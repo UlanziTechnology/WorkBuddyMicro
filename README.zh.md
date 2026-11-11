@@ -2,7 +2,7 @@
 
 **通过 Ulanzi Studio，用按键和旋钮控制 WorkBuddy 桌面客户端。**
 
-[English](README.md) · [功能使用说明](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.zh.md) · [反馈问题](https://github.com/UlanziTechnology/WorkBuddyMicro/issues)
+[English](README.md) · [安装](#安装与开始使用) · [功能使用说明](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.zh.md) · [反馈问题](https://github.com/UlanziTechnology/WorkBuddyMicro/issues)
 
 WorkBuddy Micro 将最近会话、实时状态、模型切换、语音输入、消息发送、主题和账户积分显示在 Ulanzi 设备上。设备连接与布局由 Ulanzi Studio 管理，插件直接连接本机 WorkBuddy 客户端。
 
@@ -33,7 +33,7 @@ D200X 桌面场景与会话状态示意渲染图，非实体设备实测照片�
 
 - 已安装并登录的 WorkBuddy 桌面客户端。
 - 插件清单声明支持 Windows 10 及以上、macOS 12 及以上。
-- Ulanzi Studio；**已有验证记录的基线为 3.4.13**。旋钮功能需要支持自定义 Encoder 布局的宿主。清单中的最低版本 3.0.0 不代表所有旧版宿主均已验证兼容。
+- Ulanzi Studio **3.4.8 及以上**。旋钮功能需要支持自定义 Encoder 布局的宿主。
 - 具有对应 Keypad 或 Encoder 控件的 Ulanzi 设备。D200、D200H、D200X 为目标设备系列；旋钮是否可用取决于实际硬件和 Studio 版本。
 - 开发检查需要 Node.js 20 及以上；日常使用由 Studio 提供宿主运行时。
 
@@ -41,7 +41,30 @@ D200X 桌面场景与会话状态示意渲染图，非实体设备实测照片�
 
 ## 安装与开始使用
 
-### 1. 安装插件
+### 1. LLM / Agent 安装
+
+可以把以下请求交给 LLM 或编程 Agent：
+
+```text
+请从 https://github.com/UlanziTechnology/WorkBuddyMicro 为本机 Ulanzi Studio
+安装 WorkBuddy Micro。先检查已有安装，保留我的布局和配置，分别报告插件安装
+结果与 CDP 连接状态，并按仓库 README 的安装说明操作。
+```
+
+Agent 应按以下流程操作：
+
+1. 阅读适用的仓库指引，识别桌面操作系统，并以下表目录为起点确认 Studio 实际使用的插件目录。
+2. 检查已有插件清单。清单 UUID 为 `com.ulanzi.ulanzistudio.workbuddy`，且 `CodePath`（`plugin/app.js`）指向的文件存在，才可判定插件已安装；同时检查版本、素材和属性页路径，不能仅凭目录存在判断成功。
+3. 缺失或损坏时，获取仓库并校验完整的 `com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin` 目录。有 Node.js 20 及以上环境时，在该目录运行 `npm run check`。已有有效安装可以复用，需要更新时再更新。
+4. 替换插件文件前退出 Studio。将已有目标目录备份到 Plugins 扫描目录之外，再按「手动安装」步骤安装完整插件目录，保留其他插件、设备布局和用户配置。
+5. 重新打开 Studio，确认 WorkBuddy 分类及所需按键、旋钮功能被识别；保存 WorkBuddy 中的活动任务后，通过插件连接面板连接 CDP。
+6. 分别报告安装路径、清单版本与入口文件检查、Studio 识别、CDP 连接及实体设备验证结果。目录安装成功不代表实时连接或硬件输入已验证。
+
+### 2. 手动安装
+
+先安装 WorkBuddy 桌面客户端和 Ulanzi Studio，支持范围见[使用环境](#使用环境)。插件以完整 `.ulanziPlugin` 目录运行，使用 Studio 提供的 Node 运行时。
+
+**方式 A：导入插件 ZIP**
 
 在 Ulanzi Studio 中导入 WorkBuddy Micro 插件 ZIP。也可以从仓库自行打包：
 
@@ -51,21 +74,40 @@ cd WorkBuddyMicro
 git archive --format=zip --output=com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin.zip HEAD com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin
 ```
 
-该命令打包**已提交**的插件目录，包含清单、源码、素材和属性页。ZIP 根目录应保留完整的 `.ulanziPlugin` 文件夹，文件后缀保持 `.zip`。
+该命令打包**已提交**的插件目录，包含清单、源码、素材和属性页。ZIP 根目录应保留完整的 `.ulanziPlugin` 文件夹，文件后缀保持 `.zip`。此打包命令需要 Git，Node.js 仅用于开发检查。
 
-### 2. 配置设备布局
+**方式 B：安装源码目录**
+
+使用上面的命令克隆仓库，或下载并解压[源码压缩包](https://github.com/UlanziTechnology/WorkBuddyMicro/archive/refs/heads/main.zip)。退出 Studio，将完整的 `com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin` 文件夹复制到 Studio 的 Plugins 目录：
+
+| 平台 | 默认 Plugins 目录 |
+| --- | --- |
+| macOS | `~/Library/Application Support/Ulanzi/UlanziDeck/Plugins/` |
+| Windows | `%APPDATA%\Ulanzi\UlanziDeck\Plugins\` |
+
+复制前请确认本机 Studio 实际使用的目录。`manifest.json` 应直接位于 `Plugins/com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/` 内，其下包含 `plugin/app.js`、素材和属性页目录。复制插件文件夹本身，不要复制整个仓库或多套一层目录。更新或修复时，先将旧目录备份到 Plugins 之外，再替换。安装后重新打开 Studio。
+
+### 3. 配置设备布局
 
 从 Studio 的 **WorkBuddy** 分类将功能拖到按键或旋钮，选中功能后在属性栏配置。建议先添加「启动 WorkBuddy」「WorkBuddy 任务 1–5」，在 Encoder 控件上添加「模型切换」或「当前会话状态」。
 
-### 3. 连接实时控制
+「唤起 WorkBuddy」「新建任务」「页面直达」「安装 Skill」配置后即可通过深度链接使用；实时任务状态与控制功能需继续连接 CDP。
 
-先保存 WorkBuddy 中正在进行的工作，再按「启动 WorkBuddy」，或点击 CDP 功能属性栏中的「重启 WorkBuddy」。插件会以调试模式启动客户端，使用本机 `127.0.0.1:9223` 端点，连接成功后属性栏显示「已连接」。
+### 4. 连接实时控制
 
-已连接时，启动键将 WorkBuddy 唤醒到前台；未连接时，启动或重启所选客户端。**Windows 重启会结束所选安装目录下的进程，包括托盘进程，可能中断任务。** 整个过程无需手动输入命令。
+CDP 功能请使用国内 WorkBuddy 客户端。先保存 WorkBuddy 中正在进行的工作，再按「启动 WorkBuddy」，或点击 CDP 功能属性栏中的「重启 WorkBuddy」。插件会以调试模式启动客户端，使用本机 `127.0.0.1:9223` 端点，连接成功后属性栏显示「已连接」，可点击「重新检测」刷新。
 
-模型、语音和发送功能需要打开会话输入页；麦克风权限及原生控件的可用条件仍由 WorkBuddy 管理。
+已连接时，启动键将 WorkBuddy 唤醒到前台；未连接时，启动或重启所选客户端。**Windows 重启会结束所选安装目录下的进程，包括托盘进程，可能中断任务。** 连接面板会完成启动和连接检测，无需手动输入命令。
 
-提示词模板、审批选择、主题及余额的具体用法见[功能使用说明](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.zh.md)。
+模型、语音和发送功能需要打开会话输入页；麦克风权限及原生控件的可用条件仍由 WorkBuddy 管理。WorkBuddy AI 不在当前 CDP 支持范围内。
+
+### 5. 检查安装结果
+
+- **插件**：Studio 中出现 WorkBuddy 分类，配置的功能能显示属性栏和图标。
+- **连接**：CDP 面板显示「已连接」。可用 `http://127.0.0.1:9223/json/list` 做只读排查，其中应包含 WorkBuddy 渲染页面；仅收到 HTTP 响应不能证明插件已连接到正确客户端。
+- **功能**：任务键能进入键面上显示的会话，已配置的模型旋钮能反映当前输入页模型。有设备时，再验证实际按键和旋钮输入。
+
+分类未出现时，退出并重新打开 Studio，检查目录层级、清单路径及安装目录的 `debug.log`。连接失败见[常见问题](#常见问题)。提示词模板、审批选择、主题及余额的具体用法见[功能使用说明](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.zh.md)。
 
 ## 会话状态与交互
 

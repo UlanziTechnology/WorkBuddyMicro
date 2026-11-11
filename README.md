@@ -2,7 +2,7 @@
 
 **Control WorkBuddy Desktop with keys and dials in Ulanzi Studio.**
 
-[中文说明](README.zh.md) · [Action guide](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.md) · [Report an issue](https://github.com/UlanziTechnology/WorkBuddyMicro/issues)
+[中文说明](README.zh.md) · [Installation](#installation) · [Action guide](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.md) · [Report an issue](https://github.com/UlanziTechnology/WorkBuddyMicro/issues)
 
 WorkBuddy Micro brings recent conversations, live session status, model selection, voice input, message sending, themes and account credits to your Ulanzi device. Ulanzi Studio manages the device and layout; the plugin connects directly to the local WorkBuddy client.
 
@@ -33,7 +33,7 @@ Deep-link actions work without CDP setup. Live state and controls use **CDP only
 
 - WorkBuddy Desktop installed and signed in.
 - Windows 10 or later, or macOS 12 or later, as declared in the plugin manifest.
-- Ulanzi Studio; **3.4.13 is the documented verification baseline**. Use a host with custom Encoder layout support for dial actions. The manifest's minimum of 3.0.0 does not establish compatibility with every older host.
+- Ulanzi Studio **3.4.8 or later**. Dial actions require a host with custom Encoder layout support.
 - A compatible Ulanzi device and the corresponding Keypad or Encoder surface. D200, D200H and D200X are intended device families; actual dial availability depends on the hardware and Studio version.
 - Node.js 20 or later for development checks. Normal use relies on Studio's host runtime.
 
@@ -41,9 +41,33 @@ Deep-link actions offer `workbuddy://` for the domestic client and `workbuddy-ai
 
 ## Installation
 
-### 1. Install the plugin
+### 1. LLM / Agent installation
 
-Import a WorkBuddy Micro plugin ZIP into Ulanzi Studio. To create a ZIP from this repository:
+Give an LLM or coding agent this request:
+
+```text
+Install WorkBuddy Micro from https://github.com/UlanziTechnology/WorkBuddyMicro
+for my local Ulanzi Studio. Check the existing installation first, preserve
+my layouts and settings, and report plugin installation and CDP connectivity
+separately. Follow the repository README's installation instructions.
+```
+
+The agent should:
+
+1. Read applicable repository instructions, identify the desktop OS and locate Studio's actual plugin directory using the paths below as starting points.
+2. Inspect existing plugin manifests. WorkBuddy Micro is installed when UUID `com.ulanzi.ulanzistudio.workbuddy` is present and its `CodePath` (`plugin/app.js`) resolves to an existing file. Check the version, asset paths and inspector paths as well; folder presence alone is insufficient.
+3. For a missing or broken installation, obtain the repository and validate the complete `com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin` folder. With Node.js 20 or later available, run `npm run check` inside that folder. A valid installation can be reused; update it when requested.
+4. Quit Studio before replacing plugin files. Back up an existing destination outside the scanned Plugins directory, then install the complete plugin folder as described under Manual installation. Preserve other plugins, device layouts and user settings.
+5. Reopen Studio and verify that the WorkBuddy category and the intended key/dial actions are recognized. Connect CDP through the plugin's connection panel after active WorkBuddy tasks have been saved.
+6. Report the installed path, manifest version and entry-point check, Studio recognition, CDP connection and any physical-device checks separately. An installed folder does not establish a live connection or successful hardware input.
+
+### 2. Manual installation
+
+Install WorkBuddy Desktop and Ulanzi Studio first; see [Requirements](#requirements) for the supported scope. The plugin runs from the complete `.ulanziPlugin` folder using Studio's Node runtime.
+
+**Option A — import a plugin ZIP**
+
+Import a WorkBuddy Micro plugin ZIP into Ulanzi Studio. To create one from the repository:
 
 ```sh
 git clone https://github.com/UlanziTechnology/WorkBuddyMicro.git
@@ -51,21 +75,40 @@ cd WorkBuddyMicro
 git archive --format=zip --output=com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin.zip HEAD com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin
 ```
 
-This packages the **committed** plugin folder, including its manifest, source, assets and inspectors. Keep the `.ulanziPlugin` folder at the archive root and retain the `.zip` extension.
+This packages the **committed** plugin folder, including its manifest, source, assets and inspectors. Keep the `.ulanziPlugin` folder at the archive root and retain the `.zip` extension. Git is needed for this packaging command; Node.js is only needed for development checks.
 
-### 2. Configure your layout
+**Option B — install the source folder**
+
+Clone the repository with the commands above, or download and extract its [source archive](https://github.com/UlanziTechnology/WorkBuddyMicro/archive/refs/heads/main.zip). Quit Studio and copy the complete `com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin` folder into Studio's Plugins directory:
+
+| Platform | Default Plugins directory |
+| --- | --- |
+| macOS | `~/Library/Application Support/Ulanzi/UlanziDeck/Plugins/` |
+| Windows | `%APPDATA%\Ulanzi\UlanziDeck\Plugins\` |
+
+Confirm the directory used by your Studio installation before copying. `manifest.json` must be directly inside `Plugins/com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/`, with `plugin/app.js` and the asset/inspector folders beneath it. Copy the plugin folder itself, rather than the repository root or an extra enclosing folder. For an update or repair, keep a backup of the old folder outside Plugins before replacing it. Reopen Studio after installation.
+
+### 3. Configure your layout
 
 Drag actions from the **WorkBuddy** category onto keys or dials in Studio. Select an action to configure it in the property inspector. Start with **Launch WorkBuddy**, **WorkBuddy Task 1–5** and, on an Encoder surface, **Model Switch** or **Current Session Status**.
 
-### 3. Connect live controls
+Wake WorkBuddy, New Task, Open Page and Install Skill work through deep links immediately after configuration. Live task status and controls require the CDP connection below.
 
-Save active work in WorkBuddy first. Press **Launch WorkBuddy**, or select **Restart WorkBuddy** in a CDP action's connection panel. The plugin starts the client with a debugging endpoint at `127.0.0.1:9223`. The panel changes to **Connected** when ready.
+### 4. Connect live controls
 
-When already connected, the Launch key brings WorkBuddy to the foreground. When disconnected, it starts or restarts the selected client. **On Windows, restarting ends the selected installation's processes, including tray processes, and can interrupt tasks.** No terminal command is needed.
+Use the domestic WorkBuddy client for CDP features. Save active work in WorkBuddy first. Press **Launch WorkBuddy**, or select **Restart WorkBuddy** in a CDP action's connection panel. The plugin starts the client with a debugging endpoint at `127.0.0.1:9223`. The panel changes to **Connected** when ready; use **Check again** to refresh it.
 
-Open a conversation with its composer visible to use model, voice and send controls. WorkBuddy's microphone permissions and enabled controls still apply.
+When already connected, the Launch key brings WorkBuddy to the foreground. When disconnected, it starts or restarts the selected client. **On Windows, restarting ends the selected installation's processes, including tray processes, and can interrupt tasks.** The setup panel handles launching and connection detection without a terminal command.
 
-See the [action guide](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.md) for prompt templates, approval selection, themes and credit behavior.
+Open a conversation with its composer visible to use model, voice and send controls. WorkBuddy's microphone permissions and enabled controls still apply. WorkBuddy AI is outside the current CDP support scope.
+
+### 5. Verify installation
+
+- **Plugin:** the WorkBuddy category appears in Studio; configured actions show their property inspectors and images.
+- **Connection:** the CDP panel reports Connected. For a read-only diagnostic, `http://127.0.0.1:9223/json/list` should include a WorkBuddy renderer; an HTTP response alone does not prove the plugin has connected to the correct client.
+- **Actions:** a task key opens the displayed conversation, and an assigned model dial reflects the active composer's model. Check physical key/dial input on your device when available.
+
+If the category is missing, quit and reopen Studio, check the folder nesting and manifest paths, and inspect `debug.log` in the installed plugin folder. For connection failures, use [Troubleshooting](#troubleshooting). See the [action guide](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.md) for prompt templates, approval selection, themes and credit behavior.
 
 ## Session feedback and interaction
 
