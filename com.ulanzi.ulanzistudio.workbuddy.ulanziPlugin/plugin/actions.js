@@ -316,6 +316,9 @@ class CreditsAction extends BaseAction {
     this.connected = false;
     if (this.controller === "Encoder") this.app.send({cmd:"setFeedbackLayout",
       uuid:this.uuid, actionid:this.actionid, key:this.key, layout:"layouts/credits-encoder.json"});
+    // A layout or page activation can reset the host's image while a balance
+    // request is failing. Repaint the last confirmed balance on activation.
+    if (this.app.status.cdpState && this.balancePicture) this.drawBalance(this.balancePicture);
     this.onStatus();
   }
   onStatus() {
@@ -323,7 +326,7 @@ class CreditsAction extends BaseAction {
     const connected = Boolean(this.app.status.cdpState);
     if (!connected) {
       this.connected = false;
-      this.hasBalance = false;
+      this.balancePicture = null;
       clearTimeout(this.timer);
       this.revision++;
       this.drawBalance();
@@ -342,12 +345,12 @@ class CreditsAction extends BaseAction {
       const result = await cdp.command("credits", {language:this.app.lang, encoder:this.controller === "Encoder"});
       if (!this.active || revision !== this.revision || !this.app.status.cdpState) return;
       if (result?.picture) {
-        this.drawBalance(result.picture);
-        this.hasBalance = true;
+        this.balancePicture = result.picture;
+        this.drawBalance(this.balancePicture);
         refreshed = true;
-      } else if (!this.hasBalance) this.drawBalance();
+      } else if (!this.balancePicture) this.drawBalance();
     } catch (_) {
-      if (this.active && revision === this.revision && !this.hasBalance) this.drawBalance();
+      if (this.active && revision === this.revision && !this.balancePicture) this.drawBalance();
     } finally {
       this.busy = false;
       // CDP can connect before the account adapter is ready; do not wait a full refresh cycle.
