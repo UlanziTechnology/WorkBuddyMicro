@@ -323,6 +323,7 @@ class CreditsAction extends BaseAction {
     const connected = Boolean(this.app.status.cdpState);
     if (!connected) {
       this.connected = false;
+      this.hasBalance = false;
       clearTimeout(this.timer);
       this.revision++;
       this.drawBalance();
@@ -336,15 +337,21 @@ class CreditsAction extends BaseAction {
     clearTimeout(this.timer);
     this.busy = true;
     const revision = this.revision;
+    let refreshed = false;
     try {
       const result = await cdp.command("credits", {language:this.app.lang, encoder:this.controller === "Encoder"});
       if (!this.active || revision !== this.revision || !this.app.status.cdpState) return;
-      this.drawBalance(result?.picture);
+      if (result?.picture) {
+        this.drawBalance(result.picture);
+        this.hasBalance = true;
+        refreshed = true;
+      } else if (!this.hasBalance) this.drawBalance();
     } catch (_) {
-      if (this.active && revision === this.revision) this.drawBalance();
+      if (this.active && revision === this.revision && !this.hasBalance) this.drawBalance();
     } finally {
       this.busy = false;
-      if (this.active && this.app.status.cdpState) this.timer = setTimeout(() => this.refreshCredits(), revision === this.revision ? 30000 : 0);
+      // CDP can connect before the account adapter is ready; do not wait a full refresh cycle.
+      if (this.active && this.app.status.cdpState) this.timer = setTimeout(() => this.refreshCredits(), revision === this.revision ? (refreshed ? 30000 : 1000) : 0);
     }
   }
   drawBalance(picture) {

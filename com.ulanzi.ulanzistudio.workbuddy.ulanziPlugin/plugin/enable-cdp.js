@@ -8,6 +8,19 @@ const cdp = require("./workbuddy-cdp");
 const pause = ms => new Promise(resolve => setTimeout(resolve,ms));
 const flags = ["--remote-debugging-address=127.0.0.1","--remote-debugging-port=9223"];
 const ready = () => cdp.command("state").then(s => ["idle","working","notification"].includes(s),()=>false);
+// A file argument preserves Unicode install paths and keeps PowerShell quoting at the boundary.
+/** @param {"WorkBuddy"|"WorkBuddy AI"} brand @param {"restart"|"foreground"} mode @returns {Promise<void>} */
+async function windowsWorkBuddy(brand, mode) {
+  try {
+    await exec("powershell.exe", ["-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File",
+      path.join(__dirname, "windows-workbuddy.ps1"), "-Brand", brand, "-Mode", mode],
+    {windowsHide:true, timeout:25000});
+  } catch (error) {
+    // execFile's default message includes the entire script/command. Keep the inspector actionable.
+    const detail = String(error.stderr || "").split(/\r?\n/).map(line=>line.trim()).find(Boolean);
+    throw Error(detail || "Could not run Windows CDP setup. Open WorkBuddy and retry.");
+  }
+}
 
 async function restart(brand) {
   if (await ready()) {
@@ -16,11 +29,7 @@ async function restart(brand) {
     if (process.platform === "darwin") {
       await exec("/usr/bin/open", ["-a", brand]);
     } else if (process.platform === "win32") {
-      const script = `$app = Get-Process -Name '${brand}' -ErrorAction Stop | Where-Object MainWindowHandle | Select-Object -First 1
-if (!$app) {throw 'WorkBuddy window not found'}
-$activated = (New-Object -ComObject WScript.Shell).AppActivate($app.Id)
-if (!$activated) {throw 'Could not activate WorkBuddy'}`;
-      await exec("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", script], {windowsHide:true, timeout:5000});
+      await windowsWorkBuddy(brand, "foreground");
     }
     return;
   }
@@ -43,20 +52,16 @@ if (!$activated) {throw 'Could not activate WorkBuddy'}`;
     }
     await exec("/usr/bin/open",["-a",app,"--args",...flags]);
   } else if(process.platform==="win32"){
-    // Resolve the executable before closing it. CloseMainWindow honors app save dialogs.
-    const script = `$ErrorActionPreference='Stop'
-$name='${brand}'
-$all=@(Get-Process -Name $name -ErrorAction SilentlyContinue)
-$exe=$all | Where-Object Path | Select-Object -First 1 -ExpandProperty Path
-if (!$exe) {$exe=@("$env:LOCALAPPDATA/Programs/$name/$name.exe","$env:ProgramFiles/$name/$name.exe") | Where-Object {Test-Path -LiteralPath $_} | Select-Object -First 1}
-if (!$exe) {throw 'WorkBuddy not found'}
-$p=@($all | Where-Object MainWindowHandle)
-if($all.Count -and !$p.Count){throw 'Open WorkBuddy window and retry'}
-foreach($w in $p){if(!$w.CloseMainWindow() -or !$w.WaitForExit(15000)){throw 'Save your work and retry'}}
-Start-Process -FilePath $exe -ArgumentList '${flags.join(" ")}'`;
-    await exec("powershell.exe",["-NoProfile","-NonInteractive","-Command",script],{windowsHide:true,timeout:25000});
+    await windowsWorkBuddy(brand, "restart");
   } else throw Error("Unsupported platform");
-  for(let i=0;i<40;i++){if(await ready())return; await pause(400);}
+  const deadline = Date.now() + 30000;
+  do {
+    if(await ready()) {
+      if(process.platform === "win32") await windowsWorkBuddy(brand, "foreground");
+      return;
+    }
+    await pause(400);
+  } while(Date.now() < deadline);
   throw Error("WorkBuddy CDP did not connect (127.0.0.1:9223).");
 }
 let pending;

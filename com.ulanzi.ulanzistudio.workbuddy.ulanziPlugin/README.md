@@ -18,6 +18,14 @@ Select `workbuddy://` for the domestic client or `workbuddy-ai://` for the overs
 
 Press Launch WorkBuddy to start in CDP mode. When connected, the key brings WorkBuddy forward. When disconnected, it starts or restarts WorkBuddy in CDP mode. Voice Input, Send Message, Current Session Status and Switch Theme each include connection setup.
 
+### Windows
+
+The launcher checks running processes, the registered protocol handler, per-user installations, both Program Files directories and uninstall registry entries, including custom drives. Set `WORKBUDDY_EXE` to the selected client's full executable path if needed, then restart Studio to load the environment variable.
+
+Closing WorkBuddy leaves its tray process running. A disconnected restart forcibly ends processes from the selected installation and may interrupt active tasks; save work first. An existing CDP connection only brings the window forward. CDP stays on `127.0.0.1:9223`, with a 30-second startup wait. An occupied port prevents the restart.
+
+Windows connection approach: [WorkBuddy Skin Studio](https://github.com/cdredfox/workbuddy-skin-studio/blob/main/scripts/apply.ps1).
+
 [Usage guide](usage-guide/index.html?language=en)
 
 ## Development and verification
@@ -37,3 +45,9 @@ Simulated dial events changed the real client from GLM-5.3-Flash to Auto on a ne
 Task keys 1–5 show recent chats from CDP. Press a key to open its displayed chat.
 
 Credit Balance supports keys and encoders and reads remaining account credits via CDP every 30 seconds. Press to refresh. The inspector includes connection setup. An unavailable balance displays a gray dash.
+
+
+Windows launch, reconnect, foreground activation and CDP reads were verified locally with WorkBuddy 5.9.3, Studio 3.4.13 and host Node 20.12.2. The overseas client, macOS regression and physical key/dial input were not tested in this change.
+
+
+Credits retry every second while initially unavailable or after a transient read failure. Successful reads retain the 30-second interval. Transient failures preserve the last valid balance; disconnecting clears the display.

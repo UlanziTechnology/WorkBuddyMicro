@@ -9,6 +9,9 @@ window.WorkBuddySetup = (() => {
   function init(config) {
     options=config;t=dictionaries[config.zh?"zh":"en"];
     panel=el("section",null,"wb-setup");panel.append(el("h2",t.title),el("p",t.intro,"help"));
+    if (/Win/i.test(navigator.platform || navigator.userAgent)) {
+      panel.append(el("p",config.zh?"Windows 重启会结束 WorkBuddy 进程，可能中断当前任务。请先保存工作。":"Windows restart ends WorkBuddy processes and may interrupt active tasks. Save your work first.","help"));
+    }
     const rows=el("div",null,"wb-panel");
     for(const [key,label] of [["app",t.app],["connection","CDP"],["task",t.task]]) {
       const row=el("div",null,"wb-row");row.append(el("span",label));const value=el("span",t.checking,"wb-value");value.id="wb-"+key;row.append(value);rows.append(row);

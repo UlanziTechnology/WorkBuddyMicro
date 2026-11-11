@@ -29,8 +29,8 @@
 <tr><td data-zh="积分余额" data-en="Credit Balance"></td><td data-zh="支持按键和旋钮，通过 CDP 读取账户剩余积分，每 30 秒刷新。按下立即刷新。断线或无法读取时显示灰色横线。" data-en="Show remaining account credits on a key or encoder through CDP every 30 seconds. Press to refresh. A gray dash indicates a disconnected or unavailable balance."></td></tr>
 </tbody></table>
 <p class="note" data-zh="新建任务只预填草稿，由你确认发送。国内客户端使用 workbuddy://，海外包使用 workbuddy-ai://；在动作属性面板选择协议。" data-en="New Task only prefills a draft; you confirm sending. Use workbuddy:// for the domestic client or workbuddy-ai:// for the overseas package, selected in the inspector."></p>
-<details><summary data-zh="如何启用 CDP？" data-en="How do I enable CDP?"></summary><p data-zh="打开状态动作的使用引导，点击「重启 WorkBuddy」。点击后直接启动或重启 WorkBuddy。插件会正常退出并重新打开客户端，连接成功后当前状态显示 CDP，断开后显示未连接。" data-en="Open the Status action setup and select Restart WorkBuddy. Click to start or restart WorkBuddy directly. The plugin quits and reopens the client. The status source shows CDP after connection and shows Disconnected if the connection drops."></p></details>
-<footer>WorkBuddy · Ulanzi Studio Plugin 1.10.4</footer>
+<details><summary data-zh="如何启用 CDP？" data-en="How do I enable CDP?"></summary><p data-zh="打开状态动作的使用引导，点击「重启 WorkBuddy」。点击后直接启动或重启 WorkBuddy。Windows 会强制结束所选安装路径的 WorkBuddy 进程（可能中断任务，请先保存）；macOS 正常退出后重新打开。连接成功后当前状态显示 CDP，断开后显示未连接。" data-en="Open the Status action setup and select Restart WorkBuddy. Click to start or restart WorkBuddy directly. On Windows this forcibly ends processes from the selected installation and may interrupt tasks; save work first. macOS quits normally before reopening. The status source shows CDP after connection and shows Disconnected if the connection drops."></p></details>
+<footer>WorkBuddy · Ulanzi Studio Plugin 1.10.6</footer>
 <script>
 let en=new URLSearchParams(location.search).get('language')?.startsWith('en')||false;
 function render(){document.documentElement.lang=en?'en':'zh-CN';document.querySelectorAll('[data-zh]').forEach(n=>n.textContent=n.dataset[en?'en':'zh']);document.getElementById('language').textContent=en?'中文':'English';}document.getElementById('language').onclick=()=>{en=!en;render()};render();
