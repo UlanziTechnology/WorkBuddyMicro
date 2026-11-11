@@ -24,10 +24,6 @@
       "Tooltip": "Open the WorkBuddy skill install flow for a given skill package"
     },
     {
-      "Name": "WorkBuddy Status",
-      "Tooltip": "Live WorkBuddy status. Press to open; configure status sync in the inspector."
-    },
-    {
       "Name": "WorkBuddy Task 1",
       "Tooltip": "Show a recent chat via CDP. Press to open it."
     },
@@ -53,7 +49,7 @@
     },
     {
       "Name": "Current Session Status",
-      "Tooltip": "Turn to select an approval for the current chat. Press to confirm. Requires CDP."
+      "Tooltip": "Turn to choose an approval or question option and press to execute. For multi-select questions, toggle choices then select Submit. Requires CDP."
     },
     {
       "Name": "Voice Input",

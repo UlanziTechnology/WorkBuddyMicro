@@ -191,7 +191,7 @@
       form.addEventListener("change", saveSettingsDebounced);
     }
     bindGlobalScheme();
-    if (/\.(wake|status|modelswitch|launch|credits|skin|currentsession|voice|send|task[1-5])$/.test(UUID)) window.WorkBuddySetup.init({ zh, message, stateLabels, mode: UUID.endsWith(".wake") ? "optional" : "full" });
+    if (/\.(wake|modelswitch|launch|credits|skin|currentsession|voice|send|task[1-5])$/.test(UUID)) window.WorkBuddySetup.init({ zh, message, stateLabels, mode: UUID.endsWith(".wake") ? "optional" : "full" });
     else {
       const help = document.createElement("button"); help.type="button"; help.className="guide-link"; help.textContent=zh?"使用说明":"Usage guide";
       help.addEventListener("click",()=>message({type:"openGuide"})); document.body.append(help);

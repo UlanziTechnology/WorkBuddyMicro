@@ -51,3 +51,5 @@ Windows launch, reconnect, foreground activation and CDP reads were verified loc
 
 
 Credits retry every second while initially unavailable or after a transient read failure. Successful reads retain the 30-second interval. Transient failures preserve the last valid balance; disconnecting clears the display.
+
+The current-session dial also supports standard WorkBuddy question dialogs with their actual single/multiple choices, paging, submit and skip controls. Other brings the client forward for typing. Free text is entered in WorkBuddy; custom dialogs require separate support.

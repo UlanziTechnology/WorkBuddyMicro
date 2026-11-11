@@ -3,7 +3,7 @@
   "Name": "WorkBuddy",
   "Description": "Control WorkBuddy with keys and a model dial.\nCreate task drafts, navigate pages and install skills.\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
   "Icon": "assets/icons/pluginIcon.png",
-  "Version": "1.10.8",
+  "Version": "1.11.7",
   "Category": "WorkBuddy",
   "CategoryIcon": "assets/icons/categoryIcon.png",
   "Overview": "Launch WorkBuddy, draft tasks, choose models and see live task status.",
@@ -120,25 +120,6 @@
         "Keypad"
       ],
       "DisableAutomaticStates": true
-    },
-    {
-      "Name": "WorkBuddy Status",
-      "Icon": "assets/icons/action-status.png",
-      "PropertyInspectorPath": "property-inspector/status/inspector.html",
-      "state": 0,
-      "States": [
-        {
-          "Name": "Status",
-          "Image": "assets/actions/status.png"
-        }
-      ],
-      "Tooltip": "Live WorkBuddy status. Press to open; configure status sync in the inspector.",
-      "UUID": "com.ulanzi.ulanzistudio.workbuddy.status",
-      "Controllers": [
-        "Keypad"
-      ],
-      "DisableAutomaticStates": true,
-      "SupportedInMultiActions": false
     },
     {
       "Name": "WorkBuddy Task 1",
@@ -259,7 +240,7 @@
           "Image": "assets/actions/status.png"
         }
       ],
-      "Tooltip": "Turn to select an approval for the current chat. Press to confirm. Requires CDP.",
+      "Tooltip": "Turn to choose an approval or question option and press to execute. For multi-select questions, toggle choices then select Submit. Requires CDP.",
       "UUID": "com.ulanzi.ulanzistudio.workbuddy.currentsession",
       "Controllers": [
         "Encoder"

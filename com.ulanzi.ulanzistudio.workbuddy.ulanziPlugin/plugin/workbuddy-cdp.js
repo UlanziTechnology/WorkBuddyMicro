@@ -3,8 +3,9 @@ const { WebSocketClient } = require("../libs/ws-client");
 
 // Only connect to the WorkBuddy renderer on Skin Studio's fixed loopback port.
 const { drawModelCard, modelSvg } = require("./model-art");
-const { drawCreditsCard } = require("./credits-art");
+const { drawCreditsCard, creditGlyphData } = require("./credits-art");
 const { samplePalette } = require("./skin-palette");
+const { readQuestionPanel } = require("./question-panel");
 const { applyTheme } = require("./skin-theme");
 const endpoint = "http://127.0.0.1:9223";
 const renderer = /^file:\/\/\/[^?#]*(?:\/WorkBuddy(?:%20AI| AI)?\.app\/Contents\/Resources|\/WorkBuddy(?:%20AI| AI)?\/resources)\/app\.asar\/renderer\/index\.html(?:[?#]|$)/i;
@@ -19,7 +20,7 @@ async function target() {
 }
 
 // Runs inside the verified renderer. Query only known controls; never match chat text.
-async function renderCommand(op, image, drawCard, applySkin, palette, sampler) {
+async function renderCommand(op, image, drawCard, applySkin, palette, sampler, questionPanel) {
   if (!document.getElementById("root")) return null;
   const visible = el => el.getClientRects().length && getComputedStyle(el).visibility !== "hidden";
   const session = () => document.querySelector('.cb-agent-card[data-conversation-id][data-selected="true"],.cb-agent-card[data-conversation-id][class*="_selected_"],.conversation-item [aria-selected=true][data-conversation-id]')?.dataset.conversationId || "";
@@ -38,7 +39,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler) {
     const raw = account?.usageLeft;
     const balance = (typeof raw === "number" || (typeof raw === "string" && /^\d+(?:\.\d+)?$/.test(raw))) ? Number(raw) : NaN;
     if (!Number.isFinite(balance) || balance < 0) return null;
-    return {balance, picture:drawCard(balance, image?.language === "zh" ? "zh" : "en", image?.encoder === true)};
+    return {balance, picture:await drawCard(balance, image?.language === "zh" ? "zh" : "en")};
   }
   if (op === "currentModel" || op === "currentCard") {
     const labels=[...document.querySelectorAll(".cr-model-selector__trigger-label")].filter(visible);
@@ -77,7 +78,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler) {
         const names = [...new Set(items.map(name).filter(Boolean))];
         // Minimized Electron windows can suspend image decoding. Selection
         // needs only the list and session. Warm the preview cache independently.
-        const cacheKey = Symbol.for("ulanzi.workbuddy.modelPreviews");
+        const cacheKey = Symbol.for("ulanzi.workbuddy.modelPreviews.v3");
         const cache = window[cacheKey] ||= new Map();
         for (const label of cache.keys()) if (!names.includes(label)) cache.delete(label);
         const pictures = {};
@@ -121,6 +122,31 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler) {
         !["send","发送","發送"].includes((button.getAttribute("aria-label") || "").toLowerCase())) return {state:"unavailable"};
     return {button, state:button.matches(".cr-voice-trigger--recording") ? "recording" : "ready"};
   }
+  if (op === "watchStatus") {
+    // Wake a full snapshot only for controls that can change session state.
+    // Streaming message text and voice-level style changes are excluded.
+    const selectors = ".cb-agent-card,.conversation-list,.pending-sandbox-panel,.cr-send-button,.conversation-input__stop-button,.cr-voice-trigger,.cr-model-selector__trigger-label,.cb-task-loading-text,.cb-task-approval-buttons,.execute-command-compact__actions,.command-approval-floating-wrapper,[class*=optionList],[class*=_questionFloating_]";
+    const relevant = node => node.nodeType === 1 && (node.matches(selectors) || node.querySelector(selectors));
+    const cacheKey = Symbol.for("ulanzi.workbuddy.statusWatcher");
+    window[cacheKey]?.();
+    return await new Promise(resolve => {
+      const finish = changed => {
+        observer.disconnect();
+        clearTimeout(timer);
+        if (window[cacheKey] === cancel) delete window[cacheKey];
+        resolve(changed);
+      };
+      const cancel = () => finish(false);
+      const observer = new MutationObserver(records => {
+        if (records.some(record => record.target.closest?.(selectors) ||
+            [...record.addedNodes, ...record.removedNodes].some(relevant))) finish(true);
+      });
+      const timer = setTimeout(() => finish(false), 1500);
+      window[cacheKey] = cancel;
+      observer.observe(document.body, {subtree:true, childList:true, attributes:true,
+        attributeFilter:["class","disabled","aria-disabled","aria-label","aria-selected","data-selected"]});
+    });
+  }
   if (op === "watchVoice") {
     const read = () => ({session:session(), voice:composerControl("voice").state});
     const changed = value => value.session !== image.session || value.voice !== image.voice;
@@ -147,6 +173,18 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler) {
   }
   const groups = Array.from(document.querySelectorAll(".cb-task-approval-buttons,.execute-command-compact__actions,.command-approval-floating-wrapper")).filter(el => visible(el) && (el.matches(".command-approval-floating-wrapper") || el.querySelector(".cb-task-icon-accept,.execute-command-compact__btn--allow,.execute-command-compact__btn--deny")));
   const fiberOf = node => node[Object.keys(node).find(k => k.startsWith("__reactFiber$"))];
+  const question = questionPanel(visible, fiberOf, session);
+  if (op === "answerQuestion") {
+    if (!question || question.request.submitted || question.request.token !== palette) return false;
+    const control = question.controls.get(image);
+    if (!control || control.element.matches(':disabled,[aria-disabled="true"]')) return false;
+    if (control.kind === "input") control.element.focus();
+    else {
+      question.request.submitted = true;
+      control.element.click();
+    }
+    return true;
+  }
   // Some tool approval cards share their option-list layout with ordinary
   // questions. Require WorkBuddy's pending tool record before treating it as approval.
   const toolLists = [...document.querySelectorAll('[class*="optionList"]')].filter(list => {
@@ -214,7 +252,8 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler) {
   if (op === "state" || op === "observe") {
     // Sandbox risk prompts have a separate panel from command approvals.
     const sandboxPending = [...document.querySelectorAll(".pending-sandbox-panel")].some(visible);
-    const state = groups.length || sandboxPending || toolLists.length ? "notification" : Array.from(document.querySelectorAll(".conversation-input__stop-button,.cr-send-button--stop,.cb-task-loading-text")).some(visible) ? "working" : "idle";
+    const questionPending = [...document.querySelectorAll('[class*="_questionFloating_"]')].some(visible);
+    const state = groups.length || sandboxPending || toolLists.length || questionPending ? "notification" : Array.from(document.querySelectorAll(".conversation-input__stop-button,.cr-send-button--stop,.cb-task-loading-text")).some(visible) ? "working" : "idle";
     if (op === "state") return state;
     const labels = [...document.querySelectorAll(".cr-model-selector__trigger-label")].filter(visible);
     // The sidebar groups pinned and project tasks. Its loaded conversation list
@@ -266,7 +305,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler) {
     const approval = state === "notification" ? approvalControls() : null;
     const prompt = approval && !approval.request.submitted ? {token:approval.request.token,
       choices:["allow_once","allow_session","deny"].filter(choice => approval.controls.has(choice))} : null;
-    return {state, tasks, voice:composerControl("voice").state, send:composerControl("send").state, approval:prompt, session:session(), model:labels.length === 1 ? labels[0].textContent.trim() : ""};
+    return {state, tasks, voice:composerControl("voice").state, send:composerControl("send").state, approval:prompt, question:question?.snapshot || null, session:session(), model:labels.length === 1 ? labels[0].textContent.trim() : ""};
   }
   if (op === "restoreTheme") {
     document.querySelector("style#ulanzi-workbuddy-background")?.remove();
@@ -277,14 +316,14 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler) {
 }
 const jpeg = value => typeof value === "string" && value.length <= 360000 && /^data:image\/jpeg;base64,\/9j\/[A-Za-z0-9+/]*={0,2}$/.test(value);
 async function command(op, image, palette) {
-  if (!["credits","foreground","state","observe","watchVoice","voice","send","decide","skin","toggleTheme","restoreTheme","models","selectModel","currentModel","currentCard"].includes(op) || (["voice","send"].includes(op) && (typeof image?.session !== "string" || !["ready","recording"].includes(image?.state))) || (op === "decide" && (!["allow_once","allow_session","deny"].includes(image) || typeof palette !== "string")) || (op==="selectModel" && (typeof image!=="string" || !image.length || image.length>160)) || (["skin","toggleTheme"].includes(op) && !jpeg(image))) throw Error("Invalid WorkBuddy action");
+  if (!["credits","foreground","state","observe","watchStatus","watchVoice","voice","send","decide","answerQuestion","skin","toggleTheme","restoreTheme","models","selectModel","currentModel","currentCard"].includes(op) || (["voice","send"].includes(op) && (typeof image?.session !== "string" || !["ready","recording"].includes(image?.state))) || (op === "answerQuestion" && (typeof image !== "string" || image.length > 80 || typeof palette !== "string")) || (op === "decide" && (!["allow_once","allow_session","deny"].includes(image) || typeof palette !== "string")) || (op==="selectModel" && (typeof image!=="string" || !image.length || image.length>160)) || (["skin","toggleTheme"].includes(op) && !jpeg(image))) throw Error("Invalid WorkBuddy action");
   const ws = new WebSocketClient(await target());
-  const expression = '(' + renderer.toString() + ').test(location.href) ? (' + renderCommand.toString() + ')(' + JSON.stringify(op) + ',' + (image ? JSON.stringify(image) : 'null') + ',' + (op === 'credits' ? drawCreditsCard.toString() : op === 'models' || op === 'currentCard' ? '(() => { const modelSvg = ' + modelSvg.toString() + '; return ' + drawModelCard.toString() + '; })()' : 'null' ) + ',' + ((op === 'skin' || op === 'toggleTheme') ? applyTheme.toString() : 'null') + ',' + ((op === 'skin' || op === 'toggleTheme') ? JSON.stringify(palette || {}) + ',' + samplePalette.toString() : (op === 'selectModel' || op === 'decide') ? JSON.stringify(palette ?? null) + ',null' : 'null,null') + ') : null';
+  const expression = '(' + renderer.toString() + ').test(location.href) ? (' + renderCommand.toString() + ')(' + JSON.stringify(op) + ',' + (image ? JSON.stringify(image) : 'null') + ',' + (op === 'credits' ? '(balance, language) => (' + drawCreditsCard.toString() + ')(balance, language, ' + JSON.stringify(creditGlyphData) + ')' : op === 'models' || op === 'currentCard' ? '(() => { const modelSvg = ' + modelSvg.toString() + '; return ' + drawModelCard.toString() + '; })()' : 'null' ) + ',' + ((op === 'skin' || op === 'toggleTheme') ? applyTheme.toString() : 'null') + ',' + ((op === 'skin' || op === 'toggleTheme') ? JSON.stringify(palette || {}) + ',' + samplePalette.toString() : (op === 'selectModel' || op === 'decide' || op === 'answerQuestion') ? JSON.stringify(palette ?? null) + ',null' : 'null,null') + ',' + readQuestionPanel.toString() + ') : null';
   return new Promise((resolve,reject) => {
     let done = false;
     const finish = (err,val) => { if(done)return; done=true; clearTimeout(timer); ws.close(); err ? reject(err) : resolve(val); };
     const modelMenu = op === "models" || op === "selectModel";
-    const timer = setTimeout(()=>finish(Error("CDP timeout")), (op === "skin" || op === "toggleTheme") ? 8000 : modelMenu || op === "watchVoice" ? 5000 : 1800);
+    const timer = setTimeout(()=>finish(Error("CDP timeout")), (op === "skin" || op === "toggleTheme") ? 8000 : modelMenu || op === "watchVoice" || op === "watchStatus" ? 5000 : 1800);
     ws.once("open",()=>{if(done){ws.close();return;} ws.sendJson(op === "foreground" ? {id:1, method:"Page.bringToFront"} : {id:1,method:"Runtime.evaluate",params:{expression,awaitPromise:true,returnByValue:true}});});
     ws.on("error",e=>finish(e)); ws.once("close",()=>finish(Error("CDP disconnected")));
     ws.on("message",raw=>{try{const m=JSON.parse(raw); if(m.id===1) finish(m.error || m.result?.exceptionDetails ? Error("WorkBuddy renderer unavailable") : null,m.result?.result?.value);}catch(e){finish(e);}});

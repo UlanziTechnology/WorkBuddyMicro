@@ -37,12 +37,14 @@ class WorkBuddyStatus extends EventEmitter {
         const state = ["idle","notification","working"].includes(observed?.state) ? observed.state : null;
         const tasks = observed?.tasks ?? null;
         const approval = observed?.approval ?? null;
+        const question = observed?.question ?? null;
         const voice = revision !== this.voiceRevision && observed && observed.session === this.session ? this.voice : observed?.voice ?? "unavailable";
         const send = observed?.send ?? "unavailable";
-        const changed = voice !== this.voice || send !== this.send || JSON.stringify(approval) !== JSON.stringify(this.approval) || JSON.stringify(tasks) !== JSON.stringify(this.cdpTasks) || state !== this.cdpState || observed?.model !== this.model || observed?.session !== this.session;
+        const changed = JSON.stringify(question) !== JSON.stringify(this.question) || voice !== this.voice || send !== this.send || JSON.stringify(approval) !== JSON.stringify(this.approval) || JSON.stringify(tasks) !== JSON.stringify(this.cdpTasks) || state !== this.cdpState || observed?.model !== this.model || observed?.session !== this.session;
         this.voice = voice;
         this.send = send;
         this.approval = approval;
+        this.question = question;
         this.cdpTasks = tasks;
         this.model = observed?.model;
         this.session = observed?.session;
@@ -51,19 +53,34 @@ class WorkBuddyStatus extends EventEmitter {
       } finally { this.polling = false; }
     };
     this.refresh = async () => {
-      if (this.polling || this.stopped) return;
+      if (this.stopped) return;
+      if (this.polling) { this.refreshPending = true; return; }
       clearTimeout(this.timer);
+      this.refreshPending = false;
       await poll();
       if (this.stopped) return;
       let delay = 2000;
       if (this.cdpState) {
         delay = 500;
+        this.watchStatus();
         if (this.hasVisibleVoiceKey()) this.watchVoice();
         if (Date.now() < this.fastVoiceUntil) delay = 40;
       }
-      this.timer = setTimeout(this.refresh, delay);
+      this.timer = setTimeout(this.refresh, this.refreshPending ? 0 : delay);
     };
     await this.refresh();
+  }
+  async watchStatus() {
+    if (this.watchingStatus) return;
+    this.watchingStatus = true;
+    try {
+      while (!this.stopped && this.cdpState) {
+        const changed = await cdp.command("watchStatus");
+        if (typeof changed !== "boolean") break;
+        if (changed && !this.stopped) await this.refresh();
+      }
+    } catch (_) { /* The normal snapshot loop reconnects after a CDP failure. */ }
+    finally { this.watchingStatus = false; }
   }
   async watchVoice() {
     if (this.watchingVoice) return;

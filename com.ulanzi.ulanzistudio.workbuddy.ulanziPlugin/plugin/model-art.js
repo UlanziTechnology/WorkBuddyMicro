@@ -2,10 +2,11 @@
 
 // The renderer and offline fallback share the same square artwork. Choose line
 // breaks by measured width, preferring word boundaries for model/version names.
-function modelSvg(label, measure) {
+function modelSvg(label, measure, connected = true, picture) {
   const escape = text => text.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"})[c]);
   const width = measure || ((text, size) => Array.from(text).reduce((n,c) => n + (/[^\x00-\x7f]/.test(c) ? 1 : 0.65), 0) * size);
   const name = String(label).trim();
+  const textCenter = 106;
   let lines, size;
   for (size = 20; size >= 9; size--) {
     lines = [];
@@ -22,7 +23,8 @@ function modelSvg(label, measure) {
       lines.push(chars.slice(0,end).join("").trim());
       rest = chars.slice(end).join("").trimStart();
     }
-    if (!rest && lines.length * (size + 1) <= 50) break;
+    const textBottom = textCenter + (lines.length - 1) / 2 * (size + 1) + size * 0.59;
+    if (!rest && lines.length * (size + 1) <= 50 && textBottom <= 124) break;
     if (size === 9) { if (rest) lines[2] = lines[2].slice(0,-1) + "…"; break; }
   }
   if (lines.length === 2) {
@@ -38,10 +40,12 @@ function modelSvg(label, measure) {
     }
   }
   const text = lines.map((line,i) => {
-    const y = 99 + (i - (lines.length - 1)/2) * (size+1) + size*0.34;
+    const y = textCenter + (i - (lines.length - 1)/2) * (size+1) + size*0.34;
     return `<text x="63" y="${y}" font-size="${size}">${escape(line)}</text>`;
   }).join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="252" height="252" viewBox="0 0 126 126"><rect width="126" height="126" rx="15" fill="#19cea5"/><path d="m13 36-6 7 6 7m100-14 6 7-6 7" fill="none" stroke="#0b4439" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="31" y="6" width="64" height="64" rx="15" fill="#f6fffc"/><g font-family="sans-serif" font-weight="600" text-anchor="middle" fill="#083e34"><text x="63" y="51" font-size="37">${escape(Array.from(name)[0] || "M")}</text>${text}</g></svg>`;
+  const cachedIcon = !connected && typeof picture === "string" && /^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(picture)
+    ? `<defs><clipPath id="model-icon"><rect x="31" y="13" width="64" height="64" rx="15"/></clipPath></defs><image href="${picture}" width="126" height="126" clip-path="url(#model-icon)"/>` : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="252" height="252" viewBox="0 0 126 126"><rect width="126" height="126" rx="15" fill="${connected ? "#19cea5" : "#7a7a7a"}"/><path d="m13 36-6 7 6 7m100-14 6 7-6 7" fill="none" stroke="${connected ? "#0b4439" : "#ffffff"}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="31" y="13" width="64" height="64" rx="15" fill="#f6fffc"/><g font-family="sans-serif" font-weight="600" text-anchor="middle" fill="${connected ? "#083e34" : "#ffffff"}"><text x="63" y="58" font-size="37" fill="#083e34">${escape(Array.from(name)[0] || "M")}</text>${text}</g>${cachedIcon}</svg>`;
 }
 
 async function drawModelCard(label, icon) {
@@ -80,10 +84,10 @@ async function drawModelCard(label, icon) {
       image.src = source;
       try { await image.decode(); } finally { if (source.startsWith("blob:")) URL.revokeObjectURL(source); }
       ctx.fillStyle = "#f6fffc";
-      ctx.fillRect(40, 17, 46, 42);
+      ctx.fillRect(40, 24, 46, 42);
       const scale = 56 / Math.max(image.naturalWidth, image.naturalHeight, 1);
       const w = image.naturalWidth * scale, h = image.naturalHeight * scale;
-      ctx.drawImage(image, 63 - w/2, 38 - h/2, w, h);
+      ctx.drawImage(image, 63 - w/2, 45 - h/2, w, h);
     } catch { /* A missing client icon still gets an identifiable model card. */ }
   }
   return canvas.toDataURL("image/png");

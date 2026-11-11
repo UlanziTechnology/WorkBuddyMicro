@@ -6,6 +6,7 @@
  */
 
 const deeplink = require("./deeplink");
+const { questionSvg } = require("./question-art");
 const { modelSvg } = require("./model-art");
 
 class BaseAction {
@@ -207,10 +208,12 @@ class ModelSwitchAction extends BaseAction {
   pushFeedback() {
     if (!this.active) return;
     const model = this.current();
-    const name = this.live?.names[this.liveIndex] || this.currentLabel || model?.name || (this.app.lang === "zh" ? "模型" : "Models");
+    const name = this.live?.names[this.liveIndex] || this.currentLabel || model?.name || (!this.app.status.cdpState ? "N" : this.app.lang === "zh" ? "模型" : "Models");
     let picture = this.live?.pictures?.[name];
     if (!picture && this.currentCard?.name === name) picture = this.currentCard.picture;
-    if (!picture) picture = "data:image/svg+xml;base64," + Buffer.from(modelSvg(name)).toString("base64");
+    if (!this.app.status.cdpState) {
+      picture = "data:image/svg+xml;base64," + Buffer.from(modelSvg(name, undefined, false, picture)).toString("base64");
+    } else if (!picture) picture = "data:image/svg+xml;base64," + Buffer.from(modelSvg(name)).toString("base64");
     this.app.setFeedback(this, {icon:{value:picture}});
   }
 
@@ -384,13 +387,6 @@ class LaunchAction extends BaseAction {
   }
 }
 
-class StatusAction extends BaseAction {
-  onActivated() { this.onStatus(); }
-  onSettings() { this.onStatus(); }
-  onStatus() { this.app.setStatusIcon(this, this.app.status.state); }
-  invoke() { return this.launch(deeplink.buildHomeUrl(this.scheme)); }
-}
-
 class CurrentSessionAction extends BaseAction {
   onActivated() {
     this.app.send({cmd:"setFeedbackLayout", uuid:this.uuid, actionid:this.actionid, key:this.key, layout:"layouts/session-encoder.json"});
@@ -398,7 +394,20 @@ class CurrentSessionAction extends BaseAction {
   }
   onStatus() {
     if (!this.active) return;
-    const {approval, cdpState, session, cdpTasks} = this.app.status;
+    const {approval, question, cdpState, session, cdpTasks} = this.app.status;
+    if (question) {
+      const available = question.choices.filter(c => !c.disabled);
+      if (this.questionId !== question.id || !available.some(c => c.id === this.questionChoice)) {
+        this.questionChoice = available[0]?.id;
+      }
+      this.questionId = question.id;
+      this.questionToken = question.token;
+      const image = "data:image/svg+xml;base64," + Buffer.from(questionSvg(question, this.questionChoice)).toString("base64");
+      this.app.setFeedback(this, {icon:{value:image}});
+      return;
+    }
+    this.questionId = null;
+    this.questionToken = null;
     if (this.token !== approval?.token) {
       this.token = approval?.token;
       this.choice = approval?.choices[0];
@@ -421,6 +430,15 @@ class CurrentSessionAction extends BaseAction {
     this.app.setFeedback(this, {icon:{value:picture}});
   }
   handleDialRotate(direction) {
+    const question = this.app.status.question;
+    if (question) {
+      if (!this.active || this.busy || question.token !== this.questionToken || !["left","right"].includes(direction)) return;
+      const choices = question.choices.filter(c => !c.disabled);
+      const index = choices.findIndex(c => c.id === this.questionChoice) + (direction === "left" ? -1 : 1);
+      this.questionChoice = choices[Math.max(0, Math.min(choices.length - 1, index))]?.id;
+      this.onStatus();
+      return;
+    }
     const prompt = this.app.status.approval;
     if (!this.active || this.busy || !prompt || this.token !== prompt.token || !["left","right"].includes(direction)) return;
     const next = prompt.choices.indexOf(this.choice) + (direction === "left" ? -1 : 1);
@@ -428,6 +446,18 @@ class CurrentSessionAction extends BaseAction {
     this.onStatus();
   }
   async handleDialDown() {
+    const question = this.app.status.question;
+    if (question) {
+      if (!this.active || this.busy || question.token !== this.questionToken || !this.questionChoice) return;
+      this.busy = true;
+      try {
+        const choice = question.choices.find(c => c.id === this.questionChoice);
+        if (!await cdp.command("answerQuestion", this.questionChoice, this.questionToken)) throw Error(this.app.lang === "zh" ? "问题已变化，请查看当前会话" : "Question changed. Check the current chat.");
+        if (choice?.kind === "input") await require("./enable-cdp").enableCdp(this.scheme);
+        await this.app.status.refresh?.();
+      } finally { this.busy = false; }
+      return;
+    }
     if (!this.active || this.busy || !this.token || this.token !== this.app.status.approval?.token) return;
     this.busy = true;
     try {
@@ -531,7 +561,6 @@ const ACTION_CLASSES = {
   "com.ulanzi.ulanzistudio.workbuddy.openpage": OpenPageAction,
   "com.ulanzi.ulanzistudio.workbuddy.modelswitch": ModelSwitchAction,
   "com.ulanzi.ulanzistudio.workbuddy.skillinstall": SkillInstallAction,
-  "com.ulanzi.ulanzistudio.workbuddy.status": StatusAction,
 };
 for (let i=1;i<=5;i++) ACTION_CLASSES[`com.ulanzi.ulanzistudio.workbuddy.task${i}`] = TaskAction;
 
