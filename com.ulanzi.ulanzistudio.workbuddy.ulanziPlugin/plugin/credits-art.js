@@ -16,7 +16,7 @@ async function drawCreditsCard(balance, language, iconData) {
   const bytes = Uint8Array.from(atob(iconData.slice(iconData.indexOf(",") + 1)), c => c.charCodeAt(0));
   const icon = await createImageBitmap(new Blob([bytes], {type:"image/png"}));
   try {
-    ctx.drawImage(icon, 68, 14, 60, 60);
+    ctx.drawImage(icon, 56, 27, 84, 84);
   } finally { icon.close(); }
   const text = balance === null ? "—" : new Intl.NumberFormat(language === "zh" ? "zh-CN" : "en-US", {maximumFractionDigits:2}).format(balance);
   ctx.fillStyle = "#ffffff";
@@ -27,7 +27,7 @@ async function drawCreditsCard(balance, language, iconData) {
   while (ctx.measureText(text).width > 176 && size > 12) {
     ctx.font = "600 " + (--size) + "px sans-serif";
   }
-  ctx.fillText(text, 98, 126, 176);
+  ctx.fillText(text, 98, 142, 176);
   return canvas.toDataURL("image/png");
 }
 const creditGlyphData = "data:image/png;base64," + require("node:fs")

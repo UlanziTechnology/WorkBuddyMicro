@@ -3,7 +3,7 @@
   "Name": "WorkBuddy",
   "Description": "Control WorkBuddy with keys and a model dial.\nCreate task drafts, navigate pages and install skills.\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
   "Icon": "assets/icons/pluginIcon.png",
-  "Version": "1.11.7",
+  "Version": "1.11.8",
   "Category": "WorkBuddy",
   "CategoryIcon": "assets/icons/categoryIcon.png",
   "Overview": "Launch WorkBuddy, draft tasks, choose models and see live task status.",
