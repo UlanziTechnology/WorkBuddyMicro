@@ -6,9 +6,9 @@
 
 WorkBuddy Micro 将最近会话、实时状态、模型切换、语音输入、消息发送、主题和账户积分显示在 Ulanzi 设备上。设备连接与布局由 Ulanzi Studio 管理，插件直接连接本机 WorkBuddy 客户端。
 
-![Ulanzi D200X 上的 WorkBuddy Micro](docs/images/workbuddy-d200x.png)
+![桌面场景中的 Ulanzi D200X 与 WorkBuddy Micro](docs/images/workbuddy-d200x-desktop.png)
 
-基于 Studio 配置布局制作的 D200X 产品渲染图，非实体设备实测照片。
+D200X 桌面场景与会话状态示意渲染图，非实体设备实测照片。
 
 ## 功能介绍
 

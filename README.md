@@ -6,9 +6,9 @@
 
 WorkBuddy Micro brings recent conversations, live session status, model selection, voice input, message sending, themes and account credits to your Ulanzi device. Ulanzi Studio manages the device and layout; the plugin connects directly to the local WorkBuddy client.
 
-![WorkBuddy Micro on an Ulanzi D200X](docs/images/workbuddy-d200x.png)
+![WorkBuddy Micro on an Ulanzi D200X in a desktop workspace](docs/images/workbuddy-d200x-desktop.png)
 
-D200X product visualization based on the configured Studio layout; not a physical-device test photo.
+D200X desktop visualization with illustrative session states; not a physical-device test photo.
 
 ## What it does
 
