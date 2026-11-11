@@ -9,7 +9,7 @@ function drawCreditsCard(balance, language, encoder = false, iconOnly = false) {
   background.addColorStop(0, "#0ec8a7");
   background.addColorStop(0.5, "#36cc92");
   background.addColorStop(1, "#51d07b");
-  ctx.fillStyle = balance === null && !iconOnly ? "#596469" : background;
+  ctx.fillStyle = balance === null && !iconOnly ? "#939393" : background;
   if (encoder) {
     ctx.beginPath();
     ctx.roundRect(0, 0, 196, 196, 24);
