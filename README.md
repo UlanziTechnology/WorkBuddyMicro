@@ -6,7 +6,9 @@
 
 WorkBuddy Micro brings recent conversations, live session status, model selection, voice input, message sending, themes and account credits to your Ulanzi device. Ulanzi Studio manages the device and layout; the plugin connects directly to the local WorkBuddy client.
 
-![WorkBuddy Micro features and session states](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/assets/banners/banner-1.png)
+![WorkBuddy Micro on an Ulanzi D200X](docs/images/workbuddy-d200x.png)
+
+D200X product visualization based on the configured Studio layout; not a physical-device test photo.
 
 ## What it does
 
@@ -134,6 +136,8 @@ Keep pull requests focused, describe the user-visible change, update English and
 ## Licensing
 
 Third-party license notices are retained in [THIRD_PARTY_NOTICES.txt](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/THIRD_PARTY_NOTICES.txt).
+
+The D200X device visualization is subject to the [Ulanzi Device Artwork License](docs/images/LICENSE).
 
 WorkBuddy and Ulanzi names, logos, supplied icons, animations and device artwork remain subject to their respective owners' rights. The third-party notice does not grant a license to all bundled artwork.
 
