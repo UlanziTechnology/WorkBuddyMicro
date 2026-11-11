@@ -1,0 +1,119 @@
+{
+  "Name": "WorkBuddy",
+  "Overview": "按键唤起、预填草稿、旋钮选模型，实时查看 WorkBuddy 状态。",
+  "Description": "在 Ulanzi 设备上控制 WorkBuddy。\n动作：\n- 唤起 WorkBuddy：唤起客户端并回到新建任务状态。\n- 新建任务：打开预填草稿的任务。支持 {clipboard}、{date}、{time} 占位符的提示词模板，并可配置工作目录、专家、技能、连接器、模型、模式和权限。WorkBuddy 停在草稿态，由你确认后再发送。\n- 页面直达：跳转任务、项目、专家、技能、连接器、自动化、Agent Mail 等页面。\n- 模型切换（旋钮）：旋转切换模型，停下后自动应用。\n- 安装 Skill：打开指定 HTTPS Skill 包的安装流程。\n配置：\n1. 先安装 WorkBuddy 桌面客户端（workbuddy:// 协议）。\n2. 将动作拖拽到按键或旋钮上。\n3. 在属性面板选择协议：国内正式包用 workbuddy://，海外 WorkBuddy AI 用 workbuddy-ai://。\n说明：任务描述最长 8000 字符；技能与连接器列表最多 20 项（逗号分隔）\n使用「启动 WorkBuddy」以 CDP 模式打开客户端。语音输入、发送消息、当前会话状态和主题切换均在属性栏提供 CDP 引导。",
+  "Actions": [
+    {
+      "Name": "唤起 WorkBuddy",
+      "Tooltip": "唤起 WorkBuddy 客户端并回到新建任务状态 页面可用性取决于客户端版本和功能开关。"
+    },
+    {
+      "Name": "新建任务",
+      "Tooltip": "打开预填草稿的 WorkBuddy 任务（由你确认后发送）"
+    },
+    {
+      "Name": "页面直达",
+      "Tooltip": "跳转到 WorkBuddy 页面：任务、项目、技能、连接器等 页面可用性取决于客户端版本和功能开关。"
+    },
+    {
+      "Name": "模型切换",
+      "Tooltip": "转动旋钮，停下后自动切换模型"
+    },
+    {
+      "Name": "安装 Skill",
+      "Tooltip": "打开指定 Skill 包的 WorkBuddy 安装流程"
+    },
+    {
+      "Name": "WorkBuddy 状态",
+      "Tooltip": "实时状态，按下唤起 WorkBuddy；在属性面板管理同步。"
+    },
+    {
+      "Name": "任务 1",
+      "Tooltip": "通过 CDP 显示最近会话，按下打开。"
+    },
+    {
+      "Name": "任务 2",
+      "Tooltip": "通过 CDP 显示最近会话，按下打开。"
+    },
+    {
+      "Name": "任务 3",
+      "Tooltip": "通过 CDP 显示最近会话，按下打开。"
+    },
+    {
+      "Name": "任务 4",
+      "Tooltip": "通过 CDP 显示最近会话，按下打开。"
+    },
+    {
+      "Name": "任务 5",
+      "Tooltip": "通过 CDP 显示最近会话，按下打开。"
+    },
+    {
+      "Name": "主题切换",
+      "Tooltip": "按一次应用本键主题，再按一次恢复 WorkBuddy 默认主题。"
+    },
+    {
+      "Name": "当前会话状态",
+      "Tooltip": "显示当前会话状态。需要审批时旋转选择，按下确认。需要 CDP。"
+    },
+    {
+      "Name": "语音输入",
+      "Tooltip": "按下开始录音，再按结束录音并转写。"
+    },
+    {
+      "Name": "发送消息",
+      "Tooltip": "按下发送当前草稿，按键跟随输入框状态。"
+    },
+    {
+      "Name": "启动 WorkBuddy",
+      "Tooltip": "以本机 CDP 模式启动 WorkBuddy。"
+    },
+    {
+      "Name": "积分余额",
+      "Tooltip": "通过 CDP 显示积分余额，每 30 秒刷新，按下立即刷新。 支持按键和旋钮，按下刷新。"
+    }
+  ],
+  "Localization": {
+    "Scheme": "DeepLink 协议",
+    "SchemeHelp": "国内正式包用 workbuddy://，海外 WorkBuddy AI 用 workbuddy-ai://",
+    "TargetPage": "唤起后打开页面",
+    "Prompt": "提示词模板",
+    "PromptHelp": "支持 {clipboard}、{date}、{time} 占位符，最长 8000 字符",
+    "WorkingDir": "工作目录（cwd）",
+    "ExpertId": "专家 ID",
+    "Skills": "技能（逗号分隔，最多 20 项）",
+    "ConnectorIds": "连接器 ID（逗号分隔，最多 20 项）",
+    "Model": "模型",
+    "Mode": "任务模式",
+    "WelcomeMode": "欢迎页模式",
+    "PermissionMode": "权限模式",
+    "Page": "目标页面",
+    "TaskId": "任务 ID（打开指定任务时填写）",
+    "Models": "模型列表（每行一个）",
+    "ModelsHelp": "格式：modelId|显示名，例如 gpt-5|GPT-5",
+    "SkillName": "Skill 名称",
+    "DownloadUrl": "下载地址（HTTPS）",
+    "ChannelType": "渠道（可选）",
+    "Default": "默认",
+    "FullAccess": "完全访问",
+    "Home": "新建任务首页",
+    "OpenTask": "按 ID 打开任务",
+    "Page_projects": "项目",
+    "Page_experts": "专家中心",
+    "Page_skills": "技能中心",
+    "Page_connectors": "连接器",
+    "Page_automation": "自动化",
+    "Page_colleagues": "同事",
+    "Page_claw": "Claw 工作区",
+    "Page_discover": "发现",
+    "Page_tencent-docs": "腾讯文档",
+    "Page_my-files": "我的文件",
+    "Page_my-cloud-files": "我的云文件",
+    "Page_ima": "IMA 知识库",
+    "Page_lexiang": "腾讯乐享",
+    "Page_agent-mail": "Agent Mail 邮箱",
+    "Page_space": "Space",
+    "PageAvailability": "页面是否可用取决于 WorkBuddy 版本和已启用功能；不支持的入口可能停在当前页或返回首页。“我的云文件”在部分版本中与“我的文件”共用列表。",
+    "skinImage": "背景图片",
+    "ModelDialGuide": "打开 WorkBuddy 的任务输入页。旋转选择模型，停下后自动应用，无需填写模型 ID。"
+  }
+}

@@ -1,0 +1,53 @@
+/* WorkBuddy Property Inspector shared styles. Background must stay transparent. */
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 12px;
+  color: #d0d0d0;
+}
+.sdpi-wrapper { padding: 8px 10px; }
+.sdpi-item { display: flex; flex-direction: column; margin-bottom: 10px; }
+.sdpi-item > label { margin-bottom: 4px; font-weight: 600; color: #cfcfcf; }
+.sdpi-item > .help { margin-top: 3px; color: #8a8a8a; font-size: 11px; line-height: 1.4; }
+.sdpi-item input[type="text"],
+.sdpi-item input[type="url"],
+.sdpi-item textarea,
+.sdpi-item select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px 7px;
+  border: 1px solid #3d3d3d;
+  border-radius: 4px;
+  background: #252525;
+  color: #e8e8e8;
+  font: inherit;
+}
+.sdpi-item textarea { min-height: 72px; resize: vertical; }
+.sdpi-item input:focus,
+.sdpi-item textarea:focus,
+.sdpi-item select:focus {
+  outline: none;
+  border-color: #6f9bff;
+}
+.sdpi-item select option { background: #252525; color: #e8e8e8; }
+.hidden { display: none !important; }
+.sdpi-item input:invalid { border-color: #c0392b; }
+button { color: #e8e8e8; background: #30363a; border: 1px solid #50635f; border-radius: 5px; padding: 7px 10px; margin: 0 5px 8px 0; cursor: pointer; font: inherit; }
+button:focus-visible { outline: 2px solid #13c7a0; }
+#hook-error { color: #ff8c91; overflow-wrap: anywhere; }
+.help { line-height: 1.6; color: #aaa; }
+.wb-setup { padding: 12px 12px 14px; border-bottom: 1px solid #404449; margin-bottom: 8px; }
+.wb-setup h2 { font-size: 15px; margin: 0 0 5px; }
+.wb-panel { border: 1px solid #42484a; border-radius: 8px; overflow: hidden; }
+.wb-row { display: flex; justify-content: space-between; gap: 10px; padding: 9px; border-bottom: 1px solid #383d40; }
+.wb-row:last-child { border-bottom: none; }
+.wb-value { color: #b4bac0; text-align: right; }
+.wb-value.good { color: #6dd6b1; }.wb-value.warn { color: #efbd71; }
+.wb-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 10px 0; }
+.wb-actions button { margin: 0; }.wb-actions .primary { background: #087e68; }.wb-actions .danger { grid-column: 1/-1; color: #f4a1a8; }
+.wb-error { color: #f4a1a8; overflow-wrap: anywhere; }
+details summary { cursor: pointer; color: #c5ced1; }
+.wb-optional { margin: 12px 10px; }.wb-optional .wb-setup { padding: 12px 0; }
+.guide-link { margin: 8px 10px; color: #8bcab9; background: transparent; border: none; padding: 4px 0; }

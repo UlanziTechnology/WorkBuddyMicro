@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>New Task</title>
+  <link rel="stylesheet" href="../pi.css" />
+</head>
+<body>
+  <form id="property-inspector" class="sdpi-wrapper">
+    <div class="sdpi-item">
+      <label data-i18n="Scheme">Deep link scheme</label>
+      <select id="scheme" name="__scheme">
+        <option value="workbuddy://">workbuddy://</option>
+        <option value="workbuddy-ai://">workbuddy-ai://</option>
+      </select>
+      <div class="help" data-i18n="SchemeHelp">workbuddy:// for the domestic package, workbuddy-ai:// for WorkBuddy AI</div>
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="Prompt">Prompt template</label>
+      <textarea name="prompt" maxlength="8000" data-i18n-placeholder="PromptHelp"></textarea>
+      <div class="help" data-i18n="PromptHelp">Supports {clipboard}, {date}, {time}. Max 8000 characters</div>
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="WorkingDir">Working directory (cwd)</label>
+      <input type="text" name="cwd" placeholder="D:\workspace\my-project" />
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="ExpertId">Expert ID</label>
+      <input type="text" name="expertId" />
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="Skills">Skills (comma separated, max 20)</label>
+      <input type="text" name="skills" />
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="ConnectorIds">Connector IDs (comma separated, max 20)</label>
+      <input type="text" name="connectorIds" />
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="Model">Model</label>
+      <input type="text" name="model" />
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="Mode">Mode</label>
+      <input type="text" name="mode" />
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="WelcomeMode">Welcome mode</label>
+      <select name="welcomeMode">
+        <option value="">--</option>
+        <option value="coding">coding</option>
+        <option value="working">working</option>
+        <option value="design">design</option>
+      </select>
+    </div>
+    <div class="sdpi-item">
+      <label data-i18n="PermissionMode">Permission mode</label>
+      <select name="permissionMode">
+        <option value="">--</option>
+        <option value="default" data-page-key="Default">Default</option>
+        <option value="fullAccess" data-page-key="FullAccess">Full access</option>
+      </select>
+    </div>
+  </form>
+  <script src="../setup.js"></script><script src="../pi-common.js"></script>
+</body>
+</html>

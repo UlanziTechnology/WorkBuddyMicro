@@ -1,0 +1,12 @@
+{
+  "name": "ulanzi-workbuddy-plugin",
+  "version": "1.10.4",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node --check plugin/app.js && node --check plugin/actions.js && node --check plugin/deeplink.js && node --check plugin/migrate-settings.js && node --check plugin/workbuddy-status.js && node --check property-inspector/pi-common.js && node --check property-inspector/setup.js && node --check plugin/enable-cdp.js && node --check plugin/skin-theme.js && node --check plugin/model-art.js && node --check plugin/workbuddy-cdp.js && node --check property-inspector/skin/skin.js && node --check plugin/credits-art.js"
+  }
+}

@@ -1,0 +1,350 @@
+{
+  "Author": "Wayne Tang",
+  "Name": "WorkBuddy",
+  "Description": "Control WorkBuddy with keys and a model dial.\nCreate task drafts, navigate pages and install skills.\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
+  "Icon": "assets/icons/pluginIcon.png",
+  "Version": "1.10.4",
+  "Category": "WorkBuddy",
+  "CategoryIcon": "assets/icons/categoryIcon.png",
+  "Overview": "Launch WorkBuddy, draft tasks, choose models and see live task status.",
+  "Banner": [
+    "assets/banners/banner-1.png",
+    "assets/banners/banner-2.png"
+  ],
+  "CodePath": "plugin/app.js",
+  "Type": "JavaScript",
+  "UUID": "com.ulanzi.ulanzistudio.workbuddy",
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    },
+    {
+      "Platform": "mac",
+      "MinimumVersion": "12.0"
+    }
+  ],
+  "Software": {
+    "MinVersion": "3.0.0"
+  },
+  "Actions": [
+    {
+      "Name": "Wake WorkBuddy",
+      "Icon": "assets/icons/action-wake.png",
+      "PropertyInspectorPath": "property-inspector/wake/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Wake",
+          "Image": "assets/actions/wake.png"
+        }
+      ],
+      "Tooltip": "Wake the WorkBuddy client to the new-task state Page availability depends on client version and enabled features.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.wake",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true
+    },
+    {
+      "Name": "New Task",
+      "Icon": "assets/icons/action-newtask.png",
+      "PropertyInspectorPath": "property-inspector/newtask/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "New Task",
+          "Image": "assets/actions/newtask.png"
+        }
+      ],
+      "Tooltip": "Open a WorkBuddy task with a prefilled draft (you confirm before sending)",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.newtask",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true
+    },
+    {
+      "Name": "Open Page",
+      "Icon": "assets/icons/action-openpage.png",
+      "PropertyInspectorPath": "property-inspector/openpage/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Open Page",
+          "Image": "assets/actions/openpage.png"
+        }
+      ],
+      "Tooltip": "Jump to a WorkBuddy page: tasks, projects, skills, connectors and more Page availability depends on client version and enabled features.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.openpage",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true
+    },
+    {
+      "Name": "Model Switch",
+      "Icon": "assets/icons/action-modelswitch.png",
+      "PropertyInspectorPath": "property-inspector/modelswitch/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Model Switch",
+          "Image": "assets/actions/modelswitch.png"
+        }
+      ],
+      "Tooltip": "Turn the dial to switch models in WorkBuddy",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.modelswitch",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/model-encoder.json"
+      },
+      "DisableAutomaticStates": true
+    },
+    {
+      "Name": "Install Skill",
+      "Icon": "assets/icons/action-skillinstall.png",
+      "PropertyInspectorPath": "property-inspector/skillinstall/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Install Skill",
+          "Image": "assets/actions/skillinstall.png"
+        }
+      ],
+      "Tooltip": "Open the WorkBuddy skill install flow for a given skill package",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.skillinstall",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true
+    },
+    {
+      "Name": "WorkBuddy Status",
+      "Icon": "assets/icons/action-status.png",
+      "PropertyInspectorPath": "property-inspector/status/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Status",
+          "Image": "assets/actions/status.png"
+        }
+      ],
+      "Tooltip": "Live WorkBuddy status. Press to open; configure status sync in the inspector.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.status",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false
+    },
+    {
+      "Name": "WorkBuddy Task 1",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.task1",
+      "Icon": "assets/icons/task1.png",
+      "PropertyInspectorPath": "property-inspector/task/inspector.html",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "States": [
+        {
+          "Name": "Task 1",
+          "Image": "assets/icons/task1.png"
+        }
+      ],
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "WorkBuddy Task 2",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.task2",
+      "Icon": "assets/icons/task2.png",
+      "PropertyInspectorPath": "property-inspector/task/inspector.html",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "States": [
+        {
+          "Name": "Task 2",
+          "Image": "assets/icons/task2.png"
+        }
+      ],
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "WorkBuddy Task 3",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.task3",
+      "Icon": "assets/icons/task3.png",
+      "PropertyInspectorPath": "property-inspector/task/inspector.html",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "States": [
+        {
+          "Name": "Task 3",
+          "Image": "assets/icons/task3.png"
+        }
+      ],
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "WorkBuddy Task 4",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.task4",
+      "Icon": "assets/icons/task4.png",
+      "PropertyInspectorPath": "property-inspector/task/inspector.html",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "States": [
+        {
+          "Name": "Task 4",
+          "Image": "assets/icons/task4.png"
+        }
+      ],
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "WorkBuddy Task 5",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.task5",
+      "Icon": "assets/icons/task5.png",
+      "PropertyInspectorPath": "property-inspector/task/inspector.html",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "States": [
+        {
+          "Name": "Task 5",
+          "Image": "assets/icons/task5.png"
+        }
+      ],
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "Switch Theme",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.skin",
+      "Icon": "assets/icons/skin.png",
+      "PropertyInspectorPath": "property-inspector/skin/inspector.html",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "States": [
+        {
+          "Name": "Apply background",
+          "Image": "assets/icons/skin.png"
+        }
+      ],
+      "Tooltip": "Press to apply this theme. Press again to restore the default WorkBuddy theme."
+    },
+    {
+      "Name": "Current Session Status",
+      "Icon": "assets/icons/action-status.png",
+      "PropertyInspectorPath": "property-inspector/status/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Status",
+          "Image": "assets/actions/status.png"
+        }
+      ],
+      "Tooltip": "Turn to select an approval for the current chat. Press to confirm. Requires CDP.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.currentsession",
+      "Controllers": [
+        "Encoder"
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "Encoder": {
+        "layout": "layouts/session-encoder.json"
+      }
+    },
+    {
+      "Name": "Voice Input",
+      "Tooltip": "Start or finish voice input in WorkBuddy.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.voice",
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "assets/composer/voice-ready.png",
+      "States": [
+        {
+          "Name": "Voice Input",
+          "Image": "assets/composer/voice-ready.png"
+        }
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "PropertyInspectorPath": "property-inspector/status/inspector.html"
+    },
+    {
+      "Name": "Send Message",
+      "Tooltip": "Send the current WorkBuddy draft when available.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.send",
+      "Controllers": [
+        "Keypad"
+      ],
+      "Icon": "assets/composer/send-ready.png",
+      "States": [
+        {
+          "Name": "Send Message",
+          "Image": "assets/composer/send-ready.png"
+        }
+      ],
+      "DisableAutomaticStates": true,
+      "SupportedInMultiActions": false,
+      "PropertyInspectorPath": "property-inspector/status/inspector.html"
+    },
+    {
+      "Name": "Launch WorkBuddy",
+      "Icon": "assets/icons/action-wake.png",
+      "PropertyInspectorPath": "property-inspector/status/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Wake",
+          "Image": "assets/actions/wake.png"
+        }
+      ],
+      "Tooltip": "Launch WorkBuddy with local CDP enabled.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.launch",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true
+    },
+    {
+      "Name": "Credit Balance",
+      "Tooltip": "Show remaining credits via CDP. Refreshes every 30 seconds. Press to refresh. Supports keys and encoders.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.credits",
+      "Icon": "assets/actions/credits.png",
+      "PropertyInspectorPath": "property-inspector/status/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Credits",
+          "Image": "assets/actions/credits.png"
+        }
+      ],
+      "Controllers": [
+        "Keypad",
+        "Encoder"
+      ],
+      "DisableAutomaticStates": true,
+      "Encoder": {
+        "layout": "layouts/credits-encoder.json"
+      }
+    }
+  ]
+}

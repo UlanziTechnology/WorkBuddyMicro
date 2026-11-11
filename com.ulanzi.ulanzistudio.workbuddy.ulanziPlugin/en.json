@@ -1,0 +1,119 @@
+{
+  "Name": "WorkBuddy",
+  "Overview": "Launch WorkBuddy, draft tasks, choose models and see live task status.",
+  "Description": "Control WorkBuddy from your Ulanzi device.\nActions:\n- Wake WorkBuddy: bring the client to the new-task state.\n- New Task: open a task with a prefilled draft. Supports prompt templates with {clipboard}, {date} and {time} placeholders, plus working directory, expert, skills, connectors, model, mode and permission settings. WorkBuddy keeps the draft unsent until you confirm.\n- Open Page: jump to tasks, projects, experts, skills, connectors, automation, Agent Mail and more.\n- Model Switch (encoder): turn the dial to switch the model in the task composer.\n- Install Skill: open the skill install flow for an HTTPS skill package.\nSetup:\n1. Install the WorkBuddy desktop client (workbuddy:// scheme).\n2. Drag an action onto a key or the knob.\n3. Pick the scheme in the property inspector: workbuddy:// for the domestic package, workbuddy-ai:// for WorkBuddy AI.\nNotes: task prompts are limited to 8000 characters; skill and connector lists accept up to 20 comma-separated items\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
+  "Actions": [
+    {
+      "Name": "Wake WorkBuddy",
+      "Tooltip": "Wake the WorkBuddy client to the new-task state Page availability depends on client version and enabled features."
+    },
+    {
+      "Name": "New Task",
+      "Tooltip": "Open a WorkBuddy task with a prefilled draft (you confirm before sending)"
+    },
+    {
+      "Name": "Open Page",
+      "Tooltip": "Jump to a WorkBuddy page: tasks, projects, skills, connectors and more Page availability depends on client version and enabled features."
+    },
+    {
+      "Name": "Model Switch",
+      "Tooltip": "Turn the dial to switch models in WorkBuddy"
+    },
+    {
+      "Name": "Install Skill",
+      "Tooltip": "Open the WorkBuddy skill install flow for a given skill package"
+    },
+    {
+      "Name": "WorkBuddy Status",
+      "Tooltip": "Live WorkBuddy status. Press to open; configure status sync in the inspector."
+    },
+    {
+      "Name": "WorkBuddy Task 1",
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "WorkBuddy Task 2",
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "WorkBuddy Task 3",
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "WorkBuddy Task 4",
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "WorkBuddy Task 5",
+      "Tooltip": "Show a recent chat via CDP. Press to open it."
+    },
+    {
+      "Name": "Switch Theme",
+      "Tooltip": "Press to apply this theme. Press again to restore the default WorkBuddy theme."
+    },
+    {
+      "Name": "Current Session Status",
+      "Tooltip": "Turn to select an approval for the current chat. Press to confirm. Requires CDP."
+    },
+    {
+      "Name": "Voice Input",
+      "Tooltip": "Start or finish voice input in WorkBuddy."
+    },
+    {
+      "Name": "Send Message",
+      "Tooltip": "Send the current WorkBuddy draft when available."
+    },
+    {
+      "Name": "Launch WorkBuddy",
+      "Tooltip": "Launch WorkBuddy with local CDP enabled."
+    },
+    {
+      "Name": "Credit Balance",
+      "Tooltip": "Show remaining credits via CDP. Refreshes every 30 seconds. Press to refresh. Supports keys and encoders. Press to refresh."
+    }
+  ],
+  "Localization": {
+    "Scheme": "Deep link scheme",
+    "SchemeHelp": "workbuddy:// for the domestic package, workbuddy-ai:// for WorkBuddy AI",
+    "TargetPage": "Page after wake",
+    "Prompt": "Prompt template",
+    "PromptHelp": "Supports {clipboard}, {date}, {time}. Max 8000 characters",
+    "WorkingDir": "Working directory (cwd)",
+    "ExpertId": "Expert ID",
+    "Skills": "Skills (comma separated, max 20)",
+    "ConnectorIds": "Connector IDs (comma separated, max 20)",
+    "Model": "Model",
+    "Mode": "Mode",
+    "WelcomeMode": "Welcome mode",
+    "PermissionMode": "Permission mode",
+    "Page": "Target page",
+    "TaskId": "Task ID (for Open Task)",
+    "Models": "Model list (one per line)",
+    "ModelsHelp": "Format: modelId|Display Name, e.g. gpt-5|GPT-5",
+    "SkillName": "Skill name",
+    "DownloadUrl": "Download URL (HTTPS)",
+    "ChannelType": "Channel (optional)",
+    "Default": "Default",
+    "FullAccess": "Full access",
+    "Home": "New task home",
+    "OpenTask": "Open task by ID",
+    "Page_projects": "Projects",
+    "Page_experts": "Experts",
+    "Page_skills": "Skills",
+    "Page_connectors": "Connectors",
+    "Page_automation": "Automation",
+    "Page_colleagues": "Colleagues",
+    "Page_claw": "Claw workspace",
+    "Page_discover": "Discover",
+    "Page_tencent-docs": "Tencent Docs",
+    "Page_my-files": "My files",
+    "Page_my-cloud-files": "My cloud files",
+    "Page_ima": "IMA knowledge",
+    "Page_lexiang": "Tencent Lexiang",
+    "Page_agent-mail": "Agent Mail",
+    "Page_space": "Space",
+    "PageAvailability": "Page availability depends on WorkBuddy version and enabled features. Unsupported destinations may leave the current page unchanged or return home. The cloud-files tab may share the same file list.",
+    "skinImage": "Background image",
+    "ModelDialGuide": "Open the WorkBuddy task composer. Turn the dial to switch models. No model IDs are needed."
+  }
+}

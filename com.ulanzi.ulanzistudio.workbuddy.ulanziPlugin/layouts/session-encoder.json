@@ -1,0 +1,39 @@
+{
+  "id": "workbuddy-session",
+  "items": [
+    {
+      "type": "pixmap",
+      "key": "icon",
+      "rect": [
+        0,
+        7,
+        126,
+        126
+      ],
+      "value": "assets/session/offline.png",
+      "zOrder": 0,
+      "background": "transparent",
+      "enabled": true
+    },
+    {
+      "type": "text",
+      "key": "placeholder",
+      "rect": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "text": "",
+      "alignment": "center",
+      "color": "#F4F7FA",
+      "font": {
+        "size": 10
+      },
+      "textOverflow": "ellipsis",
+      "zOrder": 1,
+      "background": "transparent",
+      "enabled": false
+    }
+  ]
+}
