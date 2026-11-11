@@ -388,7 +388,8 @@ class PluginApp {
     if (!action && signature === this.lastInspectorStatus) return;
     let sent = false;
     for (const item of action ? [action] : this.actions.values()) {
-      if (item.active) {
+      // Editing an off-page instance still needs a reply; broadcasts stay page-scoped.
+      if (action || item.active) {
         sent = this.send({cmd:"sendToPropertyInspector", uuid:item.uuid,
           actionid:item.actionid, key:item.key, payload}) || sent;
       }
