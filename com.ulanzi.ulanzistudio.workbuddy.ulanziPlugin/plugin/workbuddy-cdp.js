@@ -264,9 +264,14 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
       let fiber = anchor[Object.keys(anchor).find(key => key.startsWith("__reactFiber$"))];
       let root = fiber;
       while (root?.return) root = root.return;
-      if (root && root.stateNode?.current !== root && fiber.alternate) fiber = fiber.alternate;
-      for (; fiber; fiber = fiber.return) {
-        const list = fiber.memoizedProps?.allConversations;
+      // Reused DOM fibers can retain old parents even when their return chain
+      // reaches the current root. Read list props only from the committed tree.
+      const pending = root?.stateNode?.current ? [root.stateNode.current] : [];
+      while (pending.length) {
+        const current = pending.pop();
+        if (current.sibling) pending.push(current.sibling);
+        if (current.child) pending.push(current.child);
+        const list = current.memoizedProps?.allConversations;
         if (!Array.isArray(list)) continue;
         const valid = list.filter(row => typeof row?.id === "string" && row.id && Number.isFinite(row.sortAt) && row.lifecycle !== "archived");
         if (list.length && !valid.length) break;
