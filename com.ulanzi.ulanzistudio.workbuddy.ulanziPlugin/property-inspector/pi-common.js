@@ -23,7 +23,7 @@
   let reconnectTimer = null;
   let statusTimer;
   const zh = LANG === "zh_CN";
-  const stateLabels = zh ? {offline:"未启动",idle:"待机",thinking:"思考中",working:"执行中",attention:"已完成 · 待查看",notification:"等待确认",error:"异常",sweeping:"整理上下文",sleeping:"休眠"} : {offline:"Not running",idle:"Idle",thinking:"Thinking",working:"Working",attention:"Done · review",notification:"Needs confirmation",error:"Error",sweeping:"Compacting",sleeping:"Sleeping"};
+  const stateLabels = zh ? {offline:"未启动",idle:"待机",thinking:"思考中",working:"执行中",attention:"已完成 · 待查看",notification:"等待审批 / 回答",error:"错误",sweeping:"整理上下文",sleeping:"休眠"} : {offline:"Not running",idle:"Idle",thinking:"Thinking",working:"Working",attention:"Done · review",notification:"Approval / reply needed",error:"Error",sweeping:"Compacting",sleeping:"Sleeping"};
   const message = payload => send({cmd:"sendToPlugin", uuid:UUID, actionid:ACTIONID, key:KEY, payload});
 
   function send(obj) {
@@ -191,7 +191,7 @@
       form.addEventListener("change", saveSettingsDebounced);
     }
     bindGlobalScheme();
-    if (/\.(wake|modelswitch|launch|credits|skin|currentsession|voice|send|task[1-5])$/.test(UUID)) window.WorkBuddySetup.init({ zh, message, stateLabels, mode: UUID.endsWith(".wake") ? "optional" : "full" });
+    if (/\.(modelswitch|launch|credits|skin|currentsession|voice|send|task[1-5])$/.test(UUID)) window.WorkBuddySetup.init({ zh, message, stateLabels });
     else {
       const help = document.createElement("button"); help.type="button"; help.className="guide-link"; help.textContent=zh?"使用说明":"Usage guide";
       help.addEventListener("click",()=>message({type:"openGuide"})); document.body.append(help);

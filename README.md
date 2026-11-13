@@ -15,15 +15,13 @@ D200X desktop visualization with illustrative session states; not a physical-dev
 | Action | Control | Behavior | Connection |
 | --- | --- | --- | --- |
 | Launch WorkBuddy | Key | Start or restart WorkBuddy with local debugging enabled; bring it forward when already connected | CDP setup |
-| Wake WorkBuddy | Key | Open home or a configured destination | Deep link |
 | New Task | Key | Open an unsent draft with a reusable prompt and optional task parameters | Deep link |
 | Open Page | Key | Jump to a page or a specific task ID | Deep link |
-| Install Skill | Key | Open the client's installation flow for an HTTPS skill package | Deep link |
 | WorkBuddy Task 1–5 | Five key actions | Show recent conversations and their individual states; press to open the conversation displayed | CDP |
 | Model Switch | Dial | Show the current model and its icon; turn to choose an available model and apply after a short pause, or press to apply | CDP |
 | Current Session Status | Dial | Show live status; turn to select a permission or question option, then press to act | CDP |
 | Voice Input | Key | Start or finish native voice input; show confirmed recording state with a blinking red dot | CDP |
-| Send Message | Key | Send the current draft when enabled; mirror the client's busy and stop indicators | CDP |
+| Send Message | Key | Send the current draft, or stop the running response when Stop is shown | CDP |
 | Switch Theme | Key | Apply a chosen image and editable colors; press again to restore the native theme | CDP |
 | Credit Balance | Key or dial | Show remaining account credits; refresh every 30 seconds or on press | CDP |
 
@@ -92,7 +90,7 @@ Confirm the directory used by your Studio installation before copying. `manifest
 
 Drag actions from the **WorkBuddy** category onto keys or dials in Studio. Select an action to configure it in the property inspector. Start with **Launch WorkBuddy**, **WorkBuddy Task 1–5** and, on an Encoder surface, **Model Switch** or **Current Session Status**.
 
-Wake WorkBuddy, New Task, Open Page and Install Skill work through deep links immediately after configuration. Live task status and controls require the CDP connection below.
+New Task and Open Page work through deep links immediately after configuration. Live task status and controls require the CDP connection below.
 
 ### 4. Connect live controls
 
@@ -112,7 +110,7 @@ If the category is missing, quit and reopen Studio, check the folder nesting and
 
 ## Session feedback and interaction
 
-- **Green:** idle. **Yellow:** working. **Red:** needs attention, such as an approval, a question or an unread completion notification. **Gray:** disconnected or unavailable.
+- Status artwork distinguishes idle, working, completed, approval/reply needed, error and disconnected. Completed uses check-mark eyes, approval uses yellow pause eyes, and error uses red cross eyes.
 - Task slots come from the recent conversations currently loaded by WorkBuddy. They are not a complete history search or permanently pinned slots. Pressing opens the conversation that was displayed on that key.
 - Completion alerts require WorkBuddy's conversation-list notification. A transition from working to idle alone does not trigger a completion alert.
 - The session dial presents available permission actions, such as allow once, allow for this conversation and deny. Standard question panels use their actual choices and available paging, submit and skip controls.
@@ -126,7 +124,7 @@ If the category is missing, quit and reopen Studio, check the folder nesting and
 | --- | --- |
 | CDP stays disconnected | Save work, use Restart WorkBuddy, then Check again. Verify the selected client is installed. Another process occupying port 9223 prevents a restart. |
 | Windows client is not found | Set `WORKBUDDY_EXE` to the intended client's full executable path, then restart Studio. Discovery also checks running processes, protocol registration, common install paths and uninstall registry entries. |
-| Model, microphone or send control is unavailable | Open the active conversation's composer and check the same control inside WorkBuddy. Sending is available only when the native send control is ready; a stop image mirrors the app's state. |
+| Model, microphone or send control is unavailable | Open the active conversation's composer and check the same control inside WorkBuddy. Press to send when the native send control is ready, or to stop when the Stop control is enabled. |
 | No conversation appears in a task slot | Open or create a conversation in WorkBuddy and let its recent list load. |
 | Credits show a gray dash | Check CDP and account availability. Transient read failures retain the last valid balance; disconnecting clears it. Press to retry. |
 | A theme needs resetting | Press the same theme key again, or use Restore native WorkBuddy theme in its inspector. |

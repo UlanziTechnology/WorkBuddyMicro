@@ -6,7 +6,7 @@ This guide describes the actions shipped with WorkBuddy Micro **1.11.8**. For so
 
 ## Connect WorkBuddy
 
-Deep-link actions—Wake WorkBuddy, New Task, Open Page and Install Skill—can be used directly. Choose `workbuddy://` for the domestic client or `workbuddy-ai://` for the overseas client in the inspector. This is a plugin-wide setting for deep-link routing. **CDP features currently target the domestic WorkBuddy client; WorkBuddy AI is outside the current CDP support scope.**
+Deep-link actions—New Task and Open Page—can be used directly. Choose `workbuddy://` for the domestic client or `workbuddy-ai://` for the overseas client in the inspector. This is a plugin-wide setting for deep-link routing. **CDP features currently target the domestic WorkBuddy client; WorkBuddy AI is outside the current CDP support scope.**
 
 Live tasks, model switching, session interaction, voice input, sending, themes and credits require CDP. Save your work, then press **Launch WorkBuddy** or choose **Restart WorkBuddy** in the action's connection panel. Wait for **Connected**. No terminal command, hook configuration or separate Bridge service is required.
 
@@ -18,10 +18,8 @@ On Windows, discovery checks running processes, protocol registration, per-user 
 
 | Action | Configure and use |
 | --- | --- |
-| Wake WorkBuddy | Open home or a selected destination. |
 | New Task | Set a prompt template and optional working directory, expert, skills, connectors, model and mode. Press to open an unsent draft; sending remains your choice. |
 | Open Page | Choose a destination. Opening a specific conversation requires its task ID; the key icon follows the selected page. |
-| Install Skill | Enter a name and HTTPS package URL. Review and confirm installation inside WorkBuddy. |
 
 New Task supports `{clipboard}`, `{date}` and `{time}`. For example:
 
@@ -36,7 +34,7 @@ Working directories must be absolute paths. Prompts are limited to 8,000 charact
 
 Add **WorkBuddy Task 1–5** to keys to show up to five recent conversations loaded by the client. Each key tracks its own conversation's state. Press to open the conversation displayed on that key. Slots follow the recent list rather than permanent assignments or a complete history query.
 
-Green means idle, yellow means working, red means attention and gray means disconnected or unavailable. Completion attention requires an unread notification in WorkBuddy's conversation list. A task simply becoming idle does not create a completion alert.
+The new artwork distinguishes idle, working, completed, approval/reply needed, error and disconnected. Completed shows check-mark eyes, approval shows yellow pause eyes, and error shows red cross eyes. Completion attention requires an unread notification in WorkBuddy's conversation list. A task simply becoming idle does not create a completion alert.
 
 **Current Session Status** is a separate Encoder action. During an approval, turn to choose an available native action, such as allow once, allow for the conversation or deny, and press to execute. There are no separate Allow/Deny key actions.
 
@@ -52,7 +50,7 @@ Switching conversations refreshes the current model. If an approval temporarily 
 
 **Voice Input** starts or finishes WorkBuddy's native voice input. Recording is shown only after the client confirms it, with a blinking red dot. Allow microphone access in WorkBuddy and keep its composer available.
 
-**Send Message** sends the current draft when WorkBuddy's send control is ready. Its icon follows the client's available, busy, unavailable or stop state. A stop image is a state indicator; it does not add a stop-task operation to this action.
+**Send Message** sends the current draft when WorkBuddy's send control is ready. When the key shows Stop, press it to stop the current response. Its icon follows the client's available, busy, unavailable or stop state. The action rechecks the current conversation and native control state before clicking.
 
 ## Switch Theme
 

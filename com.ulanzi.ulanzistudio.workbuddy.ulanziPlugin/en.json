@@ -1,12 +1,8 @@
 {
   "Name": "WorkBuddy",
   "Overview": "Launch WorkBuddy, draft tasks, choose models and see live task status.",
-  "Description": "Control WorkBuddy from your Ulanzi device.\nActions:\n- Wake WorkBuddy: bring the client to the new-task state.\n- New Task: open a task with a prefilled draft. Supports prompt templates with {clipboard}, {date} and {time} placeholders, plus working directory, expert, skills, connectors, model, mode and permission settings. WorkBuddy keeps the draft unsent until you confirm.\n- Open Page: jump to tasks, projects, experts, skills, connectors, automation, Agent Mail and more.\n- Model Switch (encoder): turn the dial to switch the model in the task composer.\n- Install Skill: open the skill install flow for an HTTPS skill package.\nSetup:\n1. Install the WorkBuddy desktop client (workbuddy:// scheme).\n2. Drag an action onto a key or the knob.\n3. Pick the scheme in the property inspector: workbuddy:// for the domestic package, workbuddy-ai:// for WorkBuddy AI.\nNotes: task prompts are limited to 8000 characters; skill and connector lists accept up to 20 comma-separated items\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
+  "Description": "Control WorkBuddy from your Ulanzi device.\nActions:\n- New Task: open a task with a prefilled draft. Supports prompt templates with {clipboard}, {date} and {time} placeholders, plus working directory, expert, skills, connectors, model, mode and permission settings. WorkBuddy keeps the draft unsent until you confirm.\n- Open Page: jump to tasks, projects, experts, skills, connectors, automation, Agent Mail and more.\n- Model Switch (encoder): turn the dial to switch the model in the task composer.\nSetup:\n1. Install the WorkBuddy desktop client (workbuddy:// scheme).\n2. Drag an action onto a key or the knob.\n3. Pick the scheme in the property inspector: workbuddy:// for the domestic package, workbuddy-ai:// for WorkBuddy AI.\nNotes: task prompts are limited to 8000 characters; skill and connector lists accept up to 20 comma-separated items\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
   "Actions": [
-    {
-      "Name": "Wake WorkBuddy",
-      "Tooltip": "Wake the WorkBuddy client to the new-task state Page availability depends on client version and enabled features."
-    },
     {
       "Name": "New Task",
       "Tooltip": "Open a WorkBuddy task with a prefilled draft (you confirm before sending)"
@@ -18,10 +14,6 @@
     {
       "Name": "Model Switch",
       "Tooltip": "Turn the dial to switch models in WorkBuddy"
-    },
-    {
-      "Name": "Install Skill",
-      "Tooltip": "Open the WorkBuddy skill install flow for a given skill package"
     },
     {
       "Name": "WorkBuddy Task 1",
@@ -57,7 +49,7 @@
     },
     {
       "Name": "Send Message",
-      "Tooltip": "Send the current WorkBuddy draft when available."
+      "Tooltip": "Send the current draft, or stop the current response when Stop is shown."
     },
     {
       "Name": "Launch WorkBuddy",
@@ -71,7 +63,6 @@
   "Localization": {
     "Scheme": "Deep link scheme",
     "SchemeHelp": "workbuddy:// for the domestic package, workbuddy-ai:// for WorkBuddy AI",
-    "TargetPage": "Page after wake",
     "Prompt": "Prompt template",
     "PromptHelp": "Supports {clipboard}, {date}, {time}. Max 8000 characters",
     "WorkingDir": "Working directory (cwd)",
@@ -86,9 +77,6 @@
     "TaskId": "Task ID (for Open Task)",
     "Models": "Model list (one per line)",
     "ModelsHelp": "Format: modelId|Display Name, e.g. gpt-5|GPT-5",
-    "SkillName": "Skill name",
-    "DownloadUrl": "Download URL (HTTPS)",
-    "ChannelType": "Channel (optional)",
     "Default": "Default",
     "FullAccess": "Full access",
     "Home": "New task home",

@@ -113,7 +113,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
       const label = (button.getAttribute("aria-label") || "").trim().toLowerCase();
       if (button.matches(".cr-send-button--stop,.conversation-input__stop-button") ||
           (button.matches(".cr-send-button--custom") && /^(stop( generating| generation| response)?|停止(生成|回复|回覆|响应|回應)?)$/.test(label))) {
-        return {state:"stop"};
+        return button.matches(":disabled,[aria-disabled=true]") ? {state:"unavailable"} : {button, state:"stop"};
       }
       if (button.matches(".cr-send-button--sending")) return {state:"busy"};
     }
@@ -316,7 +316,8 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
 }
 const jpeg = value => typeof value === "string" && value.length <= 360000 && /^data:image\/jpeg;base64,\/9j\/[A-Za-z0-9+/]*={0,2}$/.test(value);
 async function command(op, image, palette) {
-  if (!["credits","foreground","state","observe","watchStatus","watchVoice","voice","send","decide","answerQuestion","skin","toggleTheme","restoreTheme","models","selectModel","currentModel","currentCard"].includes(op) || (["voice","send"].includes(op) && (typeof image?.session !== "string" || !["ready","recording"].includes(image?.state))) || (op === "answerQuestion" && (typeof image !== "string" || image.length > 80 || typeof palette !== "string")) || (op === "decide" && (!["allow_once","allow_session","deny"].includes(image) || typeof palette !== "string")) || (op==="selectModel" && (typeof image!=="string" || !image.length || image.length>160)) || (["skin","toggleTheme"].includes(op) && !jpeg(image))) throw Error("Invalid WorkBuddy action");
+  const composerStates = op === "voice" ? ["ready","recording"] : ["ready","stop"];
+  if (!["credits","foreground","state","observe","watchStatus","watchVoice","voice","send","decide","answerQuestion","skin","toggleTheme","restoreTheme","models","selectModel","currentModel","currentCard"].includes(op) || (["voice","send"].includes(op) && (typeof image?.session !== "string" || !composerStates.includes(image?.state))) || (op === "answerQuestion" && (typeof image !== "string" || image.length > 80 || typeof palette !== "string")) || (op === "decide" && (!["allow_once","allow_session","deny"].includes(image) || typeof palette !== "string")) || (op==="selectModel" && (typeof image!=="string" || !image.length || image.length>160)) || (["skin","toggleTheme"].includes(op) && !jpeg(image))) throw Error("Invalid WorkBuddy action");
   const ws = new WebSocketClient(await target());
   const expression = '(' + renderer.toString() + ').test(location.href) ? (' + renderCommand.toString() + ')(' + JSON.stringify(op) + ',' + (image ? JSON.stringify(image) : 'null') + ',' + (op === 'credits' ? '(balance, language) => (' + drawCreditsCard.toString() + ')(balance, language, ' + JSON.stringify(creditGlyphData) + ')' : op === 'models' || op === 'currentCard' ? '(() => { const modelSvg = ' + modelSvg.toString() + '; return ' + drawModelCard.toString() + '; })()' : 'null' ) + ',' + ((op === 'skin' || op === 'toggleTheme') ? applyTheme.toString() : 'null') + ',' + ((op === 'skin' || op === 'toggleTheme') ? JSON.stringify(palette || {}) + ',' + samplePalette.toString() : (op === 'selectModel' || op === 'decide' || op === 'answerQuestion') ? JSON.stringify(palette ?? null) + ',null' : 'null,null') + ',' + readQuestionPanel.toString() + ') : null';
   return new Promise((resolve,reject) => {

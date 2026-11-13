@@ -1,12 +1,8 @@
 {
   "Name": "WorkBuddy",
-  "Overview": "按键唤起、预填草稿、旋钮选模型，实时查看 WorkBuddy 状态。",
-  "Description": "在 Ulanzi 设备上控制 WorkBuddy。\n动作：\n- 唤起 WorkBuddy：唤起客户端并回到新建任务状态。\n- 新建任务：打开预填草稿的任务。支持 {clipboard}、{date}、{time} 占位符的提示词模板，并可配置工作目录、专家、技能、连接器、模型、模式和权限。WorkBuddy 停在草稿态，由你确认后再发送。\n- 页面直达：跳转任务、项目、专家、技能、连接器、自动化、Agent Mail 等页面。\n- 模型切换（旋钮）：旋转切换模型，停下后自动应用。\n- 安装 Skill：打开指定 HTTPS Skill 包的安装流程。\n配置：\n1. 先安装 WorkBuddy 桌面客户端（workbuddy:// 协议）。\n2. 将动作拖拽到按键或旋钮上。\n3. 在属性面板选择协议：国内正式包用 workbuddy://，海外 WorkBuddy AI 用 workbuddy-ai://。\n说明：任务描述最长 8000 字符；技能与连接器列表最多 20 项（逗号分隔）\n使用「启动 WorkBuddy」以 CDP 模式打开客户端。语音输入、发送消息、当前会话状态和主题切换均在属性栏提供 CDP 引导。",
+  "Overview": "启动客户端、预填草稿、旋钮选模型，实时查看 WorkBuddy 状态。",
+  "Description": "在 Ulanzi 设备上控制 WorkBuddy。\n动作：\n- 新建任务：打开预填草稿的任务。支持 {clipboard}、{date}、{time} 占位符的提示词模板，并可配置工作目录、专家、技能、连接器、模型、模式和权限。WorkBuddy 停在草稿态，由你确认后再发送。\n- 页面直达：跳转任务、项目、专家、技能、连接器、自动化、Agent Mail 等页面。\n- 模型切换（旋钮）：旋转切换模型，停下后自动应用。\n配置：\n1. 先安装 WorkBuddy 桌面客户端（workbuddy:// 协议）。\n2. 将动作拖拽到按键或旋钮上。\n3. 在属性面板选择协议：国内正式包用 workbuddy://，海外 WorkBuddy AI 用 workbuddy-ai://。\n说明：任务描述最长 8000 字符；技能与连接器列表最多 20 项（逗号分隔）\n使用「启动 WorkBuddy」以 CDP 模式打开客户端。语音输入、发送消息、当前会话状态和主题切换均在属性栏提供 CDP 引导。",
   "Actions": [
-    {
-      "Name": "唤起 WorkBuddy",
-      "Tooltip": "唤起 WorkBuddy 客户端并回到新建任务状态 页面可用性取决于客户端版本和功能开关。"
-    },
     {
       "Name": "新建任务",
       "Tooltip": "打开预填草稿的 WorkBuddy 任务（由你确认后发送）"
@@ -18,10 +14,6 @@
     {
       "Name": "模型切换",
       "Tooltip": "转动旋钮，停下后自动切换模型"
-    },
-    {
-      "Name": "安装 Skill",
-      "Tooltip": "打开指定 Skill 包的 WorkBuddy 安装流程"
     },
     {
       "Name": "任务 1",
@@ -57,7 +49,7 @@
     },
     {
       "Name": "发送消息",
-      "Tooltip": "按下发送当前草稿，按键跟随输入框状态。"
+      "Tooltip": "按下发送当前草稿；显示 Stop 时按下停止当前回复。"
     },
     {
       "Name": "启动 WorkBuddy",
@@ -71,7 +63,6 @@
   "Localization": {
     "Scheme": "DeepLink 协议",
     "SchemeHelp": "国内正式包用 workbuddy://，海外 WorkBuddy AI 用 workbuddy-ai://",
-    "TargetPage": "唤起后打开页面",
     "Prompt": "提示词模板",
     "PromptHelp": "支持 {clipboard}、{date}、{time} 占位符，最长 8000 字符",
     "WorkingDir": "工作目录（cwd）",
@@ -86,9 +77,6 @@
     "TaskId": "任务 ID（打开指定任务时填写）",
     "Models": "模型列表（每行一个）",
     "ModelsHelp": "格式：modelId|显示名，例如 gpt-5|GPT-5",
-    "SkillName": "Skill 名称",
-    "DownloadUrl": "下载地址（HTTPS）",
-    "ChannelType": "渠道（可选）",
     "Default": "默认",
     "FullAccess": "完全访问",
     "Home": "新建任务首页",

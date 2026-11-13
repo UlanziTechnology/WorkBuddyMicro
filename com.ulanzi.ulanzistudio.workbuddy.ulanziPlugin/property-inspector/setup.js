@@ -36,9 +36,7 @@ window.WorkBuddySetup = (() => {
       note.textContent=t.busy;
     };
     actions.prepend(enable);panel.append(actions);
-    if(config.mode === "optional") {
-      const optional=el("details",null,"wb-optional");optional.append(el("summary",config.zh?"状态同步设置（可选）":"Status sync settings (optional)"),panel);document.body.append(optional);
-    } else document.body.prepend(panel);
+    document.body.prepend(panel);
     waitForStatus();
   }
   function value(id,text,level) { const node=document.getElementById("wb-"+id);node.textContent=text;node.className="wb-value "+level; }

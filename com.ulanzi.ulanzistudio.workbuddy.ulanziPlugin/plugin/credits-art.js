@@ -5,11 +5,7 @@ async function drawCreditsCard(balance, language, iconData) {
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = 196;
   const ctx = canvas.getContext("2d");
-  const background = ctx.createLinearGradient(0, 0, 196, 196);
-  background.addColorStop(0, "#0ec8a7");
-  background.addColorStop(0.5, "#36cc92");
-  background.addColorStop(1, "#51d07b");
-  ctx.fillStyle = balance === null ? "#7a7a7a" : background;
+  ctx.fillStyle = "#000000";
   ctx.beginPath();
   ctx.roundRect(0, 0, 196, 196, 24);
   ctx.fill();
@@ -19,7 +15,7 @@ async function drawCreditsCard(balance, language, iconData) {
     ctx.drawImage(icon, 56, 27, 84, 84);
   } finally { icon.close(); }
   const text = balance === null ? "—" : new Intl.NumberFormat(language === "zh" ? "zh-CN" : "en-US", {maximumFractionDigits:2}).format(balance);
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = balance === null ? "#858585" : "#ffffff";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   let size = 43;

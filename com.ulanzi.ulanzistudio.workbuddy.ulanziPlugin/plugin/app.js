@@ -13,7 +13,7 @@ const fs = require("fs");
 const { spawn } = require("child_process");
 const { WebSocketClient } = require("../libs/ws-client");
 const { createAction } = require("./actions");
-const { WorkBuddyStatus } = require("./workbuddy-status");
+const { WorkBuddyStatus, statusArtwork } = require("./workbuddy-status");
 const deeplink = require("./deeplink");
 
 const PLUGIN_UUID = "com.ulanzi.ulanzistudio.workbuddy";
@@ -30,13 +30,12 @@ const STALE_PRESS_MS = 5000;
 const STRINGS = {
   zh: {
     notInstalled: "未检测到 WorkBuddy，请先安装 WorkBuddy 桌面客户端",
-    launchFailed: "唤起 WorkBuddy 失败，请检查客户端与协议注册",
+    launchFailed: "打开 WorkBuddy 失败，请检查客户端与协议注册",
     promptTruncated: "任务描述超过 8000 字符，已截断",
     taskPrefilled: "已在 WorkBuddy 预填任务草稿，确认后发送",
     modelSelected: "已请求预选模型（若未生效请检查模型 ID）：",
     noModels: "未配置模型",
     configureModels: "请先在插件属性中配置模型列表",
-    skillFieldsRequired: "请先填写 Skill 名称和 HTTPS 下载地址",
     schemeMissing: "协议未注册，请在插件属性中检查 scheme 设置",
   },
   en: {
@@ -48,8 +47,6 @@ const STRINGS = {
     modelSelected: "Model preselection requested (check model ID if ignored): ",
     noModels: "No models configured",
     configureModels: "Configure the model list in the property inspector first",
-    skillFieldsRequired:
-      "Fill in the skill name and an HTTPS download URL first",
     schemeMissing: "Scheme not registered. Check the scheme setting in the plugin properties",
   },
 };
@@ -399,7 +396,8 @@ class PluginApp {
 
   setStatusIcon(action, state, text) {
     if (!action.active) return;
-    const animation = ["thinking", "working", "sweeping"].includes(state) ? "running" : ["attention", "notification", "error"].includes(state) ? "review" : ["idle", "sleeping"].includes(state) ? "spare" : null;
+    const artwork = statusArtwork(state);
+    const animation = artwork !== "offline" ? artwork : null;
     const icon = { uuid: action.uuid, actionid: action.actionid, key: action.key, type: animation ? 4 : 2, showtext: Boolean(text), ...(text ? {textdata:text} : {}) };
     if (animation) icon.gifpath = "assets/states/" + animation + ".gif";
     else icon.path = "assets/states/offline.png";

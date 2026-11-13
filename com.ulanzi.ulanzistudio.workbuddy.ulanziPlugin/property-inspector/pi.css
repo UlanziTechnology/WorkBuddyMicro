@@ -49,5 +49,4 @@ button:focus-visible { outline: 2px solid #13c7a0; }
 .wb-actions button { margin: 0; }.wb-actions .primary { background: #087e68; }.wb-actions .danger { grid-column: 1/-1; color: #f4a1a8; }
 .wb-error { color: #f4a1a8; overflow-wrap: anywhere; }
 details summary { cursor: pointer; color: #c5ced1; }
-.wb-optional { margin: 12px 10px; }.wb-optional .wb-setup { padding: 12px 0; }
 .guide-link { margin: 8px 10px; color: #8bcab9; background: transparent; border: none; padding: 4px 0; }

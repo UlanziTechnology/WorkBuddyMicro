@@ -93,17 +93,6 @@ function buildSwitchModelUrl(scheme, modelId) {
   return `${normalizeScheme(scheme)}switch-model?modelId=${enc(modelId)}`;
 }
 
-/** workbuddy://codebuddy-ide/skill/install?skillname=...&downloadurl=... */
-function buildSkillInstallUrl(scheme, settings) {
-  const download = new URL(String(settings.downloadurl || ""));
-  if (download.protocol !== "https:" || !String(settings.skillname || "").trim()) throw Error("A skill name and HTTPS download URL are required");
-  const params = [];
-  appendParam(params, "skillname", settings.skillname);
-  appendParam(params, "downloadurl", settings.downloadurl);
-  appendParam(params, "channelType", settings.channelType || settings.source);
-  return `${normalizeScheme(scheme)}codebuddy-ide/skill/install?${params.join("&")}`;
-}
-
 const PAGE_LINKS = {
   home: "home",
   projects: "projects",
@@ -292,7 +281,6 @@ module.exports = {
   buildTaskUrl,
   buildHomeUrl,
   buildSwitchModelUrl,
-  buildSkillInstallUrl,
   buildPageUrl,
   resolvePlaceholders,
   schemeExists,

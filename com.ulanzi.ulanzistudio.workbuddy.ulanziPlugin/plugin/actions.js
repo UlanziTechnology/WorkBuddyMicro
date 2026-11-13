@@ -8,6 +8,7 @@
 const deeplink = require("./deeplink");
 const { questionSvg } = require("./question-art");
 const { modelSvg } = require("./model-art");
+const { statusArtwork } = require("./workbuddy-status");
 
 class BaseAction {
   constructor(app, event) {
@@ -64,22 +65,6 @@ class BaseAction {
       this.app.showAlert(this);
       if (notInstalled) this.app.openDownloadPage();
     }
-  }
-}
-
-/** P0-1 Wake WorkBuddy (workbuddy://home, or a direct page). */
-class WakeAction extends BaseAction {
-  onActivated() { this.onStatus(); }
-  onStatus() { this.app.setStatusIcon(this, this.app.status.state); }
-  async invoke() {
-    const target = String(this.settings.target || "home");
-    const url =
-      target === "home"
-        ? deeplink.buildHomeUrl(this.scheme)
-        : deeplink.buildPageUrl(this.scheme, target, this.settings.taskId);
-    this.app.setStatusIcon(this, "thinking");
-    try { await this.launch(url); }
-    finally { this.onStatus(); }
   }
 }
 
@@ -299,20 +284,6 @@ class ModelSwitchAction extends BaseAction {
   }
 }
 
-/** P2-5 Skill Install (client-side confirmation still required). */
-class SkillInstallAction extends BaseAction {
-  invoke() {
-    let url;
-    try { url = deeplink.buildSkillInstallUrl(this.scheme, this.settings); }
-    catch (_) {
-      this.app.toast(this.app.t("skillFieldsRequired"));
-      this.app.showAlert(this);
-      return;
-    }
-    return this.launch(url);
-  }
-}
-
 class CreditsAction extends BaseAction {
   onActivated() {
     this.revision = this.revision || 0;
@@ -394,7 +365,7 @@ class CurrentSessionAction extends BaseAction {
   }
   onStatus() {
     if (!this.active) return;
-    const {approval, question, cdpState, session, cdpTasks} = this.app.status;
+    const {approval, question, state} = this.app.status;
     if (question) {
       const available = question.choices.filter(c => !c.disabled);
       if (this.questionId !== question.id || !available.some(c => c.id === this.questionChoice)) {
@@ -413,8 +384,6 @@ class CurrentSessionAction extends BaseAction {
       this.choice = approval?.choices[0];
     }
     if (approval && !approval.choices.includes(this.choice)) this.choice = approval.choices[0];
-    const task = cdpTasks?.find(row => row.session === session);
-    const state = cdpState === "idle" ? (task?.state || "idle") : cdpState;
     let picture;
     if (approval && this.choice) {
       const language = this.app.lang === "zh" ? "zh" : "en";
@@ -423,9 +392,7 @@ class CurrentSessionAction extends BaseAction {
       const variant = mask === 7 ? "" : "-" + mask;
       picture = "assets/session/" + language + "-" + this.choice + variant + ".png";
     } else {
-      const icon = !cdpState ? "offline" : ["working","thinking"].includes(state) ? "running" :
-        ["attention","notification","error"].includes(state) ? "review" : "spare";
-      picture = "assets/session/" + icon + ".png";
+      picture = "assets/states/" + statusArtwork(state) + ".png";
     }
     this.app.setFeedback(this, {icon:{value:picture}});
   }
@@ -518,12 +485,14 @@ class ComposerAction extends BaseAction {
     }
   }
   async invoke() {
-    if (!this.active || this.busy || !["ready","recording"].includes(this.drawn)) return;
+    const states = this.kind === "send" ? ["ready","stop"] : ["ready","recording"];
+    if (!this.active || this.busy || !states.includes(this.drawn)) return;
     this.busy = true;
     try {
       const expected = {session:this.session ?? "", state:this.drawn};
       const done = await cdp.command(this.kind, expected);
       if (this.kind === "voice") this.app.status.refreshVoice();
+      else await this.app.status.refresh?.();
       if (!done) this.app.showAlert(this);
     } finally { this.busy = false; }
   }
@@ -556,11 +525,9 @@ const ACTION_CLASSES = {
   "com.ulanzi.ulanzistudio.workbuddy.send": ComposerAction,
   "com.ulanzi.ulanzistudio.workbuddy.skin": SkinAction,
   "com.ulanzi.ulanzistudio.workbuddy.currentsession": CurrentSessionAction,
-  "com.ulanzi.ulanzistudio.workbuddy.wake": WakeAction,
   "com.ulanzi.ulanzistudio.workbuddy.newtask": NewTaskAction,
   "com.ulanzi.ulanzistudio.workbuddy.openpage": OpenPageAction,
   "com.ulanzi.ulanzistudio.workbuddy.modelswitch": ModelSwitchAction,
-  "com.ulanzi.ulanzistudio.workbuddy.skillinstall": SkillInstallAction,
 };
 for (let i=1;i<=5;i++) ACTION_CLASSES[`com.ulanzi.ulanzistudio.workbuddy.task${i}`] = TaskAction;
 

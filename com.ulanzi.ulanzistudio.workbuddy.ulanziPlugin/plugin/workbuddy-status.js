@@ -3,6 +3,11 @@ const cdp = require("./workbuddy-cdp");
 const fs = require("fs");
 const path = require("path");
 const { EventEmitter } = require("events");
+// Keep key animations and encoder fallback images on the same status mapping.
+function statusArtwork(state) {
+  return {idle:"idle", sleeping:"idle", thinking:"running", working:"running", sweeping:"running",
+    attention:"done", notification:"approval", error:"error"}[state] || "offline";
+}
 class WorkBuddyStatus extends EventEmitter {
   constructor(hasVisibleVoiceKey = () => false) {
     super();
@@ -15,7 +20,8 @@ class WorkBuddyStatus extends EventEmitter {
     return {connected:Boolean(this.cdpState), installed:Boolean(this.installed || this.cdpState), state:this.state, tasks:this.taskSlots()};
   }
   publish() {
-    this.state = this.cdpState || "offline";
+    const selected = this.cdpTasks?.find(task => task.session === this.session);
+    this.state = this.cdpState === "idle" ? selected?.state || "idle" : this.cdpState || "offline";
     this.emit("change", this.snapshot());
   }
   async start() {
@@ -110,4 +116,4 @@ class WorkBuddyStatus extends EventEmitter {
     this.stopped = true; clearTimeout(this.timer);
   }
 }
-module.exports = { WorkBuddyStatus };
+module.exports = { WorkBuddyStatus, statusArtwork };

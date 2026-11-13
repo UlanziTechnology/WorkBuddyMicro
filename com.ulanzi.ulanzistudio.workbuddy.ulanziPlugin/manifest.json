@@ -1,7 +1,7 @@
 {
   "Author": "Wayne Tang",
   "Name": "WorkBuddy",
-  "Description": "Control WorkBuddy with keys and a model dial.\nCreate task drafts, navigate pages and install skills.\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
+  "Description": "Control WorkBuddy with keys and a model dial.\nCreate task drafts and navigate pages.\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
   "Icon": "assets/icons/pluginIcon.png",
   "Version": "1.11.8",
   "Category": "WorkBuddy",
@@ -28,24 +28,6 @@
     "MinVersion": "3.0.0"
   },
   "Actions": [
-    {
-      "Name": "Wake WorkBuddy",
-      "Icon": "assets/icons/action-wake.png",
-      "PropertyInspectorPath": "property-inspector/wake/inspector.html",
-      "state": 0,
-      "States": [
-        {
-          "Name": "Wake",
-          "Image": "assets/actions/wake.png"
-        }
-      ],
-      "Tooltip": "Wake the WorkBuddy client to the new-task state Page availability depends on client version and enabled features.",
-      "UUID": "com.ulanzi.ulanzistudio.workbuddy.wake",
-      "Controllers": [
-        "Keypad"
-      ],
-      "DisableAutomaticStates": true
-    },
     {
       "Name": "New Task",
       "Icon": "assets/icons/action-newtask.png",
@@ -101,24 +83,6 @@
       "Encoder": {
         "layout": "layouts/model-encoder.json"
       },
-      "DisableAutomaticStates": true
-    },
-    {
-      "Name": "Install Skill",
-      "Icon": "assets/icons/action-skillinstall.png",
-      "PropertyInspectorPath": "property-inspector/skillinstall/inspector.html",
-      "state": 0,
-      "States": [
-        {
-          "Name": "Install Skill",
-          "Image": "assets/actions/skillinstall.png"
-        }
-      ],
-      "Tooltip": "Open the WorkBuddy skill install flow for a given skill package",
-      "UUID": "com.ulanzi.ulanzistudio.workbuddy.skillinstall",
-      "Controllers": [
-        "Keypad"
-      ],
       "DisableAutomaticStates": true
     },
     {
@@ -271,7 +235,7 @@
     },
     {
       "Name": "Send Message",
-      "Tooltip": "Send the current WorkBuddy draft when available.",
+      "Tooltip": "Send the current draft, or stop the current response when Stop is shown.",
       "UUID": "com.ulanzi.ulanzistudio.workbuddy.send",
       "Controllers": [
         "Keypad"
@@ -294,7 +258,7 @@
       "state": 0,
       "States": [
         {
-          "Name": "Wake",
+          "Name": "Launch",
           "Image": "assets/actions/wake.png"
         }
       ],
