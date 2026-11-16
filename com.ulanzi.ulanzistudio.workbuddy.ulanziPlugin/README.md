@@ -2,7 +2,7 @@
 
 [中文说明](README.zh.md) · [Repository](https://github.com/UlanziTechnology/WorkBuddyMicro)
 
-This guide describes the actions shipped with WorkBuddy Micro **1.11.8**. For source installation, development, compatibility records and licensing, see the [repository README](https://github.com/UlanziTechnology/WorkBuddyMicro#readme). The bundled [usage guide](usage-guide/index.html?language=en) is also available from the connection panel.
+This guide describes the actions shipped with WorkBuddy Micro **1.11.9**. For source installation, development, compatibility records and licensing, see the [repository README](https://github.com/UlanziTechnology/WorkBuddyMicro#readme). The bundled [usage guide](usage-guide/index.html?language=en) is also available from the connection panel.
 
 ## Connect WorkBuddy
 
@@ -13,6 +13,8 @@ Live tasks, model switching, session interaction, voice input, sending, themes a
 When disconnected, Launch starts or restarts the selected client with local debugging at `127.0.0.1:9223`. When connected, it brings WorkBuddy forward. Windows restart ends the selected installation's processes, including tray processes, and may interrupt tasks. If port 9223 is occupied, restart is blocked. After launch, connection detection waits up to 30 seconds.
 
 On Windows, discovery checks running processes, protocol registration, per-user locations, Program Files and uninstall registry entries, including custom drives. If needed, set `WORKBUDDY_EXE` to the client's full executable path and restart Studio.
+
+When CDP is connected, Launch restores the Windows client from the tray or a minimized window through its bare `workbuddy://` or `workbuddy-ai://` link, then brings the renderer forward. It preserves the current chat and does not restart WorkBuddy.
 
 ## Deep-link actions
 

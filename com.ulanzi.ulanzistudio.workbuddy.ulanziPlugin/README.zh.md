@@ -2,7 +2,7 @@
 
 [English](README.md) · [项目仓库](https://github.com/UlanziTechnology/WorkBuddyMicro)
 
-本文说明 WorkBuddy Micro **1.11.8** 随包提供的功能。源码安装、开发、兼容性记录及授权现状见[仓库 README](https://github.com/UlanziTechnology/WorkBuddyMicro/blob/main/README.zh.md)。连接面板也可打开随包的[使用引导](usage-guide/index.html)。
+本文说明 WorkBuddy Micro **1.11.9** 随包提供的功能。源码安装、开发、兼容性记录及授权现状见[仓库 README](https://github.com/UlanziTechnology/WorkBuddyMicro/blob/main/README.zh.md)。连接面板也可打开随包的[使用引导](usage-guide/index.html)。
 
 ## 连接 WorkBuddy
 
@@ -13,6 +13,8 @@
 未连接时，启动键以本地调试模式启动或重启所选客户端，使用 `127.0.0.1:9223`；已连接时唤醒到前台。Windows 重启会结束所选安装目录的进程，包括托盘进程，可能中断任务。9223 端口被占用时会阻止重启；启动后最多等待 30 秒检测连接。
 
 Windows 自动定位检查运行进程、协议注册、用户安装位置、Program Files 和卸载注册表，包含自定义盘符。必要时将 `WORKBUDDY_EXE` 设为客户端完整 EXE 路径，再重启 Studio。
+
+CDP 已连接时，启动键通过不带页面路径的 `workbuddy://` 或 `workbuddy-ai://` 链接恢复 Windows 中最小化或驻留托盘的客户端，再前置渲染页面。当前会话保持不变，不会重启 WorkBuddy。
 
 ## 深度链接功能
 

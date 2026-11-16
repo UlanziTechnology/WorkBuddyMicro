@@ -54,19 +54,13 @@ function Find-WorkBuddyExe {
 try {
   $exe = Find-WorkBuddyExe
   if ($Mode -eq 'resolve') { $exe; exit }
-  $all = @(Get-Process -Name $Brand -ErrorAction SilentlyContinue | Where-Object {$_.Path -eq $exe})
+  # Main services loaded before this update still call this mode until Studio reloads.
   if ($Mode -eq 'foreground') {
-    # The renderer can become ready before Electron publishes its native window.
-    $deadline = (Get-Date).AddSeconds(5)
-    $shell = New-Object -ComObject WScript.Shell
-    do {
-      $windows = @(Get-Process -Name $Brand -ErrorAction SilentlyContinue |
-        Where-Object {$_.Path -eq $exe -and $_.MainWindowHandle -ne 0})
-      if ($windows.Count -and $shell.AppActivate($windows[0].Id)) { exit }
-      Start-Sleep -Milliseconds 200
-    } while ((Get-Date) -lt $deadline)
-    throw 'Could not activate WorkBuddy. Open its window and retry.'
+    $scheme = if ($Brand -eq 'WorkBuddy AI') {'workbuddy-ai://'} else {'workbuddy://'}
+    Start-Process -FilePath $scheme -WindowStyle Normal
+    exit
   }
+  $all = @(Get-Process -Name $Brand -ErrorAction SilentlyContinue | Where-Object {$_.Path -eq $exe})
   # Closing Electron's window leaves the tray process and single-instance lock alive.
   # Force restart is intentional; only terminate processes from the resolved install.
   foreach ($app in $all) { Stop-Process -Id $app.Id -Force -ErrorAction SilentlyContinue }

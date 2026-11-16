@@ -5,15 +5,16 @@ const os = require("node:os");
 const net = require("node:net");
 const exec = require("node:util").promisify(require("node:child_process").execFile);
 const cdp = require("./workbuddy-cdp");
+const { launchDeepLink } = require("./deeplink");
 const pause = ms => new Promise(resolve => setTimeout(resolve,ms));
 const flags = ["--remote-debugging-address=127.0.0.1","--remote-debugging-port=9223"];
 const ready = () => cdp.command("state").then(s => ["idle","working","notification"].includes(s),()=>false);
 // A file argument preserves Unicode install paths and keeps PowerShell quoting at the boundary.
-/** @param {"WorkBuddy"|"WorkBuddy AI"} brand @param {"restart"|"foreground"} mode @returns {Promise<void>} */
-async function windowsWorkBuddy(brand, mode) {
+/** @param {"WorkBuddy"|"WorkBuddy AI"} brand @returns {Promise<void>} */
+async function windowsWorkBuddy(brand) {
   try {
     await exec("powershell.exe", ["-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File",
-      path.join(__dirname, "windows-workbuddy.ps1"), "-Brand", brand, "-Mode", mode],
+      path.join(__dirname, "windows-workbuddy.ps1"), "-Brand", brand, "-Mode", "restart"],
     {windowsHide:true, timeout:25000});
   } catch (error) {
     // execFile's default message includes the entire script/command. Keep the inspector actionable.
@@ -22,15 +23,17 @@ async function windowsWorkBuddy(brand, mode) {
   }
 }
 
+/** @param {"WorkBuddy"|"WorkBuddy AI"} brand @returns {Promise<void>} */
+async function foreground(brand) {
+  // A bare deeplink restores hidden/tray windows without navigating away from the current chat.
+  if (process.platform === "win32") await launchDeepLink(brand === "WorkBuddy AI" ? "workbuddy-ai://" : "workbuddy://");
+  await cdp.command("foreground");
+  if (process.platform === "darwin") await exec("/usr/bin/open", ["-a", brand]);
+}
+
 async function restart(brand) {
   if (await ready()) {
-    await cdp.command("foreground");
-    // Bringing a renderer tab forward also needs native app activation.
-    if (process.platform === "darwin") {
-      await exec("/usr/bin/open", ["-a", brand]);
-    } else if (process.platform === "win32") {
-      await windowsWorkBuddy(brand, "foreground");
-    }
+    await foreground(brand);
     return;
   }
   // Do not interrupt the app if another program already owns the debug port.
@@ -51,12 +54,12 @@ async function restart(brand) {
     }
     await exec("/usr/bin/open",["-a",app,"--args",...flags]);
   } else if(process.platform==="win32"){
-    await windowsWorkBuddy(brand, "restart");
+    await windowsWorkBuddy(brand);
   } else throw Error("Unsupported platform");
   const deadline = Date.now() + 30000;
   do {
     if(await ready()) {
-      if(process.platform === "win32") await windowsWorkBuddy(brand, "foreground");
+      if(process.platform === "win32") await foreground(brand);
       return;
     }
     await pause(400);

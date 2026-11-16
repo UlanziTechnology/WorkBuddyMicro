@@ -2,8 +2,8 @@
 window.WorkBuddySetup = (() => {
   let options, t, panel, note, pending = false, statusTimeout;
   const dictionaries = {
-    zh: {title:"CDP 连接",intro:"点击「重启 WorkBuddy」，插件将以 CDP 模式启动 WorkBuddy，以便连接并同步会话状态。",app:"客户端",task:"会话状态",installed:"已安装",missing:"未检测到",refresh:"重新检测",guide:"使用说明",checking:"正在检测…",lost:"插件连接已断开",busy:"正在连接…",ready:"已连接",offline:"未连接",restart:"重启 WorkBuddy",restarting:"正在重启…"},
-    en: {title:"CDP connection",intro:"Click Restart WorkBuddy to start WorkBuddy in CDP mode and connect to sync chat status.",app:"Client",task:"Chat status",installed:"Installed",missing:"Not detected",refresh:"Check again",guide:"Usage guide",checking:"Checking…",lost:"Plugin disconnected",busy:"Connecting…",ready:"Connected",offline:"Disconnected",restart:"Restart WorkBuddy",restarting:"Restarting…"},
+    zh: {title:"CDP 连接",intro:"点击「重启 WorkBuddy」，插件将以 CDP 模式启动 WorkBuddy，以便连接并同步会话状态。",app:"客户端",installed:"已安装",missing:"未检测到",refresh:"重新检测",guide:"使用说明",checking:"正在检测…",lost:"插件连接已断开",busy:"正在连接…",ready:"已连接",offline:"未连接",restart:"重启 WorkBuddy",restarting:"正在重启…"},
+    en: {title:"CDP connection",intro:"Click Restart WorkBuddy to start WorkBuddy in CDP mode and connect to sync chat status.",app:"Client",installed:"Installed",missing:"Not detected",refresh:"Check again",guide:"Usage guide",checking:"Checking…",lost:"Plugin disconnected",busy:"Connecting…",ready:"Connected",offline:"Disconnected",restart:"Restart WorkBuddy",restarting:"Restarting…"},
   };
   const el = (tag, text, cls) => { const node=document.createElement(tag); if(text)node.textContent=text;if(cls)node.className=cls;return node; };
   function waitForStatus(timeout = 5000) {
@@ -18,7 +18,7 @@ window.WorkBuddySetup = (() => {
       panel.append(el("p",config.zh?"Windows 重启会结束 WorkBuddy 进程，可能中断当前任务。请先保存工作。":"Windows restart ends WorkBuddy processes and may interrupt active tasks. Save your work first.","help"));
     }
     const rows=el("div",null,"wb-panel");
-    for(const [key,label] of [["app",t.app],["connection","CDP"],["task",t.task]]) {
+    for(const [key,label] of [["app",t.app],["connection","CDP"]]) {
       const row=el("div",null,"wb-row");row.append(el("span",label));const value=el("span",t.checking,"wb-value");value.id="wb-"+key;row.append(value);rows.append(row);
     }
     panel.append(rows);note=el("p",t.checking,"help");note.setAttribute("role","status");panel.append(note);
@@ -47,7 +47,6 @@ window.WorkBuddySetup = (() => {
     enable.disabled = status.connected || status.cdpRestarting;
     value("app",status.installed?t.installed:t.missing,status.installed?"good":"warn");
     value("connection",status.connected?t.ready:t.offline,status.connected?"good":"warn");
-    value("task",status.connected?(options.stateLabels[status.state] || status.state):"—","");
     note.textContent=status.cdpRestarting?t.busy:status.connected?"":status.cdpRestartError || "";
     if(status.cdpRestarting)waitForStatus(60000);
 
@@ -55,7 +54,7 @@ window.WorkBuddySetup = (() => {
   function disconnected(){
     if(!note)return;pending=false;clearTimeout(statusTimeout);
     note.textContent=options.zh?"未收到插件状态，请重新选择动作或重启 Ulanzi Studio。":"No plugin status received. Reselect the action or restart Ulanzi Studio.";
-    for(const id of ["app","connection","task"])value(id,"—","warn");
+    for(const id of ["app","connection"])value(id,"—","warn");
     panel.querySelectorAll("button").forEach(b=>b.disabled=false);
     document.getElementById("wb-enable-cdp").textContent=t.restart;
   }
