@@ -1,9 +1,9 @@
 {
   "Author": "Wayne Tang",
   "Name": "WorkBuddy",
-  "Description": "Control WorkBuddy with keys and a model dial.\nCreate task drafts and navigate pages.\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
+  "Description": "Control WorkBuddy with keys and dials: launch the client, draft tasks, switch models, read chats and credits, and manage the current session through local CDP.",
   "Icon": "assets/icons/pluginIcon.png",
-  "Version": "1.11.9",
+  "Version": "1.12.0",
   "Category": "WorkBuddy",
   "CategoryIcon": "assets/icons/categoryIcon.png",
   "Overview": "Launch WorkBuddy, draft tasks, choose models and see live task status.",
@@ -291,5 +291,7 @@
         "layout": "layouts/credits-encoder.json"
       }
     }
-  ]
+  ],
+  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nWindows restart ends WorkBuddy processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nTask 1: Show a recent chat via CDP. Press to open it.\nTask 2: Show a recent chat via CDP. Press to open it.\nTask 3: Show a recent chat via CDP. Press to open it.\nTask 4: Show a recent chat via CDP. Press to open it.\nTask 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining credits through CDP. Refreshes every 30 seconds; press to refresh. Supports keys and encoders.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.",
+  "URL": "https://github.com/UlanziTechnology/WorkBuddyMicro"
 }

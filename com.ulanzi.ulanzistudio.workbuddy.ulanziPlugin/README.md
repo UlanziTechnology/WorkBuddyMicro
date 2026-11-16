@@ -2,11 +2,17 @@
 
 [中文说明](README.zh.md) · [Repository](https://github.com/UlanziTechnology/WorkBuddyMicro)
 
-This guide describes the actions shipped with WorkBuddy Micro **1.11.9**. For source installation, development, compatibility records and licensing, see the [repository README](https://github.com/UlanziTechnology/WorkBuddyMicro#readme). The bundled [usage guide](usage-guide/index.html?language=en) is also available from the connection panel.
+This guide describes the actions shipped with WorkBuddy Micro **1.12.0**. For source installation, development, compatibility records and licensing, see the [repository README](https://github.com/UlanziTechnology/WorkBuddyMicro#readme). The bundled [usage guide](usage-guide/index.html?language=en) is also available from the connection panel.
+
+## Languages
+
+The plugin follows the Ulanzi Studio language: Chinese, English, Japanese, German, Portuguese (Portugal), Spanish and Korean. Official locale files are `zh_CN.json`, `en.json`, `ja_JP.json`, `de_DE.json`, `pt_PT.json`, `es_ES.json` and `ko_KR.json`. Unknown languages and missing entries fall back to English. After changing the Studio language, restart Studio to reload the plugin. The bundled usage guide also lets you select any of these seven languages.
+
+Action names, properties, connection messages, status labels, approval choices and number formatting are localized. Conversation titles, prompts, model IDs and content returned by WorkBuddy retain their original text.
 
 ## Connect WorkBuddy
 
-Deep-link actions—New Task and Open Page—can be used directly. Choose `workbuddy://` for the domestic client or `workbuddy-ai://` for the overseas client in the inspector. This is a plugin-wide setting for deep-link routing. **CDP features currently target the domestic WorkBuddy client; WorkBuddy AI is outside the current CDP support scope.**
+Deep-link actions—New Task and Open Page—can be used directly. Deep-link routing uses `workbuddy://` for the domestic client or `workbuddy-ai://` for the overseas client. The scheme is a shared plugin setting; its selector is hidden in New Task and Open Page. **CDP features currently target the domestic WorkBuddy client; WorkBuddy AI is outside the current CDP support scope.**
 
 Live tasks, model switching, session interaction, voice input, sending, themes and credits require CDP. Save your work, then press **Launch WorkBuddy** or choose **Restart WorkBuddy** in the action's connection panel. Wait for **Connected**. No terminal command, hook configuration or separate Bridge service is required.
 

@@ -39,7 +39,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
     const raw = account?.usageLeft;
     const balance = (typeof raw === "number" || (typeof raw === "string" && /^\d+(?:\.\d+)?$/.test(raw))) ? Number(raw) : NaN;
     if (!Number.isFinite(balance) || balance < 0) return null;
-    return {balance, picture:await drawCard(balance, image?.language === "zh" ? "zh" : "en")};
+    return {balance, picture:await drawCard(balance, image?.language || "en")};
   }
   if (op === "currentModel" || op === "currentCard") {
     const labels=[...document.querySelectorAll(".cr-model-selector__trigger-label")].filter(visible);

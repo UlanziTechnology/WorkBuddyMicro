@@ -1,0 +1,343 @@
+{
+  "Localization": {
+    "Scheme": "딥링크 스킴",
+    "SchemeHelp": "중국 버전은 workbuddy://, WorkBuddy AI는 workbuddy-ai:// 사용",
+    "Prompt": "프롬프트 템플릿",
+    "PromptHelp": "{clipboard}, {date}, {time} 지원. 최대 8000자",
+    "WorkingDir": "작업 폴더(cwd)",
+    "ExpertId": "전문가 ID",
+    "Skills": "스킬(쉼표로 구분, 최대 20개)",
+    "ConnectorIds": "커넥터 ID(쉼표로 구분, 최대 20개)",
+    "Model": "모델",
+    "Mode": "작업 모드",
+    "WelcomeMode": "시작 화면 모드",
+    "PermissionMode": "권한 모드",
+    "Page": "대상 페이지",
+    "TaskId": "작업 ID(특정 작업을 열 때)",
+    "Models": "모델 목록(줄당 하나)",
+    "ModelsHelp": "형식: modelId|표시 이름. 예: gpt-5|GPT-5",
+    "Default": "기본값",
+    "FullAccess": "전체 접근",
+    "Home": "새 작업 홈",
+    "OpenTask": "ID로 작업 열기",
+    "Page_projects": "프로젝트",
+    "Page_experts": "전문가",
+    "Page_skills": "스킬",
+    "Page_connectors": "커넥터",
+    "Page_automation": "자동화",
+    "Page_colleagues": "동료",
+    "Page_claw": "Claw 작업 공간",
+    "Page_discover": "둘러보기",
+    "Page_tencent-docs": "Tencent Docs",
+    "Page_my-files": "내 파일",
+    "Page_my-cloud-files": "내 클라우드 파일",
+    "Page_ima": "IMA 지식",
+    "Page_lexiang": "Tencent Lexiang",
+    "Page_agent-mail": "Agent Mail",
+    "Page_space": "Space",
+    "PageAvailability": "이용 가능한 페이지는 클라이언트 버전과 활성화된 기능에 따라 다릅니다. 지원하지 않는 대상은 현재 페이지를 유지하거나 홈으로 돌아갈 수 있습니다. 클라우드 파일이 같은 파일 목록을 사용할 수도 있습니다.",
+    "skinImage": "배경 이미지",
+    "ModelDialGuide": "WorkBuddy의 작업 입력 화면을 여세요. 다이얼로 모델을 선택하면 자동 적용됩니다. 모델 ID를 입력할 필요가 없습니다.",
+    "setupTitle": "CDP 연결",
+    "setupIntro": "«WorkBuddy 재시작»을 눌러 CDP가 활성화된 클라이언트를 실행하세요.",
+    "client": "클라이언트",
+    "installed": "설치됨",
+    "missing": "감지되지 않음",
+    "checkAgain": "다시 확인",
+    "guide": "사용 안내",
+    "checking": "확인 중…",
+    "pluginDisconnected": "플러그인 연결 끊김",
+    "connecting": "연결 중…",
+    "connected": "연결됨",
+    "disconnected": "연결되지 않음",
+    "restart": "WorkBuddy 재시작",
+    "restarting": "재시작 중…",
+    "windowsRestartWarning": "Windows에서 재시작하면 WorkBuddy 프로세스가 종료되어 실행 중인 작업이 중단될 수 있습니다. 먼저 작업을 저장하세요.",
+    "noStatus": "플러그인 상태를 받지 못했습니다. 동작을 다시 선택하거나 Ulanzi Studio를 재시작하세요.",
+    "limitItems": "최대 20개",
+    "state_offline": "실행되지 않음",
+    "state_idle": "대기",
+    "state_thinking": "생각 중",
+    "state_working": "실행 중",
+    "state_attention": "완료 · 확인 필요",
+    "state_notification": "승인 / 답변 대기",
+    "state_error": "오류",
+    "state_sweeping": "컨텍스트 정리 중",
+    "state_sleeping": "절전 중",
+    "notInstalled": "WorkBuddy를 찾지 못했습니다. 먼저 데스크톱 클라이언트를 설치하세요.",
+    "launchFailed": "WorkBuddy를 열지 못했습니다. 클라이언트와 프로토콜 등록을 확인하세요.",
+    "promptTruncated": "프롬프트가 8000자를 넘어 잘렸습니다.",
+    "taskPrefilled": "WorkBuddy에 작업 초안을 입력했습니다. 확인 후 전송하세요.",
+    "modelSelected": "모델 선택을 요청했습니다: ",
+    "noModels": "설정된 모델이 없습니다",
+    "configureModels": "먼저 속성 패널에서 모델 목록을 설정하세요.",
+    "schemeMissing": "프로토콜이 등록되지 않았습니다. WorkBuddy 설치를 확인하세요.",
+    "modelComposerRequired": "WorkBuddy 작업 입력 화면을 열고 CDP를 활성화하세요.",
+    "chatChanged": "대화가 바뀌었습니다. 모델을 다시 선택하세요.",
+    "modelSelectionFailed": "모델을 선택하지 못했습니다.",
+    "modelNotSwitched": "모델이 바뀌지 않았습니다. WorkBuddy 입력 화면을 확인하세요.",
+    "cdpSetupRequired": "설정에서 «WorkBuddy 재시작»을 선택해 CDP에 연결하세요.",
+    "questionChanged": "질문이 바뀌었습니다. 현재 대화를 확인하세요.",
+    "approvalChanged": "승인 내용이 바뀌었습니다. 현재 대화를 확인하세요.",
+    "taskLabel": "작업 {n}",
+    "noSession": "이 위치에 대화가 없습니다. 먼저 WorkBuddy에서 메시지를 보내세요.",
+    "chooseImage": "먼저 키 설정에서 이미지를 선택하세요.",
+    "cdpUnavailable": "WorkBuddy CDP에 연결할 수 없습니다(127.0.0.1:9223).",
+    "noApproval": "조작할 승인을 하나로 특정하지 못했습니다. WorkBuddy를 확인하세요.",
+    "themeRestored": "WorkBuddy 기본 테마로 복원했습니다.",
+    "connectCdp": "먼저 WorkBuddy CDP에 연결하세요.",
+    "clipboardTimeout": "클립보드 읽기 시간이 초과되어 자리표시자를 유지합니다.",
+    "clipboardFailed": "클립보드를 읽을 수 없어 자리표시자를 유지합니다.",
+    "studioDisconnected": "Ulanzi Studio 연결 끊김",
+    "taskHelp": "최근 활동 순서로 불러온 작업 5개를 표시합니다. 키를 누르면 해당 대화를 엽니다.",
+    "themeColors": "테마 색상",
+    "color_ink": "본문",
+    "color_muted": "보조 텍스트",
+    "color_surface": "패널 및 입력란",
+    "color_bubble": "사용자 메시지",
+    "color_accent": "강조",
+    "color_selected": "선택 배경",
+    "color_border": "테두리",
+    "applyColors": "테마 키를 눌러 색상을 적용하세요.",
+    "resetColors": "이미지 색상으로 복원",
+    "applyAutoColors": "테마 키를 눌러 자동 색상을 적용하세요.",
+    "imageFormat": "20 MB 미만의 PNG, JPEG 또는 WebP를 선택하세요.",
+    "imageSelected": "이미지를 선택했습니다. 기기의 키를 눌러 적용하세요.",
+    "restoreTheme": "WorkBuddy 기본 테마 복원",
+    "themeToggleHelp": "테마 키를 누르면 적용되고 다시 누르면 기본값으로 돌아갑니다. 이미지나 색상을 바꾼 뒤에는 키를 눌러 새 테마를 적용하세요.",
+    "approval_allow_once": "한 번 허용",
+    "approval_allow_session": "세션 허용",
+    "approval_deny": "거부",
+    "invalidLists": "스킬과 커넥터는 각각 최대 20개 ID를 지원하며 ID 안에 쉼표를 넣을 수 없습니다.",
+    "absoluteDirectory": "작업 폴더는 절대 경로여야 합니다.",
+    "taskIdRequired": "작업 ID를 입력하세요.",
+    "unsupportedPlatform": "지원하지 않는 시스템입니다.",
+    "cdpPortOccupied": "로컬 포트 9223이 사용 중입니다. 사용 중인 프로그램을 닫고 다시 시도하세요.",
+    "cdpStartupFailed": "WorkBuddy CDP(127.0.0.1:9223)에 연결하지 못했습니다. 클라이언트를 확인한 뒤 다시 시도하세요.",
+    "windowsSetupFailed": "Windows CDP 설정을 실행하지 못했습니다. WorkBuddy를 열고 다시 시도하세요.",
+    "workbuddyNotFound": "WorkBuddy를 찾지 못했습니다. 설치하거나 WORKBUDDY_EXE에 실행 파일의 전체 경로를 설정하세요.",
+    "configuredExeInvalid": "WORKBUDDY_EXE는 선택한 WorkBuddy의 실행 파일을 가리켜야 합니다.",
+    "workbuddyStopFailed": "WorkBuddy를 종료하지 못했습니다. 작업을 저장하고 트레이 메뉴에서 종료한 후 다시 시도하세요.",
+    "cdpTimeout": "WorkBuddy CDP 요청 시간이 초과되었습니다. 클라이언트가 준비되면 다시 시도하세요.",
+    "invalidAction": "올바르지 않은 WorkBuddy 동작입니다.",
+    "noSessionYet": "아직 대화가 없습니다",
+    "Welcome_coding": "개발",
+    "Welcome_working": "사무 작업",
+    "Welcome_design": "디자인",
+    "guide_5": "WorkBuddy 실행",
+    "guide_6": "로컬 CDP로 WorkBuddy를 실행합니다. 이미 연결되어 있으면 창을 앞으로 가져옵니다.",
+    "guide_10": "대기",
+    "guide_12": "실행 중",
+    "guide_14": "완료 · 확인 필요",
+    "guide_16": "승인 / 답변 대기",
+    "guide_18": "오류",
+    "guide_20": "연결되지 않음",
+    "guide_25": "WorkBuddy 실행",
+    "guide_26": "로컬 CDP로 WorkBuddy를 실행합니다. 이미 연결되어 있으면 창을 앞으로 가져옵니다.",
+    "guide_27": "작업 1–5",
+    "guide_28": "최근 활동 순서로 불러온 작업 5개를 표시합니다. 키를 누르면 해당 대화를 엽니다.",
+    "guide_29": "새 작업",
+    "guide_31": "페이지 열기",
+    "guide_32": "WorkBuddy 페이지를 엽니다. 이용 가능 여부는 클라이언트 버전과 활성화된 기능에 따라 다릅니다. 이용 가능한 페이지는 클라이언트 버전과 활성화된 기능에 따라 다릅니다. 지원하지 않는 대상은 현재 페이지를 유지하거나 홈으로 돌아갈 수 있습니다. 클라우드 파일이 같은 파일 목록을 사용할 수도 있습니다.",
+    "guide_33": "모델 전환",
+    "guide_34": "WorkBuddy의 작업 입력 화면을 여세요. 다이얼로 모델을 선택하면 자동 적용됩니다. 모델 ID를 입력할 필요가 없습니다.",
+    "guide_35": "현재 대화 상태",
+    "guide_37": "테마 전환",
+    "guide_39": "음성 입력 / 메시지 전송",
+    "guide_41": "크레딧 잔액",
+    "guide_42": "CDP로 남은 크레딧을 표시합니다. 30초마다 갱신되며 누르면 즉시 새로고침합니다. 키와 다이얼을 지원합니다.",
+    "guide_0": "키 한 번으로 여는 AI 작업 공간.",
+    "guide_1": "세 단계로 시작하기",
+    "guide_2": "설치 및 확인",
+    "guide_3": "WorkBuddy 데스크톱을 설치하고 «WorkBuddy 실행»을 키에 배치하세요. 속성 패널에서 클라이언트와 CDP 연결을 확인할 수 있습니다.",
+    "guide_4": "WorkBuddy 다운로드 ↗",
+    "guide_7": "연결 확인",
+    "guide_8": "«연결됨»이 표시되면 음성 입력, 메시지 전송, 현재 대화 상태와 테마 전환을 사용할 수 있습니다.",
+    "guide_9": "키 상태 한눈에 보기",
+    "guide_11": "WorkBuddy가 연결되어 사용할 준비가 되었습니다.",
+    "guide_13": "생각, 도구 사용 또는 컨텍스트 정리 중입니다.",
+    "guide_15": "작업이 완료되었지만 대화 목록의 알림은 아직 읽지 않았습니다. 대화를 열면 알림이 해제됩니다.",
+    "guide_17": "승인이나 답변을 기다리는 중입니다. 현재 대화 다이얼로 동작을 선택하세요.",
+    "guide_19": "대화에서 오류나 실행 실패를 보고했습니다. WorkBuddy에서 원인을 확인하세요.",
+    "guide_21": "«WorkBuddy 실행»으로 클라이언트를 연결하세요.",
+    "guide_22": "동작 설정",
+    "guide_23": "동작",
+    "guide_24": "사용 방법",
+    "guide_30": "프롬프트 템플릿에 {clipboard}, {date}, {time}을 사용할 수 있습니다. 폴더, 전문가, 스킬, 커넥터와 모델도 설정할 수 있습니다. 최대 8000자입니다.",
+    "guide_36": "CDP 연결 후 다이얼에 현재 대화 상태가 표시됩니다. 승인 시 한 번 허용, 이번 세션 허용 또는 거부를 선택하고 누르세요. 사용할 수 없는 항목은 흐리게 표시됩니다. 질문은 실제 항목을 표시하며 단일·복수 선택, 이전/다음, 제출과 건너뛰기를 지원합니다. «기타»는 직접 입력할 수 있도록 클라이언트를 앞으로 가져옵니다. 입력한 답변은 다이얼로 제출할 수 있습니다. 사용자 지정 대화 상자는 별도 지원이 필요합니다.",
+    "guide_38": "키마다 로컬 이미지를 선택하세요. 키에는 96×96 미리보기가 표시됩니다. 누르면 CDP로 테마가 적용되고 다시 누르면 기본 테마로 돌아갑니다.",
+    "guide_40": "음성 키로 녹음을 시작하거나 종료하세요. 전송 키는 초안을 보내며 중지 표시 중에는 응답을 중단합니다. 회색은 사용할 수 없음을 뜻합니다. CDP가 필요합니다.",
+    "guide_43": "새 작업은 초안만 입력하며 전송은 직접 확인합니다. 중국 버전은 workbuddy://, WorkBuddy AI는 workbuddy-ai://를 사용합니다.",
+    "guide_44": "CDP를 활성화하려면?",
+    "guide_45": "«WorkBuddy 실행» 속성 패널에서 «WorkBuddy 재시작»을 선택하세요. Windows에서는 선택한 설치 경로의 프로세스가 종료되므로 먼저 작업을 저장하세요. macOS에서는 정상 종료 후 다시 실행합니다. 연결에 성공하면 CDP가 «연결됨»으로 표시됩니다.",
+    "action_newtask": "새 작업",
+    "action_openpage": "페이지 열기",
+    "action_modelswitch": "모델 전환",
+    "action_task1": "작업 1",
+    "action_task2": "작업 2",
+    "action_task3": "작업 3",
+    "action_task4": "작업 4",
+    "action_task5": "작업 5",
+    "action_skin": "테마 전환",
+    "action_currentsession": "현재 대화 상태",
+    "action_voice": "음성 입력",
+    "action_send": "메시지 전송",
+    "action_launch": "WorkBuddy 실행",
+    "action_credits": "크레딧 잔액",
+    "Skills and connectors accept at most 20 IDs without embedded commas / 技能和连接器最多 20 项，单项不能含逗号": "스킬과 커넥터는 각각 최대 20개 ID를 지원하며 ID 안에 쉼표를 넣을 수 없습니다.",
+    "Working directory must be absolute / 工作目录必须为绝对路径": "작업 폴더는 절대 경로여야 합니다.",
+    "Enter a task ID / 请填写任务 ID": "작업 ID를 입력하세요.",
+    "Unsupported platform": "지원하지 않는 시스템입니다.",
+    "127.0.0.1:9223 is in use.": "로컬 포트 9223이 사용 중입니다. 사용 중인 프로그램을 닫고 다시 시도하세요.",
+    "WorkBuddy CDP did not connect (127.0.0.1:9223).": "WorkBuddy CDP(127.0.0.1:9223)에 연결하지 못했습니다. 클라이언트를 확인한 뒤 다시 시도하세요.",
+    "Could not run Windows CDP setup. Open WorkBuddy and retry.": "Windows CDP 설정을 실행하지 못했습니다. WorkBuddy를 열고 다시 시도하세요.",
+    "WorkBuddy not found. Install it or set WORKBUDDY_EXE to its executable path.": "WorkBuddy를 찾지 못했습니다. 설치하거나 WORKBUDDY_EXE에 실행 파일의 전체 경로를 설정하세요.",
+    "WORKBUDDY_EXE must point to the selected WorkBuddy executable.": "WORKBUDDY_EXE는 선택한 WorkBuddy의 실행 파일을 가리켜야 합니다.",
+    "Could not stop WorkBuddy. Quit it from the tray menu and retry.": "WorkBuddy를 종료하지 못했습니다. 작업을 저장하고 트레이 메뉴에서 종료한 후 다시 시도하세요.",
+    "WorkBuddy did not quit. Save your work and retry.": "WorkBuddy를 종료하지 못했습니다. 작업을 저장하고 트레이 메뉴에서 종료한 후 다시 시도하세요.",
+    "WorkBuddy not installed": "WorkBuddy를 찾지 못했습니다. 먼저 데스크톱 클라이언트를 설치하세요.",
+    "WorkBuddy AI not installed": "WorkBuddy를 찾지 못했습니다. 먼저 데스크톱 클라이언트를 설치하세요.",
+    "CDP timeout": "WorkBuddy CDP 요청 시간이 초과되었습니다. 클라이언트가 준비되면 다시 시도하세요.",
+    "CDP unavailable": "WorkBuddy CDP에 연결할 수 없습니다(127.0.0.1:9223).",
+    "CDP disconnected": "WorkBuddy CDP에 연결할 수 없습니다(127.0.0.1:9223).",
+    "WorkBuddy renderer unavailable": "WorkBuddy CDP에 연결할 수 없습니다(127.0.0.1:9223).",
+    "No unique WorkBuddy renderer": "WorkBuddy CDP에 연결할 수 없습니다(127.0.0.1:9223).",
+    "Unexpected CDP target": "WorkBuddy CDP에 연결할 수 없습니다(127.0.0.1:9223).",
+    "Invalid WorkBuddy action": "올바르지 않은 WorkBuddy 동작입니다.",
+    "Model selection failed": "모델을 선택하지 못했습니다.",
+    "chooseImageFile": "이미지 선택"
+  },
+  "Name": "WorkBuddy",
+  "Category": "WorkBuddy",
+  "Description": "키와 다이얼로 WorkBuddy를 제어합니다. 클라이언트 실행, 작업 초안, 모델 전환과 로컬 CDP를 통한 대화·크레딧 확인 및 현재 대화 조작을 지원합니다.",
+  "Overview": "키와 다이얼로 WorkBuddy를 제어합니다. 클라이언트 실행, 작업 초안, 모델 전환과 로컬 CDP를 통한 대화·크레딧 확인 및 현재 대화 조작을 지원합니다.",
+  "Actions": [
+    {
+      "Name": "새 작업",
+      "Tooltip": "초안을 미리 입력한 작업을 엽니다. 확인 후 전송하세요.",
+      "States": [
+        {
+          "Name": "새 작업"
+        }
+      ]
+    },
+    {
+      "Name": "페이지 열기",
+      "Tooltip": "WorkBuddy 페이지를 엽니다. 이용 가능 여부는 클라이언트 버전과 활성화된 기능에 따라 다릅니다.",
+      "States": [
+        {
+          "Name": "페이지 열기"
+        }
+      ]
+    },
+    {
+      "Name": "모델 전환",
+      "Tooltip": "다이얼을 돌려 WorkBuddy 입력 화면의 모델을 전환합니다.",
+      "States": [
+        {
+          "Name": "모델 전환"
+        }
+      ]
+    },
+    {
+      "Name": "작업 1",
+      "Tooltip": "CDP로 최근 대화를 표시합니다. 누르면 엽니다.",
+      "States": [
+        {
+          "Name": "작업 1"
+        }
+      ]
+    },
+    {
+      "Name": "작업 2",
+      "Tooltip": "CDP로 최근 대화를 표시합니다. 누르면 엽니다.",
+      "States": [
+        {
+          "Name": "작업 2"
+        }
+      ]
+    },
+    {
+      "Name": "작업 3",
+      "Tooltip": "CDP로 최근 대화를 표시합니다. 누르면 엽니다.",
+      "States": [
+        {
+          "Name": "작업 3"
+        }
+      ]
+    },
+    {
+      "Name": "작업 4",
+      "Tooltip": "CDP로 최근 대화를 표시합니다. 누르면 엽니다.",
+      "States": [
+        {
+          "Name": "작업 4"
+        }
+      ]
+    },
+    {
+      "Name": "작업 5",
+      "Tooltip": "CDP로 최근 대화를 표시합니다. 누르면 엽니다.",
+      "States": [
+        {
+          "Name": "작업 5"
+        }
+      ]
+    },
+    {
+      "Name": "테마 전환",
+      "Tooltip": "이 키의 테마를 적용합니다. 다시 누르면 기본 테마로 돌아갑니다.",
+      "States": [
+        {
+          "Name": "테마 전환"
+        }
+      ]
+    },
+    {
+      "Name": "현재 대화 상태",
+      "Tooltip": "다이얼로 승인이나 질문 항목을 선택하고 눌러 실행합니다. 복수 선택은 항목을 고른 후 제출을 선택합니다. CDP가 필요합니다.",
+      "States": [
+        {
+          "Name": "현재 대화 상태"
+        }
+      ]
+    },
+    {
+      "Name": "음성 입력",
+      "Tooltip": "WorkBuddy 음성 입력을 시작하거나 종료합니다.",
+      "States": [
+        {
+          "Name": "음성 입력"
+        }
+      ]
+    },
+    {
+      "Name": "메시지 전송",
+      "Tooltip": "현재 초안을 전송하거나 중지 표시 중인 응답을 중단합니다.",
+      "States": [
+        {
+          "Name": "메시지 전송"
+        }
+      ]
+    },
+    {
+      "Name": "WorkBuddy 실행",
+      "Tooltip": "로컬 CDP로 WorkBuddy를 실행합니다. 이미 연결되어 있으면 창을 앞으로 가져옵니다.",
+      "States": [
+        {
+          "Name": "WorkBuddy 실행"
+        }
+      ]
+    },
+    {
+      "Name": "크레딧 잔액",
+      "Tooltip": "CDP로 남은 크레딧을 표시합니다. 30초마다 갱신되며 누르면 즉시 새로고침합니다. 키와 다이얼을 지원합니다.",
+      "States": [
+        {
+          "Name": "크레딧 잔액"
+        }
+      ]
+    }
+  ],
+  "Detail": "WorkBuddy 데스크톱을 설치하고 «WorkBuddy 실행»을 키에 배치하세요. 속성 패널에서 클라이언트와 CDP 연결을 확인할 수 있습니다.\n«WorkBuddy 재시작»을 눌러 CDP가 활성화된 클라이언트를 실행하세요.\nWindows에서 재시작하면 WorkBuddy 프로세스가 종료되어 실행 중인 작업이 중단될 수 있습니다. 먼저 작업을 저장하세요.\n\n새 작업: 초안을 미리 입력한 작업을 엽니다. 확인 후 전송하세요.\n페이지 열기: WorkBuddy 페이지를 엽니다. 이용 가능 여부는 클라이언트 버전과 활성화된 기능에 따라 다릅니다.\n모델 전환: 다이얼을 돌려 WorkBuddy 입력 화면의 모델을 전환합니다.\n작업 1: CDP로 최근 대화를 표시합니다. 누르면 엽니다.\n작업 2: CDP로 최근 대화를 표시합니다. 누르면 엽니다.\n작업 3: CDP로 최근 대화를 표시합니다. 누르면 엽니다.\n작업 4: CDP로 최근 대화를 표시합니다. 누르면 엽니다.\n작업 5: CDP로 최근 대화를 표시합니다. 누르면 엽니다.\n테마 전환: 이 키의 테마를 적용합니다. 다시 누르면 기본 테마로 돌아갑니다.\n현재 대화 상태: 다이얼로 승인이나 질문 항목을 선택하고 눌러 실행합니다. 복수 선택은 항목을 고른 후 제출을 선택합니다. CDP가 필요합니다.\n음성 입력: WorkBuddy 음성 입력을 시작하거나 종료합니다.\n메시지 전송: 현재 초안을 전송하거나 중지 표시 중인 응답을 중단합니다.\nWorkBuddy 실행: 로컬 CDP로 WorkBuddy를 실행합니다. 이미 연결되어 있으면 창을 앞으로 가져옵니다.\n크레딧 잔액: CDP로 남은 크레딧을 표시합니다. 30초마다 갱신되며 누르면 즉시 새로고침합니다. 키와 다이얼을 지원합니다.\n\n프롬프트 템플릿에 {clipboard}, {date}, {time}을 사용할 수 있습니다. 폴더, 전문가, 스킬, 커넥터와 모델도 설정할 수 있습니다. 최대 8000자입니다."
+}

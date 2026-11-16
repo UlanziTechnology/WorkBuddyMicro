@@ -14,7 +14,7 @@ async function drawCreditsCard(balance, language, iconData) {
   try {
     ctx.drawImage(icon, 56, 27, 84, 84);
   } finally { icon.close(); }
-  const text = balance === null ? "—" : new Intl.NumberFormat(language === "zh" ? "zh-CN" : "en-US", {maximumFractionDigits:2}).format(balance);
+  const text = balance === null ? "—" : new Intl.NumberFormat(String(language || "en").replace("_", "-"), {maximumFractionDigits:2}).format(balance);
   ctx.fillStyle = balance === null ? "#858585" : "#ffffff";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";

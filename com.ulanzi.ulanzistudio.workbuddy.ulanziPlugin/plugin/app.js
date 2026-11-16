@@ -15,6 +15,7 @@ const { WebSocketClient } = require("../libs/ws-client");
 const { createAction } = require("./actions");
 const { WorkBuddyStatus, statusArtwork } = require("./workbuddy-status");
 const deeplink = require("./deeplink");
+const i18n = require("../libs/i18n");
 
 const PLUGIN_UUID = "com.ulanzi.ulanzistudio.workbuddy";
 const DOWNLOAD_URL = "https://www.workbuddy.cn/";
@@ -25,41 +26,14 @@ const RUN_DEDUPE_MS = 250;
 const STALE_PRESS_MS = 5000;
 
 // ---------------------------------------------------------------------------
-// Localization (main service side, keyed by host language arg)
-
-const STRINGS = {
-  zh: {
-    notInstalled: "未检测到 WorkBuddy，请先安装 WorkBuddy 桌面客户端",
-    launchFailed: "打开 WorkBuddy 失败，请检查客户端与协议注册",
-    promptTruncated: "任务描述超过 8000 字符，已截断",
-    taskPrefilled: "已在 WorkBuddy 预填任务草稿，确认后发送",
-    modelSelected: "已请求预选模型（若未生效请检查模型 ID）：",
-    noModels: "未配置模型",
-    configureModels: "请先在插件属性中配置模型列表",
-    schemeMissing: "协议未注册，请在插件属性中检查 scheme 设置",
-  },
-  en: {
-    notInstalled:
-      "WorkBuddy not detected. Please install the WorkBuddy desktop client first",
-    launchFailed: "Failed to launch WorkBuddy. Check the client and scheme registration",
-    promptTruncated: "Prompt exceeds 8000 characters and was truncated",
-    taskPrefilled: "Task draft prefilled in WorkBuddy. Review and send",
-    modelSelected: "Model preselection requested (check model ID if ignored): ",
-    noModels: "No models configured",
-    configureModels: "Configure the model list in the property inspector first",
-    schemeMissing: "Scheme not registered. Check the scheme setting in the plugin properties",
-  },
-};
-
-// ---------------------------------------------------------------------------
-
 class PluginApp {
   constructor() {
     const argv = process.argv.slice(2);
     this.address = argv[0] || "127.0.0.1";
     this.port = Number(argv[1] || 3906);
     const lang = String(argv[2] || "en-US");
-    this.lang = lang.toLowerCase().startsWith("zh") ? "zh" : "en";
+    this.localization = i18n.loadSync(lang);
+    this.lang = this.localization.locale;
     this.version = argv[3] || "";
 
     this.ws = null;
@@ -92,8 +66,8 @@ class PluginApp {
     );
   }
 
-  t(key) {
-    return (STRINGS[this.lang] && STRINGS[this.lang][key]) || STRINGS.en[key] || key;
+  t(key, values) {
+    return this.localization.t(key, values);
   }
 
   connect() {
@@ -358,15 +332,14 @@ class PluginApp {
     try {
       if (request.type === "restoreTheme" && action.uuid.endsWith(".skin")) {
         const restored = await require("./workbuddy-cdp").command("restoreTheme").catch(() => false);
-        this.toast(restored ? (this.lang === "zh" ? "已恢复 WorkBuddy 原生主题" : "Restored the WorkBuddy theme.")
-          : (this.lang === "zh" ? "请先连接 WorkBuddy CDP" : "Connect WorkBuddy CDP first."));
+        this.toast(this.t(restored ? "themeRestored" : "connectCdp"));
         return;
       }
       if (request.type === "enableCdp") {
         if (this.cdpRestarting) return;
         this.cdpRestarting=true; this.cdpRestartError=""; this.sendStatus();
         try { await require("./enable-cdp").enableCdp(this.globalSettings.scheme); }
-        catch (e) { this.cdpRestartError=e.message; this.toast(e.message); }
+        catch (e) { this.cdpRestartError=this.t(e.message); this.toast(this.cdpRestartError); }
         finally { this.cdpRestarting=false; }
       }
       if (request.type === "openGuide") this.send({ cmd: "openurl", url: "./usage-guide/index.html", local: true, param: { language: this.lang } });
@@ -422,7 +395,7 @@ class PluginApp {
   }
 
   toast(msgText) {
-    this.send({ cmd: "toast", msg: msgText });
+    this.send({ cmd: "toast", msg: this.t(msgText) });
   }
 
   showAlert(action) {
@@ -502,13 +475,13 @@ class PluginApp {
       let out = "";
       const timer = setTimeout(() => {
         child.kill();
-        this.toast(this.lang === "zh" ? "剪贴板读取超时，保留占位符" : "Clipboard timed out; placeholder kept");
+        this.toast(this.t("clipboardTimeout"));
         resolve(undefined);
       }, 1500);
       child.stdout && child.stdout.on("data", (d) => (out += d));
       child.on("close", (code) => {
         clearTimeout(timer);
-        if (code !== 0) this.toast(this.lang === "zh" ? "无法读取剪贴板，保留占位符" : "Cannot read clipboard; placeholder kept");
+        if (code !== 0) this.toast(this.t("clipboardFailed"));
         resolve(code === 0 ? out : undefined);
       });
       child.on("error", () => {

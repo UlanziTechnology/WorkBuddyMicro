@@ -193,7 +193,7 @@ class ModelSwitchAction extends BaseAction {
   pushFeedback() {
     if (!this.active) return;
     const model = this.current();
-    const name = this.live?.names[this.liveIndex] || this.currentLabel || model?.name || (!this.app.status.cdpState ? "N" : this.app.lang === "zh" ? "模型" : "Models");
+    const name = this.live?.names[this.liveIndex] || this.currentLabel || model?.name || (!this.app.status.cdpState ? "N" : this.app.t("Model"));
     let picture = this.live?.pictures?.[name];
     if (!picture && this.currentCard?.name === name) picture = this.currentCard.picture;
     if (!this.app.status.cdpState) {
@@ -210,8 +210,8 @@ class ModelSwitchAction extends BaseAction {
   async loadLive() {
     const session = this.app.status.session;
     const result = await cdp.command("models").catch(() => cdp.command("models")).catch(() => null);
-    if(!result?.names?.length)throw Error(this.app.lang==="zh"?"请在 WorkBuddy 打开任务输入页并启用 CDP":"Open the WorkBuddy composer and enable CDP.");
-    if (!this.active || this.app.status.session !== session || (session && result.session !== session)) throw Error(this.app.lang === "zh" ? "会话已切换，请重新选择模型" : "Chat changed. Select the model again.");
+    if(!result?.names?.length)throw Error(this.app.t("modelComposerRequired"));
+    if (!this.active || this.app.status.session !== session || (session && result.session !== session)) throw Error(this.app.t("chatChanged"));
     this.live=result; this.liveIndex=Math.max(0,result.names.indexOf(result.selected)); this.liveAt=Date.now();
   }
   handleDialRotate(rotateEvent) {
@@ -261,12 +261,12 @@ class ModelSwitchAction extends BaseAction {
       const menu = this.live;
       const name=menu.names[this.liveIndex];
       try {
-        if (!await cdp.command("selectModel",name,menu.session)) throw Error("Model selection failed");
+        if (!await cdp.command("selectModel",name,menu.session)) throw Error(this.app.t("modelSelectionFailed"));
         if (menu.session === this.app.status.session) this.rememberCard({session:menu.session, name, picture:menu.pictures?.[name]});
       } catch {
         this.live = null;
         await this.syncLabel();
-        throw Error(this.app.lang === "zh" ? "模型未切换，请检查 WorkBuddy 的任务输入页" : "Model not switched. Check the WorkBuddy composer.");
+        throw Error(this.app.t("modelNotSwitched"));
       } finally {
         this.pushFeedback();
       }
@@ -341,7 +341,7 @@ class CreditsAction extends BaseAction {
   }
   handleDialDown() { return this.invoke(); }
   invoke() {
-    if (!this.app.status.cdpState) throw Error(this.app.lang === "zh" ? "请在属性栏点击「重启 WorkBuddy」连接 CDP" : "Choose Restart WorkBuddy in setup to connect CDP.");
+    if (!this.app.status.cdpState) throw Error(this.app.t("cdpSetupRequired"));
     return this.refreshCredits();
   }
   destroy() {
@@ -386,11 +386,10 @@ class CurrentSessionAction extends BaseAction {
     if (approval && !approval.choices.includes(this.choice)) this.choice = approval.choices[0];
     let picture;
     if (approval && this.choice) {
-      const language = this.app.lang === "zh" ? "zh" : "en";
-      const order = ["allow_once", "allow_session", "deny"];
-      const mask = order.reduce((bits, choice, index) => approval.choices.includes(choice) ? bits | (1 << index) : bits, 0);
-      const variant = mask === 7 ? "" : "-" + mask;
-      picture = "assets/session/" + language + "-" + this.choice + variant + ".png";
+      const choices = ["allow_once", "allow_session", "deny"].map(id => ({
+        id, label:this.app.t("approval_"+id), disabled:!approval.choices.includes(id), kind:"button"
+      }));
+      picture = "data:image/svg+xml;base64," + Buffer.from(questionSvg({choices}, this.choice)).toString("base64");
     } else {
       picture = "assets/states/" + statusArtwork(state) + ".png";
     }
@@ -419,7 +418,7 @@ class CurrentSessionAction extends BaseAction {
       this.busy = true;
       try {
         const choice = question.choices.find(c => c.id === this.questionChoice);
-        if (!await cdp.command("answerQuestion", this.questionChoice, this.questionToken)) throw Error(this.app.lang === "zh" ? "问题已变化，请查看当前会话" : "Question changed. Check the current chat.");
+        if (!await cdp.command("answerQuestion", this.questionChoice, this.questionToken)) throw Error(this.app.t("questionChanged"));
         if (choice?.kind === "input") await require("./enable-cdp").enableCdp(this.scheme);
         await this.app.status.refresh?.();
       } finally { this.busy = false; }
@@ -429,7 +428,7 @@ class CurrentSessionAction extends BaseAction {
     this.busy = true;
     try {
       if (!await cdp.command("decide", this.choice, this.token)) {
-        throw Error(this.app.lang === "zh" ? "审批已变化，请查看当前会话" : "Approval changed. Check the current chat.");
+        throw Error(this.app.t("approvalChanged"));
       }
     } finally { this.busy = false; }
   }
@@ -444,7 +443,7 @@ class TaskAction extends BaseAction {
     this.slot = Number(this.uuid.slice(-1));
     this.displayedTask = this.app.status.taskSlots()[this.slot-1] || null;
     const task = this.displayedTask;
-    const label = (this.app.lang === "zh" ? "任务 " : "Task ") + this.slot;
+    const label = this.app.t("taskLabel", {n:this.slot});
     const title = task?.title ? Array.from(task.title) : [];
     const subtitle = title.length ? title.slice(0,12).join("") + (title.length>12 ? "…" : "") : task?.session.slice(0,8);
     this.app.setStatusIcon(this, !this.app.status.cdpState ? "offline" : task?.state || "idle", task ? `${label}\n${subtitle}` : label);
@@ -452,7 +451,7 @@ class TaskAction extends BaseAction {
   invoke() {
     const task = this.displayedTask;
     if (!task || !this.app.status.cdpState) {
-      this.app.toast(this.app.lang === "zh" ? "此任务位暂无会话，请在 WorkBuddy 发送消息后再试" : "No session in this slot. Send a message in WorkBuddy first.");
+      this.app.toast(this.app.t("noSession"));
       return;
     }
     return this.launch(deeplink.buildPageUrl(this.scheme,"chat",task.session));
@@ -502,12 +501,12 @@ class CdpAction extends BaseAction {
   async invoke() {
     if (this.busy) return;
     this.busy = true;
-    const op = this.uuid.split(".").pop(), zh = this.app.lang === "zh";
+    const op = this.uuid.split(".").pop();
     try {
-      if (op === "skin" && !cdp.jpeg(this.settings.image)) throw Error(zh ? "请先在按键设置中选择图片" : "Choose an image in key settings first.");
+      if (op === "skin" && !cdp.jpeg(this.settings.image)) throw Error(this.app.t("chooseImage"));
       const result = await cdp.command(op === "skin" ? "toggleTheme" : op, op === "skin" ? this.settings.image : undefined, this.settings.palette).catch(() => null);
-      if (result === null) throw Error(zh ? "未连接 WorkBuddy CDP（127.0.0.1:9223）" : "WorkBuddy CDP unavailable (127.0.0.1:9223).");
-      if (!result) throw Error(zh ? "未找到唯一可操作的审批，请在 WorkBuddy 中查看" : "No unique actionable approval. Check WorkBuddy.");
+      if (result === null) throw Error(this.app.t("cdpUnavailable"));
+      if (!result) throw Error(this.app.t("noApproval"));
     } finally { this.busy = false; }
   }
 }

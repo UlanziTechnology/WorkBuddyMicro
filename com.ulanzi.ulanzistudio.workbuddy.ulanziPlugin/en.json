@@ -1,63 +1,133 @@
 {
   "Name": "WorkBuddy",
-  "Overview": "Launch WorkBuddy, draft tasks, choose models and see live task status.",
-  "Description": "Control WorkBuddy from your Ulanzi device.\nActions:\n- New Task: open a task with a prefilled draft. Supports prompt templates with {clipboard}, {date} and {time} placeholders, plus working directory, expert, skills, connectors, model, mode and permission settings. WorkBuddy keeps the draft unsent until you confirm.\n- Open Page: jump to tasks, projects, experts, skills, connectors, automation, Agent Mail and more.\n- Model Switch (encoder): turn the dial to switch the model in the task composer.\nSetup:\n1. Install the WorkBuddy desktop client (workbuddy:// scheme).\n2. Drag an action onto a key or the knob.\n3. Pick the scheme in the property inspector: workbuddy:// for the domestic package, workbuddy-ai:// for WorkBuddy AI.\nNotes: task prompts are limited to 8000 characters; skill and connector lists accept up to 20 comma-separated items\nLaunch WorkBuddy with CDP to use Voice Input, Send Message, Current Session Status and Switch Theme. Each action includes CDP setup.",
+  "Overview": "Control WorkBuddy with keys and dials: launch the client, draft tasks, switch models, read chats and credits, and manage the current session through local CDP.",
+  "Description": "Control WorkBuddy with keys and dials: launch the client, draft tasks, switch models, read chats and credits, and manage the current session through local CDP.",
   "Actions": [
     {
       "Name": "New Task",
-      "Tooltip": "Open a WorkBuddy task with a prefilled draft (you confirm before sending)"
+      "Tooltip": "Open a task with a prefilled draft. Review before sending.",
+      "States": [
+        {
+          "Name": "New Task"
+        }
+      ]
     },
     {
       "Name": "Open Page",
-      "Tooltip": "Jump to a WorkBuddy page: tasks, projects, skills, connectors and more Page availability depends on client version and enabled features."
+      "Tooltip": "Open a WorkBuddy page. Available pages depend on the client version and enabled features.",
+      "States": [
+        {
+          "Name": "Open Page"
+        }
+      ]
     },
     {
       "Name": "Model Switch",
-      "Tooltip": "Turn the dial to switch models in WorkBuddy"
+      "Tooltip": "Turn the dial to switch the model in the WorkBuddy composer.",
+      "States": [
+        {
+          "Name": "Model Switch"
+        }
+      ]
     },
     {
-      "Name": "WorkBuddy Task 1",
-      "Tooltip": "Show a recent chat via CDP. Press to open it."
+      "Name": "Task 1",
+      "Tooltip": "Show a recent chat via CDP. Press to open it.",
+      "States": [
+        {
+          "Name": "Task 1"
+        }
+      ]
     },
     {
-      "Name": "WorkBuddy Task 2",
-      "Tooltip": "Show a recent chat via CDP. Press to open it."
+      "Name": "Task 2",
+      "Tooltip": "Show a recent chat via CDP. Press to open it.",
+      "States": [
+        {
+          "Name": "Task 2"
+        }
+      ]
     },
     {
-      "Name": "WorkBuddy Task 3",
-      "Tooltip": "Show a recent chat via CDP. Press to open it."
+      "Name": "Task 3",
+      "Tooltip": "Show a recent chat via CDP. Press to open it.",
+      "States": [
+        {
+          "Name": "Task 3"
+        }
+      ]
     },
     {
-      "Name": "WorkBuddy Task 4",
-      "Tooltip": "Show a recent chat via CDP. Press to open it."
+      "Name": "Task 4",
+      "Tooltip": "Show a recent chat via CDP. Press to open it.",
+      "States": [
+        {
+          "Name": "Task 4"
+        }
+      ]
     },
     {
-      "Name": "WorkBuddy Task 5",
-      "Tooltip": "Show a recent chat via CDP. Press to open it."
+      "Name": "Task 5",
+      "Tooltip": "Show a recent chat via CDP. Press to open it.",
+      "States": [
+        {
+          "Name": "Task 5"
+        }
+      ]
     },
     {
       "Name": "Switch Theme",
-      "Tooltip": "Press to apply this theme. Press again to restore the default WorkBuddy theme."
+      "Tooltip": "Apply this key's theme. Press again to restore the default.",
+      "States": [
+        {
+          "Name": "Switch Theme"
+        }
+      ]
     },
     {
       "Name": "Current Session Status",
-      "Tooltip": "Turn to choose an approval or question option and press to execute. For multi-select questions, toggle choices then select Submit. Requires CDP."
+      "Tooltip": "Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.",
+      "States": [
+        {
+          "Name": "Current Session Status"
+        }
+      ]
     },
     {
       "Name": "Voice Input",
-      "Tooltip": "Start or finish voice input in WorkBuddy."
+      "Tooltip": "Start or finish voice input in WorkBuddy.",
+      "States": [
+        {
+          "Name": "Voice Input"
+        }
+      ]
     },
     {
       "Name": "Send Message",
-      "Tooltip": "Send the current draft, or stop the current response when Stop is shown."
+      "Tooltip": "Send the current draft, or stop the current response when Stop is shown.",
+      "States": [
+        {
+          "Name": "Send Message"
+        }
+      ]
     },
     {
       "Name": "Launch WorkBuddy",
-      "Tooltip": "Launch WorkBuddy with local CDP enabled."
+      "Tooltip": "Start WorkBuddy with local CDP; when connected, bring its window forward.",
+      "States": [
+        {
+          "Name": "Launch WorkBuddy"
+        }
+      ]
     },
     {
       "Name": "Credit Balance",
-      "Tooltip": "Show remaining credits via CDP. Refreshes every 30 seconds. Press to refresh. Supports keys and encoders. Press to refresh."
+      "Tooltip": "Show remaining credits through CDP. Refreshes every 30 seconds; press to refresh. Supports keys and encoders.",
+      "States": [
+        {
+          "Name": "Credit Balance"
+        }
+      ]
     }
   ],
   "Localization": {
@@ -98,6 +168,176 @@
     "Page_space": "Space",
     "PageAvailability": "Page availability depends on WorkBuddy version and enabled features. Unsupported destinations may leave the current page unchanged or return home. The cloud-files tab may share the same file list.",
     "skinImage": "Background image",
-    "ModelDialGuide": "Open the WorkBuddy task composer. Turn the dial to switch models. No model IDs are needed."
-  }
+    "ModelDialGuide": "Open the WorkBuddy task composer. Turn the dial to switch models. No model IDs are needed.",
+    "setupTitle": "CDP connection",
+    "setupIntro": "Click Restart WorkBuddy to launch the client with CDP enabled.",
+    "client": "Client",
+    "installed": "Installed",
+    "missing": "Not detected",
+    "checkAgain": "Check again",
+    "guide": "Usage guide",
+    "checking": "Checking…",
+    "pluginDisconnected": "Plugin disconnected",
+    "connecting": "Connecting…",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "restart": "Restart WorkBuddy",
+    "restarting": "Restarting…",
+    "windowsRestartWarning": "Restarting WorkBuddy on Windows ends its processes and may interrupt active tasks. Save your work first.",
+    "noStatus": "No plugin status received. Reselect the action or restart Ulanzi Studio.",
+    "limitItems": "At most 20 items",
+    "state_offline": "Not running",
+    "state_idle": "Idle",
+    "state_thinking": "Thinking",
+    "state_working": "Working",
+    "state_attention": "Done · review",
+    "state_notification": "Approval / reply needed",
+    "state_error": "Error",
+    "state_sweeping": "Compacting",
+    "state_sleeping": "Sleeping",
+    "notInstalled": "WorkBuddy not detected. Install the desktop client first.",
+    "launchFailed": "Failed to open WorkBuddy. Check the client and protocol registration.",
+    "promptTruncated": "Prompt exceeds 8000 characters and was truncated.",
+    "taskPrefilled": "Task draft prefilled in WorkBuddy. Review and send.",
+    "modelSelected": "Model selection requested: ",
+    "noModels": "No models configured",
+    "configureModels": "Configure the model list in the property inspector first.",
+    "schemeMissing": "Protocol not registered. Check the WorkBuddy installation.",
+    "modelComposerRequired": "Open the WorkBuddy composer and enable CDP.",
+    "chatChanged": "Chat changed. Select the model again.",
+    "modelSelectionFailed": "Model selection failed.",
+    "modelNotSwitched": "Model not switched. Check the WorkBuddy composer.",
+    "cdpSetupRequired": "Choose Restart WorkBuddy in setup to connect CDP.",
+    "questionChanged": "Question changed. Check the current chat.",
+    "approvalChanged": "Approval changed. Check the current chat.",
+    "taskLabel": "Task {n}",
+    "noSession": "No session in this slot. Send a message in WorkBuddy first.",
+    "chooseImage": "Choose an image in key settings first.",
+    "cdpUnavailable": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
+    "noApproval": "No unique actionable approval. Check WorkBuddy.",
+    "themeRestored": "Restored the native WorkBuddy theme.",
+    "connectCdp": "Connect WorkBuddy CDP first.",
+    "clipboardTimeout": "Clipboard timed out; placeholder kept.",
+    "clipboardFailed": "Cannot read clipboard; placeholder kept.",
+    "studioDisconnected": "Ulanzi Studio disconnected",
+    "taskHelp": "Show the five most recent loaded WorkBuddy tasks. Press to open the displayed chat.",
+    "themeColors": "Theme colors",
+    "color_ink": "Text",
+    "color_muted": "Secondary text",
+    "color_surface": "Panels and input",
+    "color_bubble": "User message",
+    "color_accent": "Accent",
+    "color_selected": "Selection",
+    "color_border": "Borders",
+    "applyColors": "Press the theme key to apply colors.",
+    "resetColors": "Reset to image colors",
+    "applyAutoColors": "Press the theme key to apply automatic colors.",
+    "imageFormat": "Choose PNG, JPEG or WebP under 20 MB.",
+    "imageSelected": "Image selected. Press the device key to apply.",
+    "restoreTheme": "Restore native WorkBuddy theme",
+    "themeToggleHelp": "Press the theme key to apply this theme. Press again to restore the default. After changing the image or colors, press to apply the updated theme.",
+    "approval_allow_once": "Allow once",
+    "approval_allow_session": "This session",
+    "approval_deny": "Deny",
+    "invalidLists": "Skills and connectors accept at most 20 IDs without embedded commas.",
+    "absoluteDirectory": "Working directory must be an absolute path.",
+    "taskIdRequired": "Enter a task ID.",
+    "unsupportedPlatform": "This platform is not supported.",
+    "cdpPortOccupied": "Local port 9223 is in use. Close the program using it and retry.",
+    "cdpStartupFailed": "WorkBuddy CDP did not connect at 127.0.0.1:9223. Check the client and retry.",
+    "windowsSetupFailed": "Could not run Windows CDP setup. Open WorkBuddy and retry.",
+    "workbuddyNotFound": "WorkBuddy not found. Install it or set WORKBUDDY_EXE to its executable path.",
+    "configuredExeInvalid": "WORKBUDDY_EXE must point to the selected WorkBuddy executable.",
+    "workbuddyStopFailed": "Could not stop WorkBuddy. Save your work, quit it from the tray menu and retry.",
+    "cdpTimeout": "WorkBuddy CDP request timed out. Retry when the client is ready.",
+    "invalidAction": "Invalid WorkBuddy action.",
+    "noSessionYet": "No session yet",
+    "Welcome_coding": "Development",
+    "Welcome_working": "Office work",
+    "Welcome_design": "Design",
+    "guide_0": "Your AI workspace, one press away.",
+    "guide_1": "Get started in three steps",
+    "guide_2": "Install and check",
+    "guide_3": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.",
+    "guide_4": "Download WorkBuddy ↗",
+    "guide_5": "Launch WorkBuddy",
+    "guide_6": "Press Launch WorkBuddy to start in CDP mode. When connected, bring the client forward. When disconnected, start or restart in CDP mode.",
+    "guide_7": "Check the connection",
+    "guide_8": "Once the inspector shows Connected, use Voice Input, Send Message, Current Session Status and Switch Theme.",
+    "guide_9": "Read the key at a glance",
+    "guide_10": "Idle",
+    "guide_11": "WorkBuddy is connected and ready.",
+    "guide_12": "Running",
+    "guide_13": "Thinking, using tools or compacting context.",
+    "guide_14": "Completed · unread",
+    "guide_15": "The task completed and its conversation-list notification is unread. Reading it clears the alert.",
+    "guide_16": "Approval / reply needed",
+    "guide_17": "Waiting for a permission decision or an answer. Use the current-session dial to choose an action.",
+    "guide_18": "Error",
+    "guide_19": "The conversation reports an error or execution failure. Check the cause in WorkBuddy.",
+    "guide_20": "Disconnected",
+    "guide_21": "Use Launch WorkBuddy to connect.",
+    "guide_22": "Configure your actions",
+    "guide_23": "Action",
+    "guide_24": "How to use it",
+    "guide_25": "Launch WorkBuddy",
+    "guide_26": "Start or restart the client in CDP mode when disconnected; bring it forward when connected.",
+    "guide_27": "Task 1–5",
+    "guide_28": "Show the five most recent loaded WorkBuddy tasks. Press to open the displayed chat.",
+    "guide_29": "New Task",
+    "guide_30": "Set a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.",
+    "guide_31": "Open Page",
+    "guide_32": "Choose projects, skills, connectors, automation and more. Open Task requires a task ID. Unsupported pages may remain unchanged or return home; cloud files may share the file list.",
+    "guide_33": "Model Switch · Dial",
+    "guide_34": "Enable CDP and open the task composer. Turn the dial to switch models. No model IDs are needed.",
+    "guide_35": "Current Session Status · Dial",
+    "guide_36": "Enable CDP to follow the current chat. Turn to select Allow once, Allow for this session, or Deny, then press to submit. Unavailable choices are dimmed. Question dialogs show their actual options, with single or multiple choices, previous/next, submit and skip. Other brings the client forward for typing. Entered answers can be submitted from the dial. Custom dialogs require separate support.",
+    "guide_37": "Apply background",
+    "guide_38": "Choose a local image per key. The key displays a 96×96 preview. Press to apply via CDP. Press again to restore the default theme.",
+    "guide_39": "Voice Input / Send Message",
+    "guide_40": "Enable CDP. Press Voice Input to start or finish recording. Press Send Message to send the current draft, or to stop the current response when Stop is shown. Gray means unavailable.",
+    "guide_41": "Credit Balance",
+    "guide_42": "Show remaining account credits on a key or encoder through CDP every 30 seconds. Press to refresh. A gray dash indicates a disconnected or unavailable balance.",
+    "guide_43": "New Task only prefills a draft; you confirm sending. The domestic client uses workbuddy://; WorkBuddy AI uses workbuddy-ai://.",
+    "guide_44": "How do I enable CDP?",
+    "guide_45": "Open the Launch WorkBuddy setup and select Restart WorkBuddy. Click to start or restart WorkBuddy directly. On Windows this forcibly ends processes from the selected installation and may interrupt tasks; save work first. macOS quits normally before reopening. The status source shows CDP after connection and shows Disconnected if the connection drops.",
+    "action_newtask": "New Task",
+    "action_openpage": "Open Page",
+    "action_modelswitch": "Model Switch",
+    "action_task1": "Task 1",
+    "action_task2": "Task 2",
+    "action_task3": "Task 3",
+    "action_task4": "Task 4",
+    "action_task5": "Task 5",
+    "action_skin": "Switch Theme",
+    "action_currentsession": "Current Session Status",
+    "action_voice": "Voice Input",
+    "action_send": "Send Message",
+    "action_launch": "Launch WorkBuddy",
+    "action_credits": "Credit Balance",
+    "Skills and connectors accept at most 20 IDs without embedded commas / 技能和连接器最多 20 项，单项不能含逗号": "Skills and connectors accept at most 20 IDs without embedded commas.",
+    "Working directory must be absolute / 工作目录必须为绝对路径": "Working directory must be an absolute path.",
+    "Enter a task ID / 请填写任务 ID": "Enter a task ID.",
+    "Unsupported platform": "This platform is not supported.",
+    "127.0.0.1:9223 is in use.": "Local port 9223 is in use. Close the program using it and retry.",
+    "WorkBuddy CDP did not connect (127.0.0.1:9223).": "WorkBuddy CDP did not connect at 127.0.0.1:9223. Check the client and retry.",
+    "Could not run Windows CDP setup. Open WorkBuddy and retry.": "Could not run Windows CDP setup. Open WorkBuddy and retry.",
+    "WorkBuddy not found. Install it or set WORKBUDDY_EXE to its executable path.": "WorkBuddy not found. Install it or set WORKBUDDY_EXE to its executable path.",
+    "WORKBUDDY_EXE must point to the selected WorkBuddy executable.": "WORKBUDDY_EXE must point to the selected WorkBuddy executable.",
+    "Could not stop WorkBuddy. Quit it from the tray menu and retry.": "Could not stop WorkBuddy. Save your work, quit it from the tray menu and retry.",
+    "WorkBuddy did not quit. Save your work and retry.": "Could not stop WorkBuddy. Save your work, quit it from the tray menu and retry.",
+    "WorkBuddy not installed": "WorkBuddy not detected. Install the desktop client first.",
+    "WorkBuddy AI not installed": "WorkBuddy not detected. Install the desktop client first.",
+    "CDP timeout": "WorkBuddy CDP request timed out. Retry when the client is ready.",
+    "CDP unavailable": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
+    "CDP disconnected": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
+    "WorkBuddy renderer unavailable": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
+    "No unique WorkBuddy renderer": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
+    "Unexpected CDP target": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
+    "Invalid WorkBuddy action": "Invalid WorkBuddy action.",
+    "Model selection failed": "Model selection failed.",
+    "chooseImageFile": "Choose image"
+  },
+  "Category": "WorkBuddy",
+  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nRestarting WorkBuddy on Windows ends its processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nTask 1: Show a recent chat via CDP. Press to open it.\nTask 2: Show a recent chat via CDP. Press to open it.\nTask 3: Show a recent chat via CDP. Press to open it.\nTask 4: Show a recent chat via CDP. Press to open it.\nTask 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining credits through CDP. Refreshes every 30 seconds; press to refresh. Supports keys and encoders.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters."
 }

@@ -2,7 +2,7 @@
  * Shared Property Inspector runtime for the WorkBuddy plugin.
  * Handles: WebSocket lifecycle, persisted settings sync (setSettings /
  * didReceiveSettings), global scheme setting, and label localization
- * from en.json / zh_CN.json.
+ * from official locale JSON files.
  */
 (function () {
   "use strict";
@@ -13,17 +13,19 @@
   const ACTIONID = qs.get("actionid") || "";
   const KEY = qs.get("key") || "";
   const UUID = qs.get("uuid") || "com.ulanzi.ulanzistudio.workbuddy";
-  const LANG = (qs.get("language") || "en").toLowerCase().startsWith("zh")
-    ? "zh_CN"
-    : "en";
+  const LANG = WorkBuddyI18n.normalize(qs.get("language"));
+  let localization;
+  const ready = WorkBuddyI18n.load(LANG, new URL("../../",location.href)).then(value => {
+    localization=value;document.documentElement.lang=WorkBuddyI18n.tag(LANG);return value;
+  });
+  const t = (key,values) => localization ? localization.t(key,values) : key;
 
   let ws = null;
   let form = null;
   let settings = {};
   let reconnectTimer = null;
   let statusTimer;
-  const zh = LANG === "zh_CN";
-  const stateLabels = zh ? {offline:"未启动",idle:"待机",thinking:"思考中",working:"执行中",attention:"已完成 · 待查看",notification:"等待审批 / 回答",error:"错误",sweeping:"整理上下文",sleeping:"休眠"} : {offline:"Not running",idle:"Idle",thinking:"Thinking",working:"Working",attention:"Done · review",notification:"Approval / reply needed",error:"Error",sweeping:"Compacting",sleeping:"Sleeping"};
+  const stateLabels = {};
   const message = payload => send({cmd:"sendToPlugin", uuid:UUID, actionid:ACTIONID, key:KEY, payload});
 
   function send(obj) {
@@ -57,7 +59,7 @@
 
   // Per-page hook (e.g. conditional fields), set by page scripts.
   let onFormFilled = null;
-  window.WorkBuddyPI = { restoreTheme() { message({type:"restoreTheme"}); }, saveFields(fields) { if (!ws || ws.readyState !== WebSocket.OPEN) throw Error("Studio disconnected"); settings = Object.assign({},settings,fields); send({cmd:"setSettings",uuid:UUID,actionid:ACTIONID,key:KEY,settings}); }, setFormFilledHook(fn) { onFormFilled = fn; } };
+  window.WorkBuddyPI = { ready, t, restoreTheme() { message({type:"restoreTheme"}); }, saveFields(fields) { if (!ws || ws.readyState !== WebSocket.OPEN) throw Error(t("studioDisconnected")); settings = Object.assign({},settings,fields); send({cmd:"setSettings",uuid:UUID,actionid:ACTIONID,key:KEY,settings}); }, setFormFilledHook(fn) { onFormFilled = fn; } };
 
   function saveSettings() {
     if (!form) return;
@@ -66,7 +68,7 @@
       const field = form.querySelector(`[name="${name}"]`);
       if (!field) continue;
       const items = [...new Set(field.value.split(name === "models" ? /\n/ : /[,\n]/).map(s => (name === "models" ? s.split("|")[0] : s).trim()).filter(Boolean))];
-      field.setCustomValidity(items.length > 20 ? (zh ? "最多 20 项" : "At most 20 items") : "");
+      field.setCustomValidity(items.length > 20 ? (t("limitItems")) : "");
       if (!field.reportValidity()) return;
     }
     settings = Object.assign({}, settings, values);
@@ -124,8 +126,8 @@
           if (msg.payload?.type === "status") window.WorkBuddySetup.render(msg.payload);
           if (msg.payload?.type === "status" && /\.task[1-5]$/.test(UUID)) {
             const n=Number(UUID.slice(-1)), task=msg.payload.tasks?.[n-1];
-            document.getElementById("task-name").textContent=(zh?"任务 ":"Task ")+n;
-            document.getElementById("task-state").textContent=task ? `${task.title || task.session} · ${stateLabels[task.state] || task.state}` : (zh?"暂无会话":"No session yet");
+            document.getElementById("task-name").textContent=t("taskLabel",{n});
+            document.getElementById("task-state").textContent=task ? `${task.title || task.session} · ${stateLabels[task.state] || task.state}` : (t("noSessionYet"));
           }
           break;
         }
@@ -159,28 +161,16 @@
   }
 
   function applyLocalization() {
-    fetch(`../../${LANG}.json`)
-      .then((res) => (res.ok ? res.json() : null))
-      .then((json) => {
-        if (!json || !json.Localization) return;
-        const dict = json.Localization;
-        document.querySelectorAll("[data-i18n]").forEach((el) => {
-          const keyName = el.getAttribute("data-i18n");
-          if (dict[keyName]) el.textContent = dict[keyName];
-        });
-        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-          const keyName = el.getAttribute("data-i18n-placeholder");
-          if (dict[keyName]) el.setAttribute("placeholder", dict[keyName]);
-        });
-        document.querySelectorAll("option[data-page-key]").forEach((el) => {
-          const keyName = el.getAttribute("data-page-key");
-          if (dict[keyName]) el.textContent = dict[keyName];
-        });
-      })
-      .catch(() => {});
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent=t(el.getAttribute("data-i18n")); });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.setAttribute("placeholder",t(el.getAttribute("data-i18n-placeholder"))); });
+    document.querySelectorAll("option[data-page-key]").forEach(el => { el.textContent=t(el.getAttribute("data-page-key")); });
+    const titleKey="action_"+UUID.split(".").pop();
+    if(t(titleKey)!==titleKey)document.title=t(titleKey);
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", async () => {
+    await ready;
+    for(const state of ["offline","idle","thinking","working","attention","notification","error","sweeping","sleeping"])stateLabels[state]=t("state_"+state);
     form = document.getElementById("property-inspector");
     if (form) {
       for (const row of form.querySelectorAll(".sdpi-item")) {
@@ -191,13 +181,14 @@
       form.addEventListener("change", saveSettingsDebounced);
     }
     bindGlobalScheme();
-    if (/\.(modelswitch|launch|credits|skin|currentsession|voice|send|task[1-5])$/.test(UUID)) window.WorkBuddySetup.init({ zh, message, stateLabels });
+    if (/\.(modelswitch|launch|credits|skin|currentsession|voice|send|task[1-5])$/.test(UUID)) window.WorkBuddySetup.init({ t, message, stateLabels });
     else {
-      const help = document.createElement("button"); help.type="button"; help.className="guide-link"; help.textContent=zh?"使用说明":"Usage guide";
+      const help = document.createElement("button"); help.type="button"; help.className="guide-link"; help.textContent=t("guide");
       help.addEventListener("click",()=>message({type:"openGuide"})); document.body.append(help);
     }
     connect();
-    if (/\.task[1-5]$/.test(UUID)) document.getElementById("task-help").textContent=zh?"按 WorkBuddy 最近活动顺序显示已加载的五个任务，按键打开对应会话。":"Show the five most recent loaded WorkBuddy tasks. Press to open the displayed chat.";
+    if (/\.task[1-5]$/.test(UUID)) document.getElementById("task-help").textContent=t("taskHelp");
+    if (/\.task[1-5]$/.test(UUID)) document.getElementById("task-name").textContent=t("taskLabel",{n:Number(UUID.slice(-1))});
     applyLocalization();
   });
 })();

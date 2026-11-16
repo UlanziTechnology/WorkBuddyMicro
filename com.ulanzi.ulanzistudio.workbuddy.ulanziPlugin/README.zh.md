@@ -2,11 +2,17 @@
 
 [English](README.md) · [项目仓库](https://github.com/UlanziTechnology/WorkBuddyMicro)
 
-本文说明 WorkBuddy Micro **1.11.9** 随包提供的功能。源码安装、开发、兼容性记录及授权现状见[仓库 README](https://github.com/UlanziTechnology/WorkBuddyMicro/blob/main/README.zh.md)。连接面板也可打开随包的[使用引导](usage-guide/index.html)。
+本文说明 WorkBuddy Micro **1.12.0** 随包提供的功能。源码安装、开发、兼容性记录及授权现状见[仓库 README](https://github.com/UlanziTechnology/WorkBuddyMicro/blob/main/README.zh.md)。连接面板也可打开随包的[使用引导](usage-guide/index.html)。
+
+## 界面语言
+
+插件跟随 Ulanzi Studio 的语言，支持中文、英语、日语、德语、葡萄牙语（葡萄牙）、西班牙语和韩语。按官方规范使用 `zh_CN.json`、`en.json`、`ja_JP.json`、`de_DE.json`、`pt_PT.json`、`es_ES.json`、`ko_KR.json`；未支持的语言和缺失词条回退英语。更改 Studio 语言后，请重启 Studio 重新加载插件。随包使用引导也可独立切换这七种语言。
+
+已适配动作名称、属性页、连接提示、状态标签、审批选项和数字格式。会话标题、提示词、模型 ID 及 WorkBuddy 返回的内容保留原文。
 
 ## 连接 WorkBuddy
 
-「新建任务」「页面直达」通过深度链接直接使用。在属性栏选择国内客户端 `workbuddy://` 或海外客户端 `workbuddy-ai://`，该深度链接路由设置在插件内共享。**CDP 功能当前只面向国内 WorkBuddy 适配，WorkBuddy AI 不在当前 CDP 支持范围内。**
+「新建任务」「页面直达」通过深度链接直接使用。国内客户端使用 `workbuddy://`，海外客户端使用 `workbuddy-ai://`；该深度链接路由设置在插件内共享，「新建任务」「页面直达」属性页已隐藏协议选择项。**CDP 功能当前只面向国内 WorkBuddy 适配，WorkBuddy AI 不在当前 CDP 支持范围内。**
 
 最近任务、模型切换、会话交互、语音、发送、主题和积分需要 CDP。保存工作后，按「启动 WorkBuddy」，或点击功能属性栏中的「重启 WorkBuddy」，等待显示「已连接」。无需命令行、hooks 配置或独立 Bridge 服务。
 
