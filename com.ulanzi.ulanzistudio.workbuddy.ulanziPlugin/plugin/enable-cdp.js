@@ -42,9 +42,8 @@ async function restart(brand) {
   if (process.platform === "darwin") {
     const app = ["/Applications",path.join(os.homedir(),"Applications")].map(dir=>path.join(dir,brand+".app")).find(fs.existsSync);
     if (!app) throw Error(brand+" not installed");
-    const exe=(await exec("/usr/libexec/PlistBuddy",["-c","Print :CFBundleExecutable",path.join(app,"Contents/Info.plist")])).stdout.trim();
-    const main=path.join(app,"Contents/MacOS",exe);
-    const running=async()=>(await exec("/bin/ps",["-axo","command="],{maxBuffer:4194304})).stdout.split("\n").some(s=>s===main || s.startsWith(main+" "));
+    // The sidecar and CLI workers share Electron but can outlive the GUI app.
+    const running=async()=>(await exec("/usr/bin/osascript",["-e",'application "'+app+'" is running'])).stdout.trim()==="true";
     if(await running()){
       await exec("/usr/bin/osascript",["-e",'tell application "'+app+'" to quit'],{timeout:18000});
       for(let i=0;i<40 && await running();i++)await pause(250);
