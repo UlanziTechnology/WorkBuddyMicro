@@ -205,7 +205,9 @@
     "Unexpected CDP target": "WorkBuddy CDP に接続できません（127.0.0.1:9223）。",
     "Invalid WorkBuddy action": "無効な WorkBuddy 操作です。",
     "Model selection failed": "モデルを選択できませんでした。",
-    "chooseImageFile": "画像を選択"
+    "chooseImageFile": "画像を選択",
+    "taskShowCredits": "会話の消費クレジットを表示",
+    "taskCreditsHelp": "状態 GIF の上部に会話の累計消費クレジットを表示します。ローカルの WorkBuddy 会話ファイルを毎分および状態変更時に読み取ります。データがない場合は横線を表示します。オフにすると元の GIF を使用します。"
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",

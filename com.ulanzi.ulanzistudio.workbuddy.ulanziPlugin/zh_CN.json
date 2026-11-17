@@ -336,7 +336,9 @@
     "Unexpected CDP target": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
     "Invalid WorkBuddy action": "无效的 WorkBuddy 操作。",
     "Model selection failed": "模型选择失败。",
-    "chooseImageFile": "选择图片"
+    "chooseImageFile": "选择图片",
+    "taskShowCredits": "显示会话消耗积分",
+    "taskCreditsHelp": "在状态 GIF 顶部显示该会话累计消耗的积分。每分钟及状态变化时读取本机会话文件；未获取到数据时显示短横线。关闭后使用原始 GIF。"
   },
   "Category": "WorkBuddy",
   "Detail": "安装 WorkBuddy 桌面客户端。把插件的「启动 WorkBuddy」拖到按键上，属性面板会显示客户端、同步和当前状态。\n点击「重启 WorkBuddy」，以 CDP 模式启动客户端。\n在 Windows 中重启 WorkBuddy 会结束其进程，可能中断当前任务。请先保存工作。\n\n新建任务: 打开预填草稿的任务，确认后发送。\n页面直达: 打开 WorkBuddy 页面，可用页面取决于客户端版本和功能开关。\n模型切换: 转动旋钮切换 WorkBuddy 输入框中的模型。\n任务 1: 通过 CDP 显示最近会话，按下打开。\n任务 2: 通过 CDP 显示最近会话，按下打开。\n任务 3: 通过 CDP 显示最近会话，按下打开。\n任务 4: 通过 CDP 显示最近会话，按下打开。\n任务 5: 通过 CDP 显示最近会话，按下打开。\n主题切换: 应用本键主题，再按一次恢复默认主题。\n当前会话状态: 转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 CDP。\n语音输入: 在 WorkBuddy 中开始或结束语音输入。\n发送消息: 发送当前草稿；显示 Stop 时停止当前回复。\n启动 WorkBuddy: 以本机 CDP 模式启动 WorkBuddy；已连接时唤醒窗口。\n积分余额: 通过 CDP 显示剩余积分，每 30 秒刷新，按下立即刷新。支持按键和旋钮。\n\n设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。"

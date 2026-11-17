@@ -205,7 +205,9 @@
     "Unexpected CDP target": "WorkBuddy CDP에 연결할 수 없습니다(127.0.0.1:9223).",
     "Invalid WorkBuddy action": "올바르지 않은 WorkBuddy 동작입니다.",
     "Model selection failed": "모델을 선택하지 못했습니다.",
-    "chooseImageFile": "이미지 선택"
+    "chooseImageFile": "이미지 선택",
+    "taskShowCredits": "대화 사용 크레딧 표시",
+    "taskCreditsHelp": "상태 GIF 상단에 대화의 누적 사용 크레딧을 표시합니다. 매분 및 상태 변경 시 로컬 WorkBuddy 대화 파일을 읽습니다. 데이터가 없으면 대시를 표시합니다. 끄면 원본 GIF를 사용합니다."
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",

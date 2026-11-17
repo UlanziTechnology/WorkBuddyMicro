@@ -205,7 +205,9 @@
     "Unexpected CDP target": "CDP do WorkBuddy indisponível (127.0.0.1:9223).",
     "Invalid WorkBuddy action": "Ação do WorkBuddy inválida.",
     "Model selection failed": "Falha ao selecionar o modelo.",
-    "chooseImageFile": "Escolher imagem"
+    "chooseImageFile": "Escolher imagem",
+    "taskShowCredits": "Mostrar créditos consumidos",
+    "taskCreditsHelp": "Mostra o consumo acumulado da conversa no topo do GIF. Lê os ficheiros locais do WorkBuddy a cada minuto e quando o estado muda. Sem dados apresenta um traço. Desative para usar o GIF original."
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",

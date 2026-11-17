@@ -43,7 +43,7 @@
   function getFormValue(root) {
     const values = {};
     root.querySelectorAll("[name]").forEach((el) => {
-      values[el.name] = el.value;
+      values[el.name] = el.type === "checkbox" ? el.checked : el.value;
     });
     return values;
   }
@@ -51,7 +51,8 @@
   function setFormValue(values, root) {
     root.querySelectorAll("[name]").forEach((el) => {
       if (Object.prototype.hasOwnProperty.call(values, el.name)) {
-        el.value = values[el.name] == null ? "" : String(values[el.name]);
+        if (el.type === "checkbox") el.checked = values[el.name] !== false && values[el.name] !== "false";
+        else el.value = values[el.name] == null ? "" : String(values[el.name]);
       }
     });
     onFormFilled && onFormFilled(values);

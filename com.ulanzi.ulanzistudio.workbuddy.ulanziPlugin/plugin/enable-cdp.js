@@ -4,7 +4,7 @@ const path = require("node:path");
 const os = require("node:os");
 const net = require("node:net");
 const exec = require("node:util").promisify(require("node:child_process").execFile);
-const cdp = require("./workbuddy-cdp");
+const cdp = require("./sources/cdp");
 const { launchDeepLink } = require("./deeplink");
 const pause = ms => new Promise(resolve => setTimeout(resolve,ms));
 const flags = ["--remote-debugging-address=127.0.0.1","--remote-debugging-port=9223"];

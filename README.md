@@ -17,7 +17,7 @@ D200X desktop visualization with illustrative session states; not a physical-dev
 | Launch WorkBuddy | Key | Start or restart WorkBuddy with local debugging enabled; bring it forward when already connected | CDP setup |
 | New Task | Key | Open an unsent draft with a reusable prompt and optional task parameters | Deep link |
 | Open Page | Key | Jump to a page or a specific task ID | Deep link |
-| WorkBuddy Task 1–5 | Five key actions | Show recent conversations and their individual states; press to open the conversation displayed | CDP |
+| WorkBuddy Task 1–5 | Five key actions | Show recent conversations, states and optional cumulative credits; press to open the conversation displayed | CDP + read-only session files |
 | Model Switch | Dial | Show the current model and its icon; turn to choose an available model and apply after a short pause, or press to apply | CDP |
 | Current Session Status | Dial | Show live status; turn to select a permission or question option, then press to act | CDP |
 | Voice Input | Key | Start or finish native voice input; show confirmed recording state with a blinking red dot | CDP |
@@ -25,7 +25,7 @@ D200X desktop visualization with illustrative session states; not a physical-dev
 | Switch Theme | Key | Apply a chosen image and editable colors; press again to restore the native theme | CDP |
 | Credit Balance | Key or dial | Show remaining account credits; refresh every 30 seconds or on press | CDP |
 
-Deep-link actions work without CDP setup. Live state and controls use **CDP only**, with no hook fallback, separate Bridge service or runtime npm dependencies. WorkBuddy remains responsible for authentication, model access, permissions and task execution.
+Deep-link actions work without CDP setup. Live state and controls use **CDP only**, with no hook fallback, separate Bridge service or runtime npm installation. WorkBuddy remains responsible for authentication, model access, permissions and task execution.
 
 ## Requirements
 
@@ -146,7 +146,9 @@ npm run check
 | `plugin/app.js` | Studio connection, action instances, settings, event routing and display delivery |
 | `plugin/actions.js` | Key and dial behavior |
 | `plugin/deeplink.js` | Client URLs, input validation and prompt placeholders |
-| `plugin/workbuddy-cdp.js`, `plugin/question-panel.js` | Local renderer discovery and WorkBuddy state/action adapters |
+| `plugin/sources/cdp.js`, `plugin/question-panel.js` | Local renderer discovery and WorkBuddy state/action adapters |
+| `plugin/sources/session-files.js` | Read-only transcripts, record deduplication and cumulative credits; no live-state inference |
+| `plugin/task-cards.js`, `plugin/task-gif.js` | Visible-task refresh coordination, stale-result guards, GIF composition and file caching |
 | `plugin/workbuddy-status.js` | Shared session snapshots and state subscriptions |
 | `plugin/enable-cdp.js`, `plugin/windows-workbuddy.ps1` | Platform launch, restart and foreground activation |
 | `plugin/*-art.js`, `layouts/`, `assets/` | Rendered graphics, Encoder layouts and artwork |

@@ -40,6 +40,10 @@ Working directories must be absolute paths. Prompts are limited to 8,000 charact
 
 ## Recent tasks and session status
 
+Each task key has **Show session credits** enabled by default. It draws cumulative credits in a top-center pixel label, with the robot at 86% size, preserving its animation. Disable the option to use the original GIF. Consumption is read only from `%USERPROFILE%/.workbuddy/projects` on Windows or `~/.workbuddy/projects` on macOS. Credits refresh once a minute; a real status change reads the latest amount and sends the state and amount together. Unknown usage shows `-`, distinct from a measured zero. Unchanged images are not sent again. This is conversation consumption, separate from account Credit Balance.
+
+Task identity and live status still come from CDP. File access supplies usage only and does not infer completion or approvals. Only visible, enabled conversation keys read usage. Generated GIFs are cached locally; no Python, npm installation or extra background process is needed.
+
 Add **WorkBuddy Task 1–5** to keys to show up to five recent conversations loaded by the client. Each key tracks its own conversation's state. Press to open the conversation displayed on that key. Slots follow the recent list rather than permanent assignments or a complete history query.
 
 The new artwork distinguishes idle, working, completed, approval/reply needed, error and disconnected. Completed shows check-mark eyes, approval shows yellow pause eyes, and error shows red cross eyes. Completion attention requires an unread notification in WorkBuddy's conversation list. A task simply becoming idle does not create a completion alert.

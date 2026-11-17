@@ -1,11 +1,11 @@
 "use strict";
-const cdp = require("./workbuddy-cdp");
+const cdp = require("./sources/cdp");
 const fs = require("fs");
 const path = require("path");
 const { EventEmitter } = require("events");
 // Keep key animations and encoder fallback images on the same status mapping.
 function statusArtwork(state) {
-  return {idle:"idle", sleeping:"idle", thinking:"running", working:"running", sweeping:"running",
+  return {empty:"empty", idle:"idle", sleeping:"idle", thinking:"running", working:"running", sweeping:"running",
     attention:"done", notification:"approval", error:"error"}[state] || "offline";
 }
 class WorkBuddyStatus extends EventEmitter {

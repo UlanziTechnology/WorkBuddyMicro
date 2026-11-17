@@ -1,12 +1,12 @@
 "use strict";
-const { WebSocketClient } = require("../libs/ws-client");
+const { WebSocketClient } = require("../../libs/ws-client");
 
 // Only connect to the WorkBuddy renderer on Skin Studio's fixed loopback port.
-const { drawModelCard, modelSvg } = require("./model-art");
-const { drawCreditsCard, creditGlyphData } = require("./credits-art");
-const { samplePalette } = require("./skin-palette");
-const { readQuestionPanel } = require("./question-panel");
-const { applyTheme } = require("./skin-theme");
+const { drawModelCard, modelSvg } = require("../model-art");
+const { drawCreditsCard, creditGlyphData } = require("../credits-art");
+const { samplePalette } = require("../skin-palette");
+const { readQuestionPanel } = require("../question-panel");
+const { applyTheme } = require("../skin-theme");
 const endpoint = "http://127.0.0.1:9223";
 const renderer = /^file:\/\/\/[^?#]*(?:\/WorkBuddy(?:%20AI| AI)?\.app\/Contents\/Resources|\/WorkBuddy(?:%20AI| AI)?\/resources)\/app\.asar\/renderer\/index\.html(?:[?#]|$)/i;
 async function target() {

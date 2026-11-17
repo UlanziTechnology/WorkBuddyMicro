@@ -22,3 +22,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+omggif 1.0.10 (libs/vendor/omggif.js)
+Copyright (c) 2013 Dean McNamee <dean@gmail.com>
+MIT license, reproduced in the vendored source file.
+https://github.com/deanm/omggif

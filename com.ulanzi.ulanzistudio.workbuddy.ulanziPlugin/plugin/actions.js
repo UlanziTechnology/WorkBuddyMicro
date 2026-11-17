@@ -391,7 +391,7 @@ class CurrentSessionAction extends BaseAction {
       }));
       picture = "data:image/svg+xml;base64," + Buffer.from(questionSvg({choices}, this.choice)).toString("base64");
     } else {
-      picture = "assets/states/" + statusArtwork(state) + ".png";
+      picture = "assets/states/" + statusArtwork(state === "idle" && !this.app.status.session ? "empty" : state) + ".png";
     }
     this.app.setFeedback(this, {icon:{value:picture}});
   }
@@ -436,17 +436,24 @@ class CurrentSessionAction extends BaseAction {
 
 /** Capture exactly what was drawn before awaiting OS launch; never reselect after an async refresh. */
 class TaskAction extends BaseAction {
-  onActivated() { this.onStatus(); }
+  onActivated() { this.app.taskCards.remove(this.actionid); this.onStatus(); }
+  setActive(active) {
+    if (active === false) this.app.taskCards.remove(this.actionid);
+    super.setActive(active);
+  }
+  destroy() { this.active = false; this.app.taskCards.remove(this.actionid); }
   onSettings() { this.onStatus(); }
   onStatus() {
     if (!this.active) return;
     this.slot = Number(this.uuid.slice(-1));
     this.displayedTask = this.app.status.taskSlots()[this.slot-1] || null;
     const task = this.displayedTask;
-    const label = this.app.t("taskLabel", {n:this.slot});
     const title = task?.title ? Array.from(task.title) : [];
     const subtitle = title.length ? title.slice(0,12).join("") + (title.length>12 ? "…" : "") : task?.session.slice(0,8);
-    this.app.setStatusIcon(this, !this.app.status.cdpState ? "offline" : task?.state || "idle", task ? `${label}\n${subtitle}` : label);
+    this.app.taskCards.update(this, {session:task?.session || null,
+      state:!this.app.status.cdpState ? "offline" : task?.state || "empty",
+      text:subtitle || "",
+      showCredits:this.settings.showCredits !== false && this.settings.showCredits !== "false"});
   }
   invoke() {
     const task = this.displayedTask;
@@ -458,7 +465,7 @@ class TaskAction extends BaseAction {
   }
 }
 
-const cdp = require("./workbuddy-cdp");
+const cdp = require("./sources/cdp");
 class ComposerAction extends BaseAction {
   get kind() { return this.uuid.split(".").pop(); }
   onActivated() {

@@ -13,8 +13,11 @@ const fs = require("fs");
 const { spawn } = require("child_process");
 const { WebSocketClient } = require("../libs/ws-client");
 const { createAction } = require("./actions");
-const { WorkBuddyStatus, statusArtwork } = require("./workbuddy-status");
+const { WorkBuddyStatus } = require("./workbuddy-status");
 const deeplink = require("./deeplink");
+const {TaskCards} = require("./task-cards");
+const {TaskGif} = require("./task-gif");
+const {SessionFiles} = require("./sources/session-files");
 const i18n = require("../libs/i18n");
 
 const PLUGIN_UUID = "com.ulanzi.ulanzistudio.workbuddy";
@@ -39,6 +42,7 @@ class PluginApp {
     this.ws = null;
     this.actions = new Map(); // actionid -> action instance
     this.displayCache = new Map();
+    this.taskCards = new TaskCards({usage:new SessionFiles(), artwork:new TaskGif(), send:message => this.send(message)});
     this.sessionModelCards = new Map(); // Shared by model dials when Studio recreates an instance.
     this.globalSettings = { scheme: "workbuddy://" };
     this.status = new WorkBuddyStatus(() => {
@@ -331,7 +335,7 @@ class PluginApp {
     if (!action) return;
     try {
       if (request.type === "restoreTheme" && action.uuid.endsWith(".skin")) {
-        const restored = await require("./workbuddy-cdp").command("restoreTheme").catch(() => false);
+        const restored = await require("./sources/cdp").command("restoreTheme").catch(() => false);
         this.toast(this.t(restored ? "themeRestored" : "connectCdp"));
         return;
       }
@@ -365,16 +369,6 @@ class PluginApp {
       }
     }
     if (!action && sent) this.lastInspectorStatus = signature;
-  }
-
-  setStatusIcon(action, state, text) {
-    if (!action.active) return;
-    const artwork = statusArtwork(state);
-    const animation = artwork !== "offline" ? artwork : null;
-    const icon = { uuid: action.uuid, actionid: action.actionid, key: action.key, type: animation ? 4 : 2, showtext: Boolean(text), ...(text ? {textdata:text} : {}) };
-    if (animation) icon.gifpath = "assets/states/" + animation + ".gif";
-    else icon.path = "assets/states/offline.png";
-    this.send({ cmd: "state", param: { statelist: [icon] } });
   }
 
   setActionIcon(action, iconPath) {
@@ -498,7 +492,7 @@ if (require.main === module) {
   catch (e) { app.log("error", "WorkBuddy settings migration: " + e.message); }
   app.status.start().catch(e => { app.log("error", "Status startup: " + e.message); });
   app.connect();
-  const stop = async () => { await app.status.stop(); process.exit(0); };
+  const stop = async () => { app.taskCards.stop(); await app.status.stop(); process.exit(0); };
   process.once("SIGTERM", stop); process.once("SIGINT", stop);
 }
 module.exports = { PluginApp };

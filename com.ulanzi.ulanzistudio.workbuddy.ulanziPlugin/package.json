@@ -7,6 +7,6 @@
     "node": ">=20"
   },
   "scripts": {
-    "check": "node --check plugin/app.js && node --check plugin/actions.js && node --check plugin/deeplink.js && node --check plugin/migrate-settings.js && node --check plugin/workbuddy-status.js && node --check property-inspector/pi-common.js && node --check property-inspector/setup.js && node --check plugin/enable-cdp.js && node --check plugin/skin-theme.js && node --check plugin/model-art.js && node --check plugin/workbuddy-cdp.js && node --check property-inspector/skin/skin.js && node --check plugin/credits-art.js && node --check plugin/question-panel.js && node --check plugin/question-art.js && node --check libs/i18n.js && node --check usage-guide/guide.js"
+    "check": "node --check plugin/app.js && node --check plugin/actions.js && node --check plugin/deeplink.js && node --check plugin/migrate-settings.js && node --check plugin/workbuddy-status.js && node --check property-inspector/pi-common.js && node --check property-inspector/setup.js && node --check plugin/enable-cdp.js && node --check plugin/skin-theme.js && node --check plugin/model-art.js && node --check plugin/sources/cdp.js && node --check property-inspector/skin/skin.js && node --check plugin/credits-art.js && node --check plugin/question-panel.js && node --check plugin/question-art.js && node --check libs/i18n.js && node --check usage-guide/guide.js && node --check plugin/sources/session-files.js && node --check plugin/task-cards.js && node --check plugin/task-gif.js"
   }
 }
