@@ -28,6 +28,33 @@
   const stateLabels = {};
   const message = payload => send({cmd:"sendToPlugin", uuid:UUID, actionid:ACTIONID, key:KEY, payload});
 
+  let conversations = null, requestingConversations = false, pickerConnected;
+  function renderConversations() {
+    const select = document.getElementById("conversation");
+    if (!select) return;
+    const selected = settings.taskId || "", items = conversations || [];
+    const option = (value, text, disabled = false) => {
+      const node = document.createElement("option");node.value=value;node.textContent=text;node.disabled=disabled;return node;
+    };
+    const options = [option("",t("chooseConversation"))];
+    const saved = items.find(item => item.session === selected);
+    if (selected && !saved) options.push(option(selected,settings.taskTitle || t("savedConversation"),true));
+    const titles = new Map();
+    for (const item of items) titles.set(item.title,(titles.get(item.title) || 0)+1);
+    for (const item of items) options.push(option(item.session,(item.title || t("untitledConversation")) +
+      (titles.get(item.title)>1 ? " · "+item.session.slice(0,8) : "")));
+    select.replaceChildren(...options);select.value=selected;
+    select.disabled = !items.length;
+    document.getElementById("refresh-conversations").disabled=requestingConversations;
+    document.getElementById("conversation-note").textContent = requestingConversations ? t("loadingConversations") :
+      conversations === null ? t("connectToLoadConversations") : selected && !saved ? t("selectedConversationMissing") :
+      !items.length ? t("noConversations") : "";
+  }
+  function requestConversations() {
+    if (!UUID.endsWith(".openchat") || requestingConversations) return;
+    requestingConversations = true;renderConversations();message({type:"getConversations"});
+  }
+
   function send(obj) {
     if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(obj));
   }
@@ -56,6 +83,7 @@
       }
     });
     onFormFilled && onFormFilled(values);
+    renderConversations();
   }
 
   // Per-page hook (e.g. conditional fields), set by page scripts.
@@ -91,6 +119,7 @@
       send({ cmd: "getSettings", uuid: UUID, actionid: ACTIONID, key: KEY });
       send({ cmd: "getGlobalSettings", uuid: UUID, actionid: ACTIONID, key: KEY });
       message({type:"getStatus"});
+      requestConversations();
       clearInterval(statusTimer); statusTimer = setInterval(() => message({type:"getStatus"}), 2000);
     };
     ws.onmessage = (evt) => {
@@ -125,6 +154,16 @@
           break;
         case "sendToPropertyInspector": {
           if (msg.payload?.type === "status") window.WorkBuddySetup.render(msg.payload);
+          if (UUID.endsWith(".openchat") && msg.payload?.type === "conversations") {
+            conversations = Array.isArray(msg.payload.items) ? msg.payload.items.filter(item =>
+              typeof item?.session === "string" && item.session.length > 0 && item.session.length <= 256)
+              .map(item => ({session:item.session,title:String(item.title || "")})) : null;
+            requestingConversations=false;renderConversations();
+          }
+          if (UUID.endsWith(".openchat") && msg.payload?.type === "status") {
+            if (msg.payload.connected && pickerConnected !== true) requestConversations();
+            pickerConnected=Boolean(msg.payload.connected);
+          }
           if (msg.payload?.type === "status" && /\.task[1-5]$/.test(UUID)) {
             const n=Number(UUID.slice(-1)), task=msg.payload.tasks?.[n-1];
             document.getElementById("task-name").textContent=t("taskLabel",{n});
@@ -138,6 +177,7 @@
     };
     ws.onclose = () => {
       clearInterval(statusTimer); window.WorkBuddySetup.disconnected();
+      requestingConversations=false;pickerConnected=false;conversations=null;renderConversations();
       if (reconnectTimer) return;
       reconnectTimer = setTimeout(() => {
         reconnectTimer = null;
@@ -181,8 +221,17 @@
       form.addEventListener("input", saveSettingsDebounced);
       form.addEventListener("change", saveSettingsDebounced);
     }
+    const conversation = document.getElementById("conversation");
+    if (conversation) {
+      document.getElementById("refresh-conversations").addEventListener("click",requestConversations);
+      conversation.addEventListener("change",() => {
+        settings.taskId=conversation.value;
+        settings.taskTitle=conversations?.find(item => item.session === conversation.value)?.title || "";
+      });
+      renderConversations();
+    }
     bindGlobalScheme();
-    if (/\.(modelswitch|launch|credits|skin|currentsession|voice|send|task[1-5])$/.test(UUID)) window.WorkBuddySetup.init({ t, message, stateLabels });
+    if (/\.(modelswitch|launch|credits|skin|currentsession|voice|send|openchat|task[1-5])$/.test(UUID)) window.WorkBuddySetup.init({ t, message, stateLabels });
     else {
       const help = document.createElement("button"); help.type="button"; help.className="guide-link"; help.textContent=t("guide");
       help.addEventListener("click",()=>message({type:"openGuide"})); document.body.append(help);

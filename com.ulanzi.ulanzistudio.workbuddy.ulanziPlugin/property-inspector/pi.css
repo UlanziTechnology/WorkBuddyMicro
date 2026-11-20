@@ -1,4 +1,11 @@
 /* WorkBuddy Property Inspector shared styles. Background must stay transparent. */
+html { color-scheme: dark; }
+* { scrollbar-width: thin; scrollbar-color: #53585b transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background: #53585b; border: 1px solid transparent; background-clip: padding-box; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background-color: #6b7276; }
+::-webkit-scrollbar-button { display: none; }
 body {
   margin: 0;
   padding: 0;
@@ -39,14 +46,27 @@ button:focus-visible { outline: 2px solid #13c7a0; }
 #hook-error { color: #ff8c91; overflow-wrap: anywhere; }
 .help { line-height: 1.6; color: #aaa; }
 .wb-setup { padding: 12px 12px 14px; border-bottom: 1px solid #404449; margin-bottom: 8px; }
-.wb-setup h2 { font-size: 15px; margin: 0 0 5px; }
+.wb-setup-summary { display: flex; align-items: center; gap: 8px; list-style: none; color: #d0d0d0; font-size: 14px; font-weight: 600; }
+.wb-setup-summary::-webkit-details-marker { display: none; }
+.wb-setup-summary::before { content: ""; width: 6px; height: 6px; border-right: 2px solid #9ba3a6; border-bottom: 2px solid #9ba3a6; transform: rotate(-45deg); flex-shrink: 0; }
+.wb-setup[open] > .wb-setup-summary::before { transform: rotate(45deg); }
+.wb-summary-state { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.wb-summary-state > .wb-value { font-size: 11px; font-weight: 400; }
+.wb-setup [hidden] { display: none !important; }
+.wb-setup .wb-refresh { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 3px; margin: 0; border: 0; background: transparent; color: #aab4b6; flex-shrink: 0; }
+.wb-setup .wb-refresh:hover { color: #e8e8e8; background: #30363a; }
+.wb-refresh svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.wb-row-actions { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; }
+.wb-setup .wb-inline-action { margin: 0; padding: 4px 9px; font-size: 11px; line-height: 1.4; white-space: nowrap; }
+.wb-inline-link { color: #8bcab9; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+.wb-inline-link:hover { color: #a5ead5; }
+.wb-inline-link:focus-visible { outline: 2px solid #13c7a0; outline-offset: 2px; }
+.wb-setup-summary:focus-visible { outline: 2px solid #13c7a0; outline-offset: 4px; border-radius: 2px; }
 .wb-panel { border: 1px solid #42484a; border-radius: 8px; overflow: hidden; }
-.wb-row { display: flex; justify-content: space-between; gap: 10px; padding: 9px; border-bottom: 1px solid #383d40; }
+.wb-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 24px; padding: 6px 9px; border-bottom: 1px solid #383d40; }
 .wb-row:last-child { border-bottom: none; }
 .wb-value { color: #b4bac0; text-align: right; }
 .wb-value.good { color: #6dd6b1; }.wb-value.warn { color: #efbd71; }
-.wb-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 10px 0; }
-.wb-actions button { margin: 0; }.wb-actions .primary { background: #087e68; }.wb-actions .danger { grid-column: 1/-1; color: #f4a1a8; }
 .wb-error { color: #f4a1a8; overflow-wrap: anywhere; }
 details summary { cursor: pointer; color: #c5ced1; }
 .guide-link { margin: 8px 10px; color: #8bcab9; background: transparent; border: none; padding: 4px 0; }

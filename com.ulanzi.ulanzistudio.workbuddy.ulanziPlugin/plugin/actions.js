@@ -90,7 +90,7 @@ class NewTaskAction extends BaseAction {
 class OpenPageAction extends BaseAction {
   onSettings() { this.onActivated(); }
   onActivated() {
-    const icons = {home:"首页",chat:"按ID打开任务",projects:"项目",experts:"专家",skills:"技能",connectors:"连接器",automation:"定时任务",claw:"本地助理",discover:"灵感社区","tencent-docs":"腾讯文档","my-files":"本地文件",ima:"ima",lexiang:"乐享知识库","agent-mail":"我的邮箱"};
+    const icons = {home:"首页",chat:"按ID打开任务",projects:"项目",experts:"专家",skills:"技能",connectors:"连接器",automation:"定时任务",colleagues:"本地助理",claw:"本地助理",discover:"灵感社区","tencent-docs":"腾讯文档","my-files":"本地文件",ima:"ima",lexiang:"乐享知识库","agent-mail":"我的邮箱"};
     this.app.setActionIcon(this, "assets/pages/" + (icons[this.settings.page || "home"] || "打开页面") + ".png");
   }
   invoke() {
@@ -100,6 +100,27 @@ class OpenPageAction extends BaseAction {
       this.settings.taskId
     );
     return this.launch(url);
+  }
+}
+
+/** Saved conversation identity is stable even when the recent list reorders. */
+class OpenConversationAction extends BaseAction {
+  onSettings() {
+    const enabled = this.settings.autoTitle !== false && this.settings.autoTitle !== "false";
+    // Resume automation even if the host title was edited while it was disabled.
+    if (enabled && this.autoTitleEnabled === false) this.app.displayCache.delete(this.actionid);
+    this.autoTitleEnabled = enabled;
+    this.onActivated();
+  }
+  onActivated() {
+    if (!this.autoTitleEnabled) return;
+    const title = this.settings.taskId ? this.settings.taskTitle || this.app.t("untitledConversation") : this.app.t("action_openchat");
+    this.app.setActionIcon(this, "assets/pages/按ID打开任务.png",title);
+  }
+  invoke() {
+    const id = typeof this.settings.taskId === "string" ? this.settings.taskId.trim() : "";
+    if (!id || id.length > 256) throw Error(this.app.t("chooseConversation"));
+    return this.launch(deeplink.buildPageUrl(this.scheme,"chat",id));
   }
 }
 
@@ -138,9 +159,6 @@ class ModelSwitchAction extends BaseAction {
   }
 
   onActivated() {
-    // An existing encoder instance may still carry the geometry of an older layout.
-    this.app.send({ cmd:"setFeedbackLayout", uuid:this.uuid, actionid:this.actionid, key:this.key,
-      layout:"layouts/model-encoder.json" });
     this.onStatus();
     this.pushFeedback();
   }
@@ -262,7 +280,11 @@ class ModelSwitchAction extends BaseAction {
       const name=menu.names[this.liveIndex];
       try {
         if (!await cdp.command("selectModel",name,menu.session)) throw Error(this.app.t("modelSelectionFailed"));
-        if (menu.session === this.app.status.session) this.rememberCard({session:menu.session, name, picture:menu.pictures?.[name]});
+        if (menu.session === this.app.status.session) {
+          const previous = this.currentCard;
+          const cached = previous?.session === menu.session && previous?.name === name ? previous.picture : undefined;
+          this.rememberCard({session:menu.session, name, picture:menu.pictures?.[name] || cached});
+        }
       } catch {
         this.live = null;
         await this.syncLabel();
@@ -574,6 +596,7 @@ const ACTION_CLASSES = {
   "com.ulanzi.ulanzistudio.workbuddy.currentsession": CurrentSessionAction,
   "com.ulanzi.ulanzistudio.workbuddy.newtask": NewTaskAction,
   "com.ulanzi.ulanzistudio.workbuddy.openpage": OpenPageAction,
+  "com.ulanzi.ulanzistudio.workbuddy.openchat": OpenConversationAction,
   "com.ulanzi.ulanzistudio.workbuddy.modelswitch": ModelSwitchAction,
 };
 for (let i=1;i<=5;i++) ACTION_CLASSES[`com.ulanzi.ulanzistudio.workbuddy.task${i}`] = TaskAction;

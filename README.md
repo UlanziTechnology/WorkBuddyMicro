@@ -16,7 +16,8 @@ D200X desktop visualization with illustrative session states; not a physical-dev
 | --- | --- | --- | --- |
 | Launch WorkBuddy | Key | Start or restart WorkBuddy with local debugging enabled; bring it forward when already connected | CDP setup |
 | New Task | Key | Open an unsent draft with a reusable prompt and optional task parameters | Deep link |
-| Open Page | Key | Jump to a page or a specific task ID | Deep link |
+| Open Page | Key | Jump to a selected WorkBuddy page | Deep link |
+| Open Conversation | Key | Choose a loaded conversation from a dropdown; press to open the saved selection | CDP for selection; deep link for opening |
 | Recent Task 1–5 | Five key actions | Show recent conversations and their states; press to open the conversation displayed | CDP |
 | Model Switch | Dial | Show the current model and its icon; turn to choose an available model and apply after a short pause, or press to apply | CDP |
 | Current Session Status | Dial | Show live status; turn to select a permission or question option, then press to act | CDP |
@@ -147,7 +148,6 @@ npm run check
 | `plugin/actions.js` | Key and dial behavior |
 | `plugin/deeplink.js` | Client URLs, input validation and prompt placeholders |
 | `plugin/sources/cdp.js`, `plugin/question-panel.js` | Local renderer discovery and WorkBuddy state/action adapters |
-| `plugin/sources/session-files.js` | Read-only transcripts, record deduplication and cumulative credits; no live-state inference |
 | `plugin/task-cards.js`, `plugin/task-art.js`, `plugin/task-art-worker.js` | Visible task updates, stale-result guards, worker-based PNG/GIF drawing and file caching |
 | `plugin/workbuddy-status.js` | Shared session snapshots and state subscriptions |
 | `plugin/enable-cdp.js`, `plugin/windows-workbuddy.ps1` | Platform launch, restart and foreground activation |

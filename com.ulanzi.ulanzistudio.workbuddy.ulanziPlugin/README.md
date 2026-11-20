@@ -27,7 +27,7 @@ When CDP is connected, Launch restores the Windows client from the tray or a min
 | Action | Configure and use |
 | --- | --- |
 | New Task | Set a prompt template and optional working directory, expert, skills, connectors, model and mode. Press to open an unsent draft; sending remains your choice. |
-| Open Page | Choose a destination. Opening a specific conversation requires its task ID; the key icon follows the selected page. |
+| Open Page | Choose a destination. The key icon follows the selected page; use Open Conversation to bind a specific chat. |
 
 New Task supports `{clipboard}`, `{date}` and `{time}`. For example:
 
@@ -36,11 +36,13 @@ Summarize these notes and list next steps ({date}):
 {clipboard}
 ```
 
-Working directories must be absolute paths. Prompts are limited to 8,000 characters; skill and connector lists accept up to 20 unique entries each. Long prompts are truncated with feedback. Page destinations include home, projects, experts, skills, connectors, automation, colleagues, Claw, discovery, Tencent Docs, local/cloud files, IMA, Lexiang, mail and Space. Availability depends on the client version, region and enabled features. Earlier checks on WorkBuddy 5.3.14 found that Space left the current page unchanged and the cloud-files route opened the same file list.
+Working directories must be absolute paths. Prompts are limited to 8,000 characters; skill and connector lists accept up to 20 unique entries each. Long prompts are truncated with feedback. Page destinations include home, projects, experts, skills, connectors, automation, assistants, discovery, Tencent Docs, My Files, IMA, Lexiang and mail. Availability depends on the client version, region and enabled features.
+
+## Open Conversation
+
+Add **Open Conversation** to a key. Connect CDP, select a loaded conversation from the dropdown and use **Refresh conversations** when needed. The saved conversation stays fixed when recent tasks reorder. No task ID entry is required. **Automatically update title** is enabled by default; disable it to preserve your custom key title. Opening a saved selection uses its deep link. Unloaded or deleted selections stay visible as unavailable; refreshing never silently binds a different chat.
 
 ## Recent tasks and session status
-
-Each recent-task key draws its title over the supplied round status artwork: a conversation title of up to two lines at the top and a colored status pill below. Idle keys have no status pill. Running keys keep the loading GIF’s original frames and timing; completed, approval, error and disconnected use green, amber, red and gray badges. Long titles end with an ellipsis. Status labels are part of the supplied images and stay the same across Studio languages.
 
 Each recent-task key draws its title over the supplied round status artwork: a conversation title of up to two lines at the top and a colored status pill below. Idle keys have no status pill. Running keys keep the loading GIF’s original frames and timing; completed, approval, error and disconnected use green, amber, red and gray badges. Long titles end with an ellipsis. Status labels are part of the supplied images and stay the same across Studio languages.
 

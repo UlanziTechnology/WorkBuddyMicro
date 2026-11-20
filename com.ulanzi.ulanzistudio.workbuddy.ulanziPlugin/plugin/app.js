@@ -138,12 +138,7 @@ class PluginApp {
       }
       return sent;
     }
-    const sent = this.ws.sendJson(obj);
-    if (sent && obj.cmd === "setFeedbackLayout") {
-      const cached = this.displayCache.get(obj.actionid);
-      if (cached) delete cached.feedback;
-    }
-    return sent;
+    return this.ws.sendJson(obj);
   }
 
   onMessage(text) {
@@ -340,6 +335,13 @@ class PluginApp {
     const action = this.actions.get(msg.actionid);
     if (!action) return;
     try {
+      if (request.type === "getConversations" && action.uuid.endsWith(".openchat")) {
+        const items = await require("./sources/cdp").command("conversations").catch(() => null);
+        // Picker responses stay scoped to the requesting instance, never the 500ms status broadcast.
+        if (this.actions.get(action.actionid) === action) this.send({cmd:"sendToPropertyInspector",
+          uuid:action.uuid,actionid:action.actionid,key:action.key,payload:{type:"conversations",items}});
+        return;
+      }
       if (request.type === "restoreTheme" && action.uuid.endsWith(".skin")) {
         const restored = await require("./sources/cdp").command("restoreTheme").catch(() => false);
         this.toast(this.t(restored ? "themeRestored" : "connectCdp"));
@@ -352,6 +354,7 @@ class PluginApp {
         catch (e) { this.cdpRestartError=this.t(e.message); this.toast(this.cdpRestartError); }
         finally { this.cdpRestarting=false; }
       }
+      if (request.type === "openDownload") { this.openDownloadPage(); return; }
       if (request.type === "openGuide") this.send({ cmd: "openurl", url: "./usage-guide/index.html", local: true, param: { language: this.lang } });
       this.sendStatus(action);
     } catch (e) {
@@ -377,8 +380,9 @@ class PluginApp {
     if (!action && sent) this.lastInspectorStatus = signature;
   }
 
-  setActionIcon(action, iconPath) {
-    if (action.active) this.send({cmd:"state",param:{statelist:[{uuid:action.uuid,actionid:action.actionid,key:action.key,type:2,path:iconPath,showtext:false}]}});
+  setActionIcon(action, iconPath, title) {
+    if (action.active) this.send({cmd:"state",param:{statelist:[{uuid:action.uuid,actionid:action.actionid,key:action.key,type:2,path:iconPath,
+      showtext:typeof title === "string",...(typeof title === "string" ? {textdata:title} : {})}]}});
   }
 
   requestGlobalSettings() {

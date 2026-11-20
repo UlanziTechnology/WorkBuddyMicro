@@ -45,7 +45,7 @@ function modelSvg(label, measure, connected = true, picture) {
   }).join("");
   const cachedIcon = !connected && typeof picture === "string" && /^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(picture)
     ? `<defs><clipPath id="model-icon"><rect x="31" y="13" width="64" height="64" rx="15"/></clipPath></defs><image href="${picture}" width="126" height="126" clip-path="url(#model-icon)"/>` : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="252" height="252" viewBox="0 0 126 126"><rect width="126" height="126" rx="15" fill="${connected ? "#19cea5" : "#7a7a7a"}"/><path d="m13 36-6 7 6 7m100-14 6 7-6 7" fill="none" stroke="${connected ? "#0b4439" : "#ffffff"}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="31" y="13" width="64" height="64" rx="15" fill="#f6fffc"/><g font-family="sans-serif" font-weight="600" text-anchor="middle" fill="${connected ? "#083e34" : "#ffffff"}"><text x="63" y="58" font-size="37" fill="#083e34">${escape(Array.from(name)[0] || "M")}</text>${text}</g>${cachedIcon}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="252" height="252" viewBox="0 0 126 126"><rect width="126" height="126" rx="15" fill="${connected ? "#010101" : "#7a7a7a"}"/><path d="m13 36-6 7 6 7m100-14 6 7-6 7" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="31" y="13" width="64" height="64" rx="15" fill="#f6fffc"/><g font-family="sans-serif" font-weight="600" text-anchor="middle" fill="#ffffff"><text x="63" y="58" font-size="37" fill="#083e34">${escape(Array.from(name)[0] || "M")}</text>${text}</g>${cachedIcon}</svg>`;
 }
 
 async function drawModelCard(label, icon) {

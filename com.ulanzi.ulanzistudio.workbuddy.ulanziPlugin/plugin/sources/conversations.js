@@ -1,7 +1,7 @@
 "use strict";
 
-/** Runs in WorkBuddy's renderer. Read the committed conversation list; reused DOM
- * fibers can still point into an obsolete tree.
+/** Runs in WorkBuddy's renderer. Both recent slots and the picker read the same
+ * committed list; reused DOM fibers can still point into an obsolete tree.
  * null means unavailable; [] is an authoritative empty list.
  */
 function readConversations() {

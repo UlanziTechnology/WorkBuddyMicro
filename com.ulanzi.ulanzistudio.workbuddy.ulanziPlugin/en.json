@@ -22,6 +22,15 @@
       ]
     },
     {
+      "Name": "Open Conversation",
+      "Tooltip": "Select a conversation loaded by WorkBuddy, ordered by recent activity. The key keeps this conversation when the recent list changes. Refreshing the list requires CDP; opening a saved selection uses its deep link.",
+      "States": [
+        {
+          "Name": "Open Conversation"
+        }
+      ]
+    },
+    {
       "Name": "Model Switch",
       "Tooltip": "Turn the dial to switch the model in the WorkBuddy composer.",
       "States": [
@@ -156,17 +165,15 @@
     "Page_skills": "Skills",
     "Page_connectors": "Connectors",
     "Page_automation": "Automation",
-    "Page_colleagues": "Colleagues",
+    "Page_colleagues": "Assistants",
     "Page_claw": "Claw workspace",
     "Page_discover": "Discover",
     "Page_tencent-docs": "Tencent Docs",
     "Page_my-files": "My files",
-    "Page_my-cloud-files": "My cloud files",
     "Page_ima": "IMA knowledge",
     "Page_lexiang": "Tencent Lexiang",
     "Page_agent-mail": "Agent Mail",
-    "Page_space": "Space",
-    "PageAvailability": "Page availability depends on WorkBuddy version and enabled features. Unsupported destinations may leave the current page unchanged or return home. The cloud-files tab may share the same file list.",
+    "PageAvailability": "Page availability depends on WorkBuddy version and enabled features. Unsupported destinations may leave the current page unchanged or return home.",
     "skinImage": "Background image",
     "ModelDialGuide": "Open the WorkBuddy task composer. Turn the dial to switch models. No model IDs are needed.",
     "setupTitle": "CDP connection",
@@ -287,7 +294,7 @@
     "guide_29": "New Task",
     "guide_30": "Set a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.",
     "guide_31": "Open Page",
-    "guide_32": "Choose projects, skills, connectors, automation and more. Open Task requires a task ID. Unsupported pages may remain unchanged or return home; cloud files may share the file list.",
+    "guide_32": "Choose projects, assistants, skills, connectors or another supported page. Use Open Conversation for a specific conversation. Page availability depends on the client version.",
     "guide_33": "Model Switch · Dial",
     "guide_34": "Enable CDP and open the task composer. Turn the dial to switch models. No model IDs are needed.",
     "guide_35": "Current Session Status · Dial",
@@ -336,8 +343,24 @@
     "Unexpected CDP target": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
     "Invalid WorkBuddy action": "Invalid WorkBuddy action.",
     "Model selection failed": "Model selection failed.",
-    "chooseImageFile": "Choose image"
+    "chooseImageFile": "Choose image",
+    "action_openchat": "Open Conversation",
+    "conversationLabel": "Conversation",
+    "chooseConversation": "Choose a conversation",
+    "refreshConversations": "Refresh conversations",
+    "loadingConversations": "Loading conversations…",
+    "connectToLoadConversations": "Connect CDP to load conversations.",
+    "noConversations": "No loaded conversations. Open a conversation in WorkBuddy and refresh.",
+    "savedConversation": "Saved conversation",
+    "untitledConversation": "Untitled conversation",
+    "selectedConversationMissing": "The saved conversation is not in the loaded list. Its binding is kept; choose another conversation to replace it.",
+    "conversationHelp": "Select a conversation loaded by WorkBuddy, ordered by recent activity. The key keeps this conversation when the recent list changes. Refreshing the list requires CDP; opening a saved selection uses its deep link.",
+    "legacyPageHelp": "This key uses a retired page destination. Its existing link is preserved. Choose a new page, or add Open Conversation to select a conversation.",
+    "guide_openchat": "Open Conversation",
+    "guide_openchat_help": "Select a conversation loaded by WorkBuddy, ordered by recent activity. The key keeps this conversation when the recent list changes. Refreshing the list requires CDP; opening a saved selection uses its deep link.",
+    "workbuddyWebsite": "WorkBuddy website",
+    "autoConversationTitle": "Automatically update title"
   },
   "Category": "WorkBuddy",
-  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nRestarting WorkBuddy on Windows ends its processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nRecent Task 1: Show a recent chat via CDP. Press to open it.\nRecent Task 2: Show a recent chat via CDP. Press to open it.\nRecent Task 3: Show a recent chat via CDP. Press to open it.\nRecent Task 4: Show a recent chat via CDP. Press to open it.\nRecent Task 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining account credits. Turn the dial to view recent-task usage (1–5). Press to refresh.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters."
+  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nRestarting WorkBuddy on Windows ends its processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nRecent Task 1: Show a recent chat via CDP. Press to open it.\nRecent Task 2: Show a recent chat via CDP. Press to open it.\nRecent Task 3: Show a recent chat via CDP. Press to open it.\nRecent Task 4: Show a recent chat via CDP. Press to open it.\nRecent Task 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining account credits. Turn the dial to view recent-task usage (1–5). Press to refresh.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.\n\nOpen Conversation: Select a conversation loaded by WorkBuddy, ordered by recent activity. The key keeps this conversation when the recent list changes. Refreshing the list requires CDP; opening a saved selection uses its deep link."
 }

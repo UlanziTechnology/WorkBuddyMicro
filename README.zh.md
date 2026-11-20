@@ -16,7 +16,8 @@ D200X 桌面场景与会话状态示意渲染图，非实体设备实测照片�
 | --- | --- | --- | --- |
 | 启动 WorkBuddy | 按键 | 以本地调试模式启动或重启；已连接时唤醒到前台 | CDP 引导 |
 | 新建任务 | 按键 | 根据提示词模板和可选任务参数预填草稿，不自动发送 | 深度链接 |
-| 页面直达 | 按键 | 打开指定页面，或按任务 ID 进入会话 | 深度链接 |
+| 页面直达 | 按键 | 打开指定 WorkBuddy 页面 | 深度链接 |
+| 打开会话 | 按键 | 从下拉列表选择会话，按下打开固定绑定的会话 | CDP 选择；深度链接打开 |
 | 最近任务 1–5 | 五个按键功能 | 显示最近会话及其状态；按下进入键面上显示的会话 | CDP |
 | 模型切换 | 旋钮 | 显示当前模型及图标；旋转选择，停下后自动应用，也可按下应用 | CDP |
 | 当前会话状态 | 旋钮 | 显示实时状态；旋转选择审批或问题选项，按下执行 | CDP |
@@ -146,7 +147,6 @@ npm run check
 | `plugin/actions.js` | 按键和旋钮行为 |
 | `plugin/deeplink.js` | 客户端 URL、输入校验和提示词占位符 |
 | `plugin/sources/cdp.js`、`plugin/question-panel.js` | 本地渲染进程定位，以及 WorkBuddy 状态和操作适配 |
-| `plugin/sources/session-files.js` | 只读会话文件、记录去重与积分汇总，不推断实时状态 |
 | `plugin/task-cards.js`、`plugin/task-art.js`、`plugin/task-art-worker.js` | 可见任务更新、异步结果校验、工作线程 PNG/GIF 绘制与文件缓存 |
 | `plugin/workbuddy-status.js` | 共享会话快照和状态订阅 |
 | `plugin/enable-cdp.js`、`plugin/windows-workbuddy.ps1` | 各平台的启动、重启和前台唤醒 |

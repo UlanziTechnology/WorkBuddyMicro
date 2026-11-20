@@ -22,6 +22,15 @@
       ]
     },
     {
+      "Name": "打开会话",
+      "Tooltip": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 CDP；已保存的会话通过深度链接打开。",
+      "States": [
+        {
+          "Name": "打开会话"
+        }
+      ]
+    },
+    {
       "Name": "模型切换",
       "Tooltip": "转动旋钮切换 WorkBuddy 输入框中的模型。",
       "States": [
@@ -156,17 +165,15 @@
     "Page_skills": "技能中心",
     "Page_connectors": "连接器",
     "Page_automation": "自动化",
-    "Page_colleagues": "同事",
+    "Page_colleagues": "助理",
     "Page_claw": "Claw 工作区",
     "Page_discover": "发现",
     "Page_tencent-docs": "腾讯文档",
     "Page_my-files": "我的文件",
-    "Page_my-cloud-files": "我的云文件",
     "Page_ima": "IMA 知识库",
     "Page_lexiang": "腾讯乐享",
     "Page_agent-mail": "Agent Mail 邮箱",
-    "Page_space": "Space",
-    "PageAvailability": "页面是否可用取决于 WorkBuddy 版本和已启用功能；不支持的入口可能停在当前页或返回首页。“我的云文件”在部分版本中与“我的文件”共用列表。",
+    "PageAvailability": "页面是否可用取决于 WorkBuddy 版本和已启用功能；不支持的入口可能停在当前页或返回首页。",
     "skinImage": "背景图片",
     "ModelDialGuide": "打开 WorkBuddy 的任务输入页。旋转选择模型，停下后自动应用，无需填写模型 ID。",
     "setupTitle": "CDP 连接",
@@ -287,7 +294,7 @@
     "guide_29": "新建任务",
     "guide_30": "设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。",
     "guide_31": "页面直达",
-    "guide_32": "选择项目、技能、连接器、自动化等页面。打开指定任务时需填写任务 ID。未支持的页面可能停在当前页或返回首页；云文件可能共用文件列表。",
+    "guide_32": "选择项目、助理、技能、连接器等页面；指定会话请使用“打开会话”。可用页面取决于客户端版本。",
     "guide_33": "模型切换 · 旋钮",
     "guide_34": "打开任务输入页并启用 CDP。转动旋钮切换客户端提供的模型，无需填写 ID。",
     "guide_35": "当前会话状态 · 旋钮",
@@ -336,8 +343,24 @@
     "Unexpected CDP target": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
     "Invalid WorkBuddy action": "无效的 WorkBuddy 操作。",
     "Model selection failed": "模型选择失败。",
-    "chooseImageFile": "选择图片"
+    "chooseImageFile": "选择图片",
+    "action_openchat": "打开会话",
+    "conversationLabel": "会话",
+    "chooseConversation": "请选择会话",
+    "refreshConversations": "刷新会话列表",
+    "loadingConversations": "正在加载会话…",
+    "connectToLoadConversations": "请连接 CDP 后加载会话列表。",
+    "noConversations": "没有已加载的会话，请在 WorkBuddy 中打开会话后刷新。",
+    "savedConversation": "已保存的会话",
+    "untitledConversation": "未命名会话",
+    "selectedConversationMissing": "已保存的会话不在当前列表中，原绑定已保留；选择其他会话可替换。",
+    "conversationHelp": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 CDP；已保存的会话通过深度链接打开。",
+    "legacyPageHelp": "此按键使用了已移出列表的旧入口，原跳转仍保留。请选择新页面，或添加“打开会话”来选择会话。",
+    "guide_openchat": "打开会话",
+    "guide_openchat_help": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 CDP；已保存的会话通过深度链接打开。",
+    "workbuddyWebsite": "WorkBuddy 官网",
+    "autoConversationTitle": "自动更新标题"
   },
   "Category": "WorkBuddy",
-  "Detail": "安装 WorkBuddy 桌面客户端。把插件的「启动 WorkBuddy」拖到按键上，属性面板会显示客户端、同步和当前状态。\n点击「重启 WorkBuddy」，以 CDP 模式启动客户端。\n在 Windows 中重启 WorkBuddy 会结束其进程，可能中断当前任务。请先保存工作。\n\n新建任务: 打开预填草稿的任务，确认后发送。\n页面直达: 打开 WorkBuddy 页面，可用页面取决于客户端版本和功能开关。\n模型切换: 转动旋钮切换 WorkBuddy 输入框中的模型。\n最近任务 1: 通过 CDP 显示最近会话，按下打开。\n最近任务 2: 通过 CDP 显示最近会话，按下打开。\n最近任务 3: 通过 CDP 显示最近会话，按下打开。\n最近任务 4: 通过 CDP 显示最近会话，按下打开。\n最近任务 5: 通过 CDP 显示最近会话，按下打开。\n主题切换: 应用本键主题，再按一次恢复默认主题。\n当前会话状态: 转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 CDP。\n语音输入: 在 WorkBuddy 中开始或结束语音输入。\n发送消息: 发送当前草稿；显示 Stop 时停止当前回复。\n启动 WorkBuddy: 以本机 CDP 模式启动 WorkBuddy；已连接时唤醒窗口。\n积分余额: 显示账户剩余积分，转动旋钮可查看最近任务 ①–⑤ 的累计消耗。按下立即刷新。\n\n设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。"
+  "Detail": "安装 WorkBuddy 桌面客户端。把插件的「启动 WorkBuddy」拖到按键上，属性面板会显示客户端、同步和当前状态。\n点击「重启 WorkBuddy」，以 CDP 模式启动客户端。\n在 Windows 中重启 WorkBuddy 会结束其进程，可能中断当前任务。请先保存工作。\n\n新建任务: 打开预填草稿的任务，确认后发送。\n页面直达: 打开 WorkBuddy 页面，可用页面取决于客户端版本和功能开关。\n模型切换: 转动旋钮切换 WorkBuddy 输入框中的模型。\n最近任务 1: 通过 CDP 显示最近会话，按下打开。\n最近任务 2: 通过 CDP 显示最近会话，按下打开。\n最近任务 3: 通过 CDP 显示最近会话，按下打开。\n最近任务 4: 通过 CDP 显示最近会话，按下打开。\n最近任务 5: 通过 CDP 显示最近会话，按下打开。\n主题切换: 应用本键主题，再按一次恢复默认主题。\n当前会话状态: 转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 CDP。\n语音输入: 在 WorkBuddy 中开始或结束语音输入。\n发送消息: 发送当前草稿；显示 Stop 时停止当前回复。\n启动 WorkBuddy: 以本机 CDP 模式启动 WorkBuddy；已连接时唤醒窗口。\n积分余额: 显示账户剩余积分，转动旋钮可查看最近任务 ①–⑤ 的累计消耗。按下立即刷新。\n\n设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。\n\n打开会话: 从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 CDP；已保存的会话通过深度链接打开。"
 }

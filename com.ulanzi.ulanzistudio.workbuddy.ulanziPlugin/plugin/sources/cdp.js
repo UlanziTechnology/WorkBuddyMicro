@@ -25,6 +25,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
   if (!document.getElementById("root")) return null;
   const visible = el => el.getClientRects().length && getComputedStyle(el).visibility !== "hidden";
   const session = () => document.querySelector('.cb-agent-card[data-conversation-id][data-selected="true"],.cb-agent-card[data-conversation-id][class*="_selected_"],.conversation-item [aria-selected=true][data-conversation-id]')?.dataset.conversationId || "";
+  if (op === "conversations") return conversationRows()?.map(row => ({session:row.id,title:String(row.title || row.taskTitle || "").slice(0,120)})) ?? null;
   if (op === "credits") {
     // Read the same adapter as WorkBuddy's account menu. Do not confuse turn
     // consumption labels with the account's remaining credit balance.
@@ -79,7 +80,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
         const names = [...new Set(items.map(name).filter(Boolean))];
         // Minimized Electron windows can suspend image decoding. Selection
         // needs only the list and session. Warm the preview cache independently.
-        const cacheKey = Symbol.for("ulanzi.workbuddy.modelPreviews.v3");
+        const cacheKey = Symbol.for("ulanzi.workbuddy.modelPreviews.v4");
         const cache = window[cacheKey] ||= new Map();
         for (const label of cache.keys()) if (!names.includes(label)) cache.delete(label);
         const pictures = {};
@@ -296,7 +297,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
 const jpeg = value => typeof value === "string" && value.length <= 360000 && /^data:image\/jpeg;base64,\/9j\/[A-Za-z0-9+/]*={0,2}$/.test(value);
 async function command(op, image, palette) {
   const composerStates = op === "voice" ? ["ready","recording"] : ["ready","stop"];
-  if (!["credits","foreground","state","observe","watchStatus","watchVoice","voice","send","decide","answerQuestion","skin","toggleTheme","restoreTheme","models","selectModel","currentModel","currentCard"].includes(op) || (["voice","send"].includes(op) && (typeof image?.session !== "string" || !composerStates.includes(image?.state))) || (op === "answerQuestion" && (typeof image !== "string" || image.length > 80 || typeof palette !== "string")) || (op === "decide" && (!["allow_once","allow_session","deny"].includes(image) || typeof palette !== "string")) || (op==="selectModel" && (typeof image!=="string" || !image.length || image.length>160)) || (["skin","toggleTheme"].includes(op) && !jpeg(image))) throw Error("Invalid WorkBuddy action");
+  if (!["conversations","credits","foreground","state","observe","watchStatus","watchVoice","voice","send","decide","answerQuestion","skin","toggleTheme","restoreTheme","models","selectModel","currentModel","currentCard"].includes(op) || (["voice","send"].includes(op) && (typeof image?.session !== "string" || !composerStates.includes(image?.state))) || (op === "answerQuestion" && (typeof image !== "string" || image.length > 80 || typeof palette !== "string")) || (op === "decide" && (!["allow_once","allow_session","deny"].includes(image) || typeof palette !== "string")) || (op==="selectModel" && (typeof image!=="string" || !image.length || image.length>160)) || (["skin","toggleTheme"].includes(op) && !jpeg(image))) throw Error("Invalid WorkBuddy action");
   const ws = new WebSocketClient(await target());
   const expression = '(' + renderer.toString() + ').test(location.href) ? (' + renderCommand.toString() + ')(' + JSON.stringify(op) + ',' + (image ? JSON.stringify(image) : 'null') + ',' + (op === 'credits' && !image?.encoder ? '(balance, language) => (' + drawCreditsCard.toString() + ')(balance, language, ' + JSON.stringify(creditGlyphData) + ')' : op === 'models' || op === 'currentCard' ? '(() => { const modelSvg = ' + modelSvg.toString() + '; return ' + drawModelCard.toString() + '; })()' : 'null' ) + ',' + ((op === 'skin' || op === 'toggleTheme') ? applyTheme.toString() : 'null') + ',' + ((op === 'skin' || op === 'toggleTheme') ? JSON.stringify(palette || {}) + ',' + samplePalette.toString() : (op === 'selectModel' || op === 'decide' || op === 'answerQuestion') ? JSON.stringify(palette ?? null) + ',null' : 'null,null') + ',' + readQuestionPanel.toString() + ',' + readConversations.toString() + ') : null';
   return new Promise((resolve,reject) => {

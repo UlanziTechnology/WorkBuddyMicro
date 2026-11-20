@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Open Conversation</title><link rel="stylesheet" href="../pi.css"></head>
+<body><form id="property-inspector" class="sdpi-wrapper">
+  <div class="sdpi-item"><label for="conversation" data-i18n="conversationLabel">Conversation</label><select id="conversation" name="taskId" disabled><option value=""></option></select></div>
+  <div class="sdpi-item"><label><input type="checkbox" name="autoTitle" checked> <span data-i18n="autoConversationTitle">Automatically update title</span></label></div>
+  <button id="refresh-conversations" type="button" data-i18n="refreshConversations">Refresh conversations</button>
+  <p id="conversation-note" class="help" role="status"></p>
+  <p class="help" data-i18n="conversationHelp"></p>
+</form><script src="../../libs/i18n.js"></script><script src="../setup.js"></script><script src="../pi-common.js"></script></body></html>

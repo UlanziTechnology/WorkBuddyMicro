@@ -25,17 +25,15 @@
     "Page_skills": "Skills",
     "Page_connectors": "Konnektoren",
     "Page_automation": "Automatisierung",
-    "Page_colleagues": "Kollegen",
+    "Page_colleagues": "Assistenten",
     "Page_claw": "Claw-Arbeitsbereich",
     "Page_discover": "Entdecken",
     "Page_tencent-docs": "Tencent Docs",
     "Page_my-files": "Meine Dateien",
-    "Page_my-cloud-files": "Meine Cloud-Dateien",
     "Page_ima": "IMA-Wissen",
     "Page_lexiang": "Tencent Lexiang",
     "Page_agent-mail": "Agent Mail",
-    "Page_space": "Space",
-    "PageAvailability": "Verfügbare Seiten hängen von Clientversion und aktivierten Funktionen ab. Nicht unterstützte Ziele können auf der aktuellen Seite bleiben oder zur Startseite führen. Cloud-Dateien können dieselbe Dateiliste verwenden.",
+    "PageAvailability": "Verfügbare Seiten hängen von Clientversion und aktivierten Funktionen ab. Nicht unterstützte Ziele können auf der aktuellen Seite bleiben oder zur Startseite führen.",
     "skinImage": "Hintergrundbild",
     "ModelDialGuide": "Öffne die Aufgabeneingabe in WorkBuddy. Wähle das Modell per Drehregler; es wird automatisch übernommen. Keine Modell-IDs erforderlich.",
     "setupTitle": "CDP-Verbindung",
@@ -138,7 +136,7 @@
     "guide_28": "Zeigt die fünf zuletzt aktiven geladenen Aufgaben. Drücke die Taste, um den jeweiligen Chat zu öffnen.",
     "guide_29": "Neue Aufgabe",
     "guide_31": "Seite öffnen",
-    "guide_32": "Öffnet eine WorkBuddy-Seite. Verfügbarkeit hängt von Clientversion und aktiven Funktionen ab. Verfügbare Seiten hängen von Clientversion und aktivierten Funktionen ab. Nicht unterstützte Ziele können auf der aktuellen Seite bleiben oder zur Startseite führen. Cloud-Dateien können dieselbe Dateiliste verwenden.",
+    "guide_32": "Projekte, Assistenten, Skills, Konnektoren oder andere Seiten auswählen. Für eine bestimmte Unterhaltung „Unterhaltung öffnen“ verwenden. Verfügbarkeit abhängig von der Client-Version.",
     "guide_33": "Modell wechseln",
     "guide_34": "Öffne die Aufgabeneingabe in WorkBuddy. Wähle das Modell per Drehregler; es wird automatisch übernommen. Keine Modell-IDs erforderlich.",
     "guide_35": "Aktueller Chatstatus",
@@ -205,7 +203,23 @@
     "Unexpected CDP target": "WorkBuddy-CDP nicht verfügbar (127.0.0.1:9223).",
     "Invalid WorkBuddy action": "Ungültige WorkBuddy-Aktion.",
     "Model selection failed": "Modellauswahl fehlgeschlagen.",
-    "chooseImageFile": "Bild auswählen"
+    "chooseImageFile": "Bild auswählen",
+    "action_openchat": "Unterhaltung öffnen",
+    "conversationLabel": "Unterhaltung",
+    "chooseConversation": "Unterhaltung auswählen",
+    "refreshConversations": "Unterhaltungen aktualisieren",
+    "loadingConversations": "Unterhaltungen werden geladen…",
+    "connectToLoadConversations": "CDP verbinden, um Unterhaltungen zu laden.",
+    "noConversations": "Keine geladenen Unterhaltungen. In WorkBuddy eine Unterhaltung öffnen und aktualisieren.",
+    "savedConversation": "Gespeicherte Unterhaltung",
+    "untitledConversation": "Unterhaltung ohne Titel",
+    "selectedConversationMissing": "Die gespeicherte Unterhaltung fehlt in der geladenen Liste. Die Zuordnung bleibt erhalten, bis Sie eine andere auswählen.",
+    "conversationHelp": "Wählen Sie eine in WorkBuddy geladene Unterhaltung, sortiert nach letzter Aktivität. Die Taste bleibt dieser Unterhaltung zugeordnet. Die Liste benötigt CDP; eine gespeicherte Auswahl wird per Deep-Link geöffnet.",
+    "legacyPageHelp": "Diese Taste verwendet ein entferntes Seitenziel. Der bestehende Link bleibt erhalten. Wählen Sie eine andere Seite oder fügen Sie „Unterhaltung öffnen“ hinzu.",
+    "guide_openchat": "Unterhaltung öffnen",
+    "guide_openchat_help": "Wählen Sie eine in WorkBuddy geladene Unterhaltung, sortiert nach letzter Aktivität. Die Taste bleibt dieser Unterhaltung zugeordnet. Die Liste benötigt CDP; eine gespeicherte Auswahl wird per Deep-Link geöffnet.",
+    "workbuddyWebsite": "WorkBuddy-Webseite",
+    "autoConversationTitle": "Titel automatisch aktualisieren"
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",
@@ -227,6 +241,15 @@
       "States": [
         {
           "Name": "Seite öffnen"
+        }
+      ]
+    },
+    {
+      "Name": "Unterhaltung öffnen",
+      "Tooltip": "Wählen Sie eine in WorkBuddy geladene Unterhaltung, sortiert nach letzter Aktivität. Die Taste bleibt dieser Unterhaltung zugeordnet. Die Liste benötigt CDP; eine gespeicherte Auswahl wird per Deep-Link geöffnet.",
+      "States": [
+        {
+          "Name": "Unterhaltung öffnen"
         }
       ]
     },
@@ -339,5 +362,5 @@
       ]
     }
   ],
-  "Detail": "Installiere WorkBuddy Desktop und ziehe „WorkBuddy starten“ auf eine Taste. Der Eigenschaftenbereich zeigt Client und CDP-Verbindung.\nStarte den Client über „WorkBuddy neu starten“ mit aktiviertem CDP.\nBeim Neustart von WorkBuddy unter Windows werden seine Prozesse beendet. Laufende Aufgaben können unterbrochen werden. Speichere vorher deine Arbeit.\n\nNeue Aufgabe: Öffnet eine Aufgabe mit vorausgefülltem Entwurf. Vor dem Senden prüfen.\nSeite öffnen: Öffnet eine WorkBuddy-Seite. Verfügbarkeit hängt von Clientversion und aktiven Funktionen ab.\nModell wechseln: Drehe den Regler, um das Modell in der WorkBuddy-Eingabe zu wechseln.\nLetzte Aufgabe 1: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 2: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 3: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 4: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 5: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nDesign wechseln: Wendet das Design dieser Taste an. Erneutes Drücken stellt den Standard wieder her.\nAktueller Chatstatus: Drehen wählt eine Freigabe oder Antwort, Drücken führt sie aus. Bei Mehrfachauswahl Optionen markieren und dann Absenden wählen. CDP erforderlich.\nSpracheingabe: Startet oder beendet die Spracheingabe in WorkBuddy.\nNachricht senden: Sendet den Entwurf oder stoppt die laufende Antwort, wenn Stopp angezeigt wird.\nWorkBuddy starten: Startet WorkBuddy mit lokalem CDP; bei bestehender Verbindung wird das Fenster nach vorn geholt.\nGuthaben: Zeigt das Guthaben per CDP. Aktualisiert alle 30 Sekunden, Drücken aktualisiert sofort. Für Tasten und Drehregler.\n\nErstelle eine Prompt-Vorlage mit {clipboard}, {date} und {time}. Verzeichnis, Experte, Skills, Konnektoren und Modell sind optional. Maximal 8000 Zeichen."
+  "Detail": "Installiere WorkBuddy Desktop und ziehe „WorkBuddy starten“ auf eine Taste. Der Eigenschaftenbereich zeigt Client und CDP-Verbindung.\nStarte den Client über „WorkBuddy neu starten“ mit aktiviertem CDP.\nBeim Neustart von WorkBuddy unter Windows werden seine Prozesse beendet. Laufende Aufgaben können unterbrochen werden. Speichere vorher deine Arbeit.\n\nNeue Aufgabe: Öffnet eine Aufgabe mit vorausgefülltem Entwurf. Vor dem Senden prüfen.\nSeite öffnen: Öffnet eine WorkBuddy-Seite. Verfügbarkeit hängt von Clientversion und aktiven Funktionen ab.\nModell wechseln: Drehe den Regler, um das Modell in der WorkBuddy-Eingabe zu wechseln.\nLetzte Aufgabe 1: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 2: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 3: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 4: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 5: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nDesign wechseln: Wendet das Design dieser Taste an. Erneutes Drücken stellt den Standard wieder her.\nAktueller Chatstatus: Drehen wählt eine Freigabe oder Antwort, Drücken führt sie aus. Bei Mehrfachauswahl Optionen markieren und dann Absenden wählen. CDP erforderlich.\nSpracheingabe: Startet oder beendet die Spracheingabe in WorkBuddy.\nNachricht senden: Sendet den Entwurf oder stoppt die laufende Antwort, wenn Stopp angezeigt wird.\nWorkBuddy starten: Startet WorkBuddy mit lokalem CDP; bei bestehender Verbindung wird das Fenster nach vorn geholt.\nGuthaben: Zeigt das Guthaben per CDP. Aktualisiert alle 30 Sekunden, Drücken aktualisiert sofort. Für Tasten und Drehregler.\n\nErstelle eine Prompt-Vorlage mit {clipboard}, {date} und {time}. Verzeichnis, Experte, Skills, Konnektoren und Modell sind optional. Maximal 8000 Zeichen.\n\nUnterhaltung öffnen: Wählen Sie eine in WorkBuddy geladene Unterhaltung, sortiert nach letzter Aktivität. Die Taste bleibt dieser Unterhaltung zugeordnet. Die Liste benötigt CDP; eine gespeicherte Auswahl wird per Deep-Link geöffnet."
 }

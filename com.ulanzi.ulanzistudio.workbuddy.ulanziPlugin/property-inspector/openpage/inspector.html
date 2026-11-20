@@ -19,40 +19,29 @@
       <label data-i18n="Page">Target page</label>
       <select name="page" id="page">
         <option value="home" data-page-key="Home">New task home</option>
-        <option value="chat" data-page-key="OpenTask">Open task by ID</option>
         <option value="projects" data-i18n="Page_projects">projects</option>
         <option value="experts" data-i18n="Page_experts">experts</option>
         <option value="skills" data-i18n="Page_skills">skills</option>
         <option value="connectors" data-i18n="Page_connectors">connectors</option>
         <option value="automation" data-i18n="Page_automation">automation</option>
         <option value="colleagues" data-i18n="Page_colleagues">colleagues</option>
-        <option value="claw" data-i18n="Page_claw">claw</option>
         <option value="discover" data-i18n="Page_discover">discover</option>
         <option value="tencent-docs" data-i18n="Page_tencent-docs">tencent-docs</option>
         <option value="my-files" data-i18n="Page_my-files">my-files</option>
-        <option value="my-cloud-files" data-i18n="Page_my-cloud-files">my-files (cloud)</option>
         <option value="ima" data-i18n="Page_ima">ima</option>
         <option value="lexiang" data-i18n="Page_lexiang">lexiang</option>
         <option value="agent-mail" data-i18n="Page_agent-mail">agent-mail</option>
-        <option value="space" data-i18n="Page_space">space</option>
       </select>
-      <div class="help" data-i18n="PageAvailability">Page availability depends on WorkBuddy version and enabled features. Unsupported destinations may leave the current page unchanged or return home. The cloud-files tab may share the same file list.</div>
+      <div class="help" data-i18n="PageAvailability">Page availability depends on WorkBuddy version and enabled features. Unsupported destinations may leave the current page unchanged or return home.</div>
     </div>
-    <div class="sdpi-item hidden" id="taskid-row">
-      <label data-i18n="TaskId">Task ID (for Open Task)</label>
-      <input type="text" name="taskId" />
-    </div>
+    <p class="help hidden" id="legacy-page" data-i18n="legacyPageHelp"></p>
   </form>
   <script src="../../libs/i18n.js"></script><script src="../setup.js"></script><script src="../pi-common.js"></script>
   <script>
     (function () {
-      const page = document.getElementById("page");
-      const row = document.getElementById("taskid-row");
-      function sync() {
-        row.classList.toggle("hidden", page.value !== "chat");
-      }
-      page.addEventListener("change", sync);
-      window.WorkBuddyPI && window.WorkBuddyPI.setFormFilledHook(sync);
+      window.WorkBuddyPI.setFormFilledHook(values => {
+        document.getElementById("legacy-page").classList.toggle("hidden", !["chat","claw","space","my-cloud-files"].includes(values.page));
+      });
     })();
   </script>
 </body>

@@ -65,6 +65,24 @@
       "DisableAutomaticStates": true
     },
     {
+      "Name": "Open Conversation",
+      "Icon": "assets/pages/按ID打开任务.png",
+      "PropertyInspectorPath": "property-inspector/openchat/inspector.html",
+      "state": 0,
+      "States": [
+        {
+          "Name": "Open Conversation",
+          "Image": "assets/pages/按ID打开任务.png"
+        }
+      ],
+      "Tooltip": "Select a loaded WorkBuddy conversation from the dropdown, then press to open it. CDP is required to load the list.",
+      "UUID": "com.ulanzi.ulanzistudio.workbuddy.openchat",
+      "Controllers": [
+        "Keypad"
+      ],
+      "DisableAutomaticStates": true
+    },
+    {
       "Name": "Model Switch",
       "Icon": "assets/icons/action-modelswitch.png",
       "PropertyInspectorPath": "property-inspector/modelswitch/inspector.html",
@@ -292,6 +310,6 @@
       }
     }
   ],
-  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nWindows restart ends WorkBuddy processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nRecent Task 1: Show a recent chat via CDP. Press to open it.\nRecent Task 2: Show a recent chat via CDP. Press to open it.\nRecent Task 3: Show a recent chat via CDP. Press to open it.\nRecent Task 4: Show a recent chat via CDP. Press to open it.\nRecent Task 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining account credits. Turn the dial to view recent-task usage (1–5). Press to refresh.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.",
+  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nRestarting WorkBuddy on Windows ends its processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nRecent Task 1: Show a recent chat via CDP. Press to open it.\nRecent Task 2: Show a recent chat via CDP. Press to open it.\nRecent Task 3: Show a recent chat via CDP. Press to open it.\nRecent Task 4: Show a recent chat via CDP. Press to open it.\nRecent Task 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining account credits. Turn the dial to view recent-task usage (1–5). Press to refresh.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.\n\nOpen Conversation: Select a conversation loaded by WorkBuddy, ordered by recent activity. The key keeps this conversation when the recent list changes. Refreshing the list requires CDP; opening a saved selection uses its deep link.",
   "URL": "https://github.com/UlanziTechnology/WorkBuddyMicro"
 }

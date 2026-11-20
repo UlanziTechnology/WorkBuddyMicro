@@ -25,17 +25,15 @@
     "Page_skills": "Competências",
     "Page_connectors": "Conectores",
     "Page_automation": "Automatização",
-    "Page_colleagues": "Colegas",
+    "Page_colleagues": "Assistentes",
     "Page_claw": "Espaço de trabalho Claw",
     "Page_discover": "Descobrir",
     "Page_tencent-docs": "Tencent Docs",
     "Page_my-files": "Os meus ficheiros",
-    "Page_my-cloud-files": "Os meus ficheiros na nuvem",
     "Page_ima": "Conhecimento IMA",
     "Page_lexiang": "Tencent Lexiang",
     "Page_agent-mail": "Agent Mail",
-    "Page_space": "Space",
-    "PageAvailability": "As páginas disponíveis dependem da versão do cliente e das funcionalidades ativas. Os destinos não suportados podem manter a página atual ou voltar ao início. Os ficheiros na nuvem podem usar a mesma lista de ficheiros.",
+    "PageAvailability": "As páginas disponíveis dependem da versão do cliente e das funcionalidades ativas. Os destinos não suportados podem manter a página atual ou voltar ao início.",
     "skinImage": "Imagem de fundo",
     "ModelDialGuide": "Abre a área de escrita de tarefas do WorkBuddy. Roda o seletor para escolher um modelo; a alteração é aplicada automaticamente. Não é necessário indicar IDs.",
     "setupTitle": "Ligação CDP",
@@ -138,7 +136,7 @@
     "guide_28": "Mostra as cinco tarefas carregadas com atividade mais recente. Prime a tecla para abrir a conversa apresentada.",
     "guide_29": "Nova tarefa",
     "guide_31": "Abrir página",
-    "guide_32": "Abre uma página do WorkBuddy. A disponibilidade depende da versão do cliente e das funcionalidades ativas. As páginas disponíveis dependem da versão do cliente e das funcionalidades ativas. Os destinos não suportados podem manter a página atual ou voltar ao início. Os ficheiros na nuvem podem usar a mesma lista de ficheiros.",
+    "guide_32": "Escolha projetos, assistentes, competências, conectores ou outra página. Para uma conversa específica, utilize Abrir conversa. A disponibilidade depende da versão do cliente.",
     "guide_33": "Mudar modelo",
     "guide_34": "Abre a área de escrita de tarefas do WorkBuddy. Roda o seletor para escolher um modelo; a alteração é aplicada automaticamente. Não é necessário indicar IDs.",
     "guide_35": "Estado da conversa atual",
@@ -205,7 +203,23 @@
     "Unexpected CDP target": "CDP do WorkBuddy indisponível (127.0.0.1:9223).",
     "Invalid WorkBuddy action": "Ação do WorkBuddy inválida.",
     "Model selection failed": "Falha ao selecionar o modelo.",
-    "chooseImageFile": "Escolher imagem"
+    "chooseImageFile": "Escolher imagem",
+    "action_openchat": "Abrir conversa",
+    "conversationLabel": "Conversa",
+    "chooseConversation": "Selecionar conversa",
+    "refreshConversations": "Atualizar conversas",
+    "loadingConversations": "A carregar conversas…",
+    "connectToLoadConversations": "Ligue o CDP para carregar as conversas.",
+    "noConversations": "Nenhuma conversa carregada. Abra uma conversa no WorkBuddy e atualize.",
+    "savedConversation": "Conversa guardada",
+    "untitledConversation": "Conversa sem título",
+    "selectedConversationMissing": "A conversa guardada não consta da lista carregada. A associação mantém-se até selecionar outra.",
+    "conversationHelp": "Selecione uma conversa carregada no WorkBuddy, ordenada por atividade recente. A tecla mantém essa conversa quando a ordem muda. Atualizar a lista requer CDP; uma seleção guardada abre por ligação profunda.",
+    "legacyPageHelp": "Esta tecla usa um destino removido da lista. A ligação existente mantém-se. Escolha outra página ou adicione Abrir conversa.",
+    "guide_openchat": "Abrir conversa",
+    "guide_openchat_help": "Selecione uma conversa carregada no WorkBuddy, ordenada por atividade recente. A tecla mantém essa conversa quando a ordem muda. Atualizar a lista requer CDP; uma seleção guardada abre por ligação profunda.",
+    "workbuddyWebsite": "Site do WorkBuddy",
+    "autoConversationTitle": "Atualizar título automaticamente"
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",
@@ -227,6 +241,15 @@
       "States": [
         {
           "Name": "Abrir página"
+        }
+      ]
+    },
+    {
+      "Name": "Abrir conversa",
+      "Tooltip": "Selecione uma conversa carregada no WorkBuddy, ordenada por atividade recente. A tecla mantém essa conversa quando a ordem muda. Atualizar a lista requer CDP; uma seleção guardada abre por ligação profunda.",
+      "States": [
+        {
+          "Name": "Abrir conversa"
         }
       ]
     },
@@ -339,5 +362,5 @@
       ]
     }
   ],
-  "Detail": "Instala o WorkBuddy Desktop e arrasta «Iniciar WorkBuddy» para uma tecla. O painel de propriedades verifica o cliente e a ligação CDP.\nClica em «Reiniciar WorkBuddy» para iniciar o cliente com CDP ativo.\nNo Windows, reiniciar termina os processos do WorkBuddy e pode interromper tarefas. Guarda o trabalho primeiro.\n\nNova tarefa: Abre uma tarefa com um rascunho preenchido. Revê antes de enviar.\nAbrir página: Abre uma página do WorkBuddy. A disponibilidade depende da versão do cliente e das funcionalidades ativas.\nMudar modelo: Roda o seletor para mudar o modelo na área de escrita do WorkBuddy.\nTarefa recente 1: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 2: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 3: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 4: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 5: Mostra uma conversa recente por CDP. Prime para a abrir.\nMudar tema: Aplica o tema desta tecla. Prime novamente para restaurar o original.\nEstado da conversa atual: Roda para escolher uma aprovação ou resposta e prime para executar. Para escolhas múltiplas, marca opções e escolhe Enviar. Requer CDP.\nEntrada de voz: Inicia ou termina a entrada de voz no WorkBuddy.\nEnviar mensagem: Envia o rascunho atual ou para a resposta em curso quando aparece Parar.\nIniciar WorkBuddy: Inicia o WorkBuddy com CDP local; se já estiver ligado, traz a janela para a frente.\nSaldo de créditos: Mostra os créditos restantes por CDP. Atualiza a cada 30 segundos; prime para atualizar já. Suporta teclas e seletores.\n\nCria um modelo de instruções com {clipboard}, {date} e {time}. Podes definir diretório, especialista, competências, conectores e modelo. Máximo de 8000 caracteres."
+  "Detail": "Instala o WorkBuddy Desktop e arrasta «Iniciar WorkBuddy» para uma tecla. O painel de propriedades verifica o cliente e a ligação CDP.\nClica em «Reiniciar WorkBuddy» para iniciar o cliente com CDP ativo.\nNo Windows, reiniciar termina os processos do WorkBuddy e pode interromper tarefas. Guarda o trabalho primeiro.\n\nNova tarefa: Abre uma tarefa com um rascunho preenchido. Revê antes de enviar.\nAbrir página: Abre uma página do WorkBuddy. A disponibilidade depende da versão do cliente e das funcionalidades ativas.\nMudar modelo: Roda o seletor para mudar o modelo na área de escrita do WorkBuddy.\nTarefa recente 1: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 2: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 3: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 4: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 5: Mostra uma conversa recente por CDP. Prime para a abrir.\nMudar tema: Aplica o tema desta tecla. Prime novamente para restaurar o original.\nEstado da conversa atual: Roda para escolher uma aprovação ou resposta e prime para executar. Para escolhas múltiplas, marca opções e escolhe Enviar. Requer CDP.\nEntrada de voz: Inicia ou termina a entrada de voz no WorkBuddy.\nEnviar mensagem: Envia o rascunho atual ou para a resposta em curso quando aparece Parar.\nIniciar WorkBuddy: Inicia o WorkBuddy com CDP local; se já estiver ligado, traz a janela para a frente.\nSaldo de créditos: Mostra os créditos restantes por CDP. Atualiza a cada 30 segundos; prime para atualizar já. Suporta teclas e seletores.\n\nCria um modelo de instruções com {clipboard}, {date} e {time}. Podes definir diretório, especialista, competências, conectores e modelo. Máximo de 8000 caracteres.\n\nAbrir conversa: Selecione uma conversa carregada no WorkBuddy, ordenada por atividade recente. A tecla mantém essa conversa quando a ordem muda. Atualizar a lista requer CDP; uma seleção guardada abre por ligação profunda."
 }
