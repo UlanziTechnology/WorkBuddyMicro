@@ -79,7 +79,7 @@
     "cdpSetupRequired": "Wähle in der Einrichtung „WorkBuddy neu starten“, um CDP zu verbinden.",
     "questionChanged": "Die Frage hat sich geändert. Prüfe den aktuellen Chat.",
     "approvalChanged": "Die Freigabe hat sich geändert. Prüfe den aktuellen Chat.",
-    "taskLabel": "Aufgabe {n}",
+    "taskLabel": "Letzte Aufgabe {n}",
     "noSession": "Dieser Platz enthält keinen Chat. Sende zuerst eine Nachricht in WorkBuddy.",
     "chooseImage": "Wähle zuerst ein Bild in den Tasteneinstellungen.",
     "cdpUnavailable": "WorkBuddy-CDP nicht verfügbar (127.0.0.1:9223).",
@@ -134,7 +134,7 @@
     "guide_20": "Nicht verbunden",
     "guide_25": "WorkBuddy starten",
     "guide_26": "Startet WorkBuddy mit lokalem CDP; bei bestehender Verbindung wird das Fenster nach vorn geholt.",
-    "guide_27": "Aufgabe 1–5",
+    "guide_27": "Letzte Aufgabe 1–5",
     "guide_28": "Zeigt die fünf zuletzt aktiven geladenen Aufgaben. Drücke die Taste, um den jeweiligen Chat zu öffnen.",
     "guide_29": "Neue Aufgabe",
     "guide_31": "Seite öffnen",
@@ -145,7 +145,7 @@
     "guide_37": "Design wechseln",
     "guide_39": "Spracheingabe / Nachricht senden",
     "guide_41": "Guthaben",
-    "guide_42": "Zeigt das Guthaben per CDP. Aktualisiert alle 30 Sekunden, Drücken aktualisiert sofort. Für Tasten und Drehregler.",
+    "guide_42": "Die Taste zeigt das Kontoguthaben. Mit dem Regler wechseln Sie zwischen Gesamt und dem Verbrauch der letzten Aufgaben ①–⑤. Drücken aktualisiert die Anzeige.",
     "guide_0": "Dein KI-Arbeitsplatz, einen Tastendruck entfernt.",
     "guide_1": "In drei Schritten starten",
     "guide_2": "Installieren und prüfen",
@@ -173,11 +173,11 @@
     "action_newtask": "Neue Aufgabe",
     "action_openpage": "Seite öffnen",
     "action_modelswitch": "Modell wechseln",
-    "action_task1": "Aufgabe 1",
-    "action_task2": "Aufgabe 2",
-    "action_task3": "Aufgabe 3",
-    "action_task4": "Aufgabe 4",
-    "action_task5": "Aufgabe 5",
+    "action_task1": "Letzte Aufgabe 1",
+    "action_task2": "Letzte Aufgabe 2",
+    "action_task3": "Letzte Aufgabe 3",
+    "action_task4": "Letzte Aufgabe 4",
+    "action_task5": "Letzte Aufgabe 5",
     "action_skin": "Design wechseln",
     "action_currentsession": "Aktueller Chatstatus",
     "action_voice": "Spracheingabe",
@@ -205,9 +205,7 @@
     "Unexpected CDP target": "WorkBuddy-CDP nicht verfügbar (127.0.0.1:9223).",
     "Invalid WorkBuddy action": "Ungültige WorkBuddy-Aktion.",
     "Model selection failed": "Modellauswahl fehlgeschlagen.",
-    "chooseImageFile": "Bild auswählen",
-    "taskShowCredits": "Verbrauchte Credits anzeigen",
-    "taskCreditsHelp": "Zeigt den gesamten Credit-Verbrauch der Unterhaltung oben im Status-GIF. Lokale WorkBuddy-Dateien werden jede Minute und bei Statusänderungen gelesen. Fehlende Daten erscheinen als Strich. Deaktiviert wird das ursprüngliche GIF verwendet."
+    "chooseImageFile": "Bild auswählen"
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",
@@ -242,47 +240,47 @@
       ]
     },
     {
-      "Name": "Aufgabe 1",
+      "Name": "Letzte Aufgabe 1",
       "Tooltip": "Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.",
       "States": [
         {
-          "Name": "Aufgabe 1"
+          "Name": "Letzte Aufgabe 1"
         }
       ]
     },
     {
-      "Name": "Aufgabe 2",
+      "Name": "Letzte Aufgabe 2",
       "Tooltip": "Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.",
       "States": [
         {
-          "Name": "Aufgabe 2"
+          "Name": "Letzte Aufgabe 2"
         }
       ]
     },
     {
-      "Name": "Aufgabe 3",
+      "Name": "Letzte Aufgabe 3",
       "Tooltip": "Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.",
       "States": [
         {
-          "Name": "Aufgabe 3"
+          "Name": "Letzte Aufgabe 3"
         }
       ]
     },
     {
-      "Name": "Aufgabe 4",
+      "Name": "Letzte Aufgabe 4",
       "Tooltip": "Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.",
       "States": [
         {
-          "Name": "Aufgabe 4"
+          "Name": "Letzte Aufgabe 4"
         }
       ]
     },
     {
-      "Name": "Aufgabe 5",
+      "Name": "Letzte Aufgabe 5",
       "Tooltip": "Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.",
       "States": [
         {
-          "Name": "Aufgabe 5"
+          "Name": "Letzte Aufgabe 5"
         }
       ]
     },
@@ -341,5 +339,5 @@
       ]
     }
   ],
-  "Detail": "Installiere WorkBuddy Desktop und ziehe „WorkBuddy starten“ auf eine Taste. Der Eigenschaftenbereich zeigt Client und CDP-Verbindung.\nStarte den Client über „WorkBuddy neu starten“ mit aktiviertem CDP.\nBeim Neustart von WorkBuddy unter Windows werden seine Prozesse beendet. Laufende Aufgaben können unterbrochen werden. Speichere vorher deine Arbeit.\n\nNeue Aufgabe: Öffnet eine Aufgabe mit vorausgefülltem Entwurf. Vor dem Senden prüfen.\nSeite öffnen: Öffnet eine WorkBuddy-Seite. Verfügbarkeit hängt von Clientversion und aktiven Funktionen ab.\nModell wechseln: Drehe den Regler, um das Modell in der WorkBuddy-Eingabe zu wechseln.\nAufgabe 1: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nAufgabe 2: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nAufgabe 3: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nAufgabe 4: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nAufgabe 5: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nDesign wechseln: Wendet das Design dieser Taste an. Erneutes Drücken stellt den Standard wieder her.\nAktueller Chatstatus: Drehen wählt eine Freigabe oder Antwort, Drücken führt sie aus. Bei Mehrfachauswahl Optionen markieren und dann Absenden wählen. CDP erforderlich.\nSpracheingabe: Startet oder beendet die Spracheingabe in WorkBuddy.\nNachricht senden: Sendet den Entwurf oder stoppt die laufende Antwort, wenn Stopp angezeigt wird.\nWorkBuddy starten: Startet WorkBuddy mit lokalem CDP; bei bestehender Verbindung wird das Fenster nach vorn geholt.\nGuthaben: Zeigt das Guthaben per CDP. Aktualisiert alle 30 Sekunden, Drücken aktualisiert sofort. Für Tasten und Drehregler.\n\nErstelle eine Prompt-Vorlage mit {clipboard}, {date} und {time}. Verzeichnis, Experte, Skills, Konnektoren und Modell sind optional. Maximal 8000 Zeichen."
+  "Detail": "Installiere WorkBuddy Desktop und ziehe „WorkBuddy starten“ auf eine Taste. Der Eigenschaftenbereich zeigt Client und CDP-Verbindung.\nStarte den Client über „WorkBuddy neu starten“ mit aktiviertem CDP.\nBeim Neustart von WorkBuddy unter Windows werden seine Prozesse beendet. Laufende Aufgaben können unterbrochen werden. Speichere vorher deine Arbeit.\n\nNeue Aufgabe: Öffnet eine Aufgabe mit vorausgefülltem Entwurf. Vor dem Senden prüfen.\nSeite öffnen: Öffnet eine WorkBuddy-Seite. Verfügbarkeit hängt von Clientversion und aktiven Funktionen ab.\nModell wechseln: Drehe den Regler, um das Modell in der WorkBuddy-Eingabe zu wechseln.\nLetzte Aufgabe 1: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 2: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 3: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 4: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nLetzte Aufgabe 5: Zeigt einen aktuellen Chat per CDP. Drücken zum Öffnen.\nDesign wechseln: Wendet das Design dieser Taste an. Erneutes Drücken stellt den Standard wieder her.\nAktueller Chatstatus: Drehen wählt eine Freigabe oder Antwort, Drücken führt sie aus. Bei Mehrfachauswahl Optionen markieren und dann Absenden wählen. CDP erforderlich.\nSpracheingabe: Startet oder beendet die Spracheingabe in WorkBuddy.\nNachricht senden: Sendet den Entwurf oder stoppt die laufende Antwort, wenn Stopp angezeigt wird.\nWorkBuddy starten: Startet WorkBuddy mit lokalem CDP; bei bestehender Verbindung wird das Fenster nach vorn geholt.\nGuthaben: Zeigt das Guthaben per CDP. Aktualisiert alle 30 Sekunden, Drücken aktualisiert sofort. Für Tasten und Drehregler.\n\nErstelle eine Prompt-Vorlage mit {clipboard}, {date} und {time}. Verzeichnis, Experte, Skills, Konnektoren und Modell sind optional. Maximal 8000 Zeichen."
 }

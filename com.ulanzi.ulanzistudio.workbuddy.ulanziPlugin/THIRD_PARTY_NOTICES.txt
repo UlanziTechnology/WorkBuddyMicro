@@ -28,3 +28,9 @@ omggif 1.0.10 (libs/vendor/omggif.js)
 Copyright (c) 2013 Dean McNamee <dean@gmail.com>
 MIT license, reproduced in the vendored source file.
 https://github.com/deanm/omggif
+
+@resvg/resvg-wasm 2.6.2 (libs/vendor/resvg)
+Copyright (c) 2021-present, yisibl
+MPL-2.0; full license in libs/vendor/resvg/LICENSE.
+Unmodified release; corresponding source and build instructions:
+https://github.com/thx/resvg-js/tree/v2.6.2

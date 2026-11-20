@@ -31,47 +31,47 @@
       ]
     },
     {
-      "Name": "任务 1",
+      "Name": "最近任务 1",
       "Tooltip": "通过 CDP 显示最近会话，按下打开。",
       "States": [
         {
-          "Name": "任务 1"
+          "Name": "最近任务 1"
         }
       ]
     },
     {
-      "Name": "任务 2",
+      "Name": "最近任务 2",
       "Tooltip": "通过 CDP 显示最近会话，按下打开。",
       "States": [
         {
-          "Name": "任务 2"
+          "Name": "最近任务 2"
         }
       ]
     },
     {
-      "Name": "任务 3",
+      "Name": "最近任务 3",
       "Tooltip": "通过 CDP 显示最近会话，按下打开。",
       "States": [
         {
-          "Name": "任务 3"
+          "Name": "最近任务 3"
         }
       ]
     },
     {
-      "Name": "任务 4",
+      "Name": "最近任务 4",
       "Tooltip": "通过 CDP 显示最近会话，按下打开。",
       "States": [
         {
-          "Name": "任务 4"
+          "Name": "最近任务 4"
         }
       ]
     },
     {
-      "Name": "任务 5",
+      "Name": "最近任务 5",
       "Tooltip": "通过 CDP 显示最近会话，按下打开。",
       "States": [
         {
-          "Name": "任务 5"
+          "Name": "最近任务 5"
         }
       ]
     },
@@ -122,7 +122,7 @@
     },
     {
       "Name": "积分余额",
-      "Tooltip": "通过 CDP 显示剩余积分，每 30 秒刷新，按下立即刷新。支持按键和旋钮。",
+      "Tooltip": "显示账户剩余积分，转动旋钮可查看最近任务 ①–⑤ 的累计消耗。按下立即刷新。",
       "States": [
         {
           "Name": "积分余额"
@@ -210,7 +210,7 @@
     "cdpSetupRequired": "请在属性栏点击「重启 WorkBuddy」连接 CDP。",
     "questionChanged": "问题已变化，请查看当前会话。",
     "approvalChanged": "审批已变化，请查看当前会话。",
-    "taskLabel": "任务 {n}",
+    "taskLabel": "最近任务 {n}",
     "noSession": "此任务位暂无会话，请先在 WorkBuddy 发送消息。",
     "chooseImage": "请先在按键设置中选择图片。",
     "cdpUnavailable": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
@@ -282,7 +282,7 @@
     "guide_24": "怎么用",
     "guide_25": "启动 WorkBuddy",
     "guide_26": "未连接时以 CDP 模式启动或重启客户端；已连接时唤醒到前台。",
-    "guide_27": "任务 1–5",
+    "guide_27": "最近任务 1–5",
     "guide_28": "按 WorkBuddy 最近活动顺序显示已加载的五个任务，按键打开对应会话。",
     "guide_29": "新建任务",
     "guide_30": "设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。",
@@ -297,18 +297,18 @@
     "guide_39": "语音输入 / 发送消息",
     "guide_40": "启用 CDP 后，按语音键开始或结束录音，按发送键发送当前草稿，显示 Stop 时按下停止当前回复。灰色表示不可用。",
     "guide_41": "积分余额",
-    "guide_42": "支持按键和旋钮，通过 CDP 读取账户剩余积分，每 30 秒刷新。按下立即刷新。断线或无法读取时显示灰色横线。",
+    "guide_42": "按键显示账户剩余积分。旋钮可在「总」与最近任务 ①–⑤ 间切换。「总」显示账户剩余积分，任务页显示该会话累计消耗。按下刷新，无法读取时显示横线。",
     "guide_43": "新建任务只预填草稿，由你确认发送。国内客户端使用 workbuddy://，海外 WorkBuddy AI 使用 workbuddy-ai://。",
     "guide_44": "如何启用 CDP？",
     "guide_45": "打开「启动 WorkBuddy」的属性栏，点击「重启 WorkBuddy」。点击后直接启动或重启 WorkBuddy。Windows 会强制结束所选安装路径的 WorkBuddy 进程（可能中断任务，请先保存）；macOS 正常退出后重新打开。连接成功后当前状态显示 CDP，断开后显示未连接。",
     "action_newtask": "新建任务",
     "action_openpage": "页面直达",
     "action_modelswitch": "模型切换",
-    "action_task1": "任务 1",
-    "action_task2": "任务 2",
-    "action_task3": "任务 3",
-    "action_task4": "任务 4",
-    "action_task5": "任务 5",
+    "action_task1": "最近任务 1",
+    "action_task2": "最近任务 2",
+    "action_task3": "最近任务 3",
+    "action_task4": "最近任务 4",
+    "action_task5": "最近任务 5",
     "action_skin": "主题切换",
     "action_currentsession": "当前会话状态",
     "action_voice": "语音输入",
@@ -336,10 +336,8 @@
     "Unexpected CDP target": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
     "Invalid WorkBuddy action": "无效的 WorkBuddy 操作。",
     "Model selection failed": "模型选择失败。",
-    "chooseImageFile": "选择图片",
-    "taskShowCredits": "显示会话消耗积分",
-    "taskCreditsHelp": "在状态 GIF 顶部显示该会话累计消耗的积分。每分钟及状态变化时读取本机会话文件；未获取到数据时显示短横线。关闭后使用原始 GIF。"
+    "chooseImageFile": "选择图片"
   },
   "Category": "WorkBuddy",
-  "Detail": "安装 WorkBuddy 桌面客户端。把插件的「启动 WorkBuddy」拖到按键上，属性面板会显示客户端、同步和当前状态。\n点击「重启 WorkBuddy」，以 CDP 模式启动客户端。\n在 Windows 中重启 WorkBuddy 会结束其进程，可能中断当前任务。请先保存工作。\n\n新建任务: 打开预填草稿的任务，确认后发送。\n页面直达: 打开 WorkBuddy 页面，可用页面取决于客户端版本和功能开关。\n模型切换: 转动旋钮切换 WorkBuddy 输入框中的模型。\n任务 1: 通过 CDP 显示最近会话，按下打开。\n任务 2: 通过 CDP 显示最近会话，按下打开。\n任务 3: 通过 CDP 显示最近会话，按下打开。\n任务 4: 通过 CDP 显示最近会话，按下打开。\n任务 5: 通过 CDP 显示最近会话，按下打开。\n主题切换: 应用本键主题，再按一次恢复默认主题。\n当前会话状态: 转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 CDP。\n语音输入: 在 WorkBuddy 中开始或结束语音输入。\n发送消息: 发送当前草稿；显示 Stop 时停止当前回复。\n启动 WorkBuddy: 以本机 CDP 模式启动 WorkBuddy；已连接时唤醒窗口。\n积分余额: 通过 CDP 显示剩余积分，每 30 秒刷新，按下立即刷新。支持按键和旋钮。\n\n设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。"
+  "Detail": "安装 WorkBuddy 桌面客户端。把插件的「启动 WorkBuddy」拖到按键上，属性面板会显示客户端、同步和当前状态。\n点击「重启 WorkBuddy」，以 CDP 模式启动客户端。\n在 Windows 中重启 WorkBuddy 会结束其进程，可能中断当前任务。请先保存工作。\n\n新建任务: 打开预填草稿的任务，确认后发送。\n页面直达: 打开 WorkBuddy 页面，可用页面取决于客户端版本和功能开关。\n模型切换: 转动旋钮切换 WorkBuddy 输入框中的模型。\n最近任务 1: 通过 CDP 显示最近会话，按下打开。\n最近任务 2: 通过 CDP 显示最近会话，按下打开。\n最近任务 3: 通过 CDP 显示最近会话，按下打开。\n最近任务 4: 通过 CDP 显示最近会话，按下打开。\n最近任务 5: 通过 CDP 显示最近会话，按下打开。\n主题切换: 应用本键主题，再按一次恢复默认主题。\n当前会话状态: 转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 CDP。\n语音输入: 在 WorkBuddy 中开始或结束语音输入。\n发送消息: 发送当前草稿；显示 Stop 时停止当前回复。\n启动 WorkBuddy: 以本机 CDP 模式启动 WorkBuddy；已连接时唤醒窗口。\n积分余额: 显示账户剩余积分，转动旋钮可查看最近任务 ①–⑤ 的累计消耗。按下立即刷新。\n\n设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。"
 }

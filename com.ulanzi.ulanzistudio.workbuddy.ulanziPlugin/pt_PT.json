@@ -79,7 +79,7 @@
     "cdpSetupRequired": "Escolhe «Reiniciar WorkBuddy» na configuração para ligar o CDP.",
     "questionChanged": "A pergunta mudou. Verifica a conversa atual.",
     "approvalChanged": "A aprovação mudou. Verifica a conversa atual.",
-    "taskLabel": "Tarefa {n}",
+    "taskLabel": "Tarefa recente {n}",
     "noSession": "Não há conversa nesta posição. Envia primeiro uma mensagem no WorkBuddy.",
     "chooseImage": "Escolhe primeiro uma imagem nas definições da tecla.",
     "cdpUnavailable": "CDP do WorkBuddy indisponível (127.0.0.1:9223).",
@@ -134,7 +134,7 @@
     "guide_20": "Desligado",
     "guide_25": "Iniciar WorkBuddy",
     "guide_26": "Inicia o WorkBuddy com CDP local; se já estiver ligado, traz a janela para a frente.",
-    "guide_27": "Tarefa 1–5",
+    "guide_27": "Tarefa recente 1–5",
     "guide_28": "Mostra as cinco tarefas carregadas com atividade mais recente. Prime a tecla para abrir a conversa apresentada.",
     "guide_29": "Nova tarefa",
     "guide_31": "Abrir página",
@@ -145,7 +145,7 @@
     "guide_37": "Mudar tema",
     "guide_39": "Entrada de voz / Enviar mensagem",
     "guide_41": "Saldo de créditos",
-    "guide_42": "Mostra os créditos restantes por CDP. Atualiza a cada 30 segundos; prime para atualizar já. Suporta teclas e seletores.",
+    "guide_42": "A tecla mostra o saldo da conta. Rode o seletor entre o total e o consumo das tarefas recentes ①–⑤. Prima para atualizar.",
     "guide_0": "O teu espaço de trabalho com IA, à distância de uma tecla.",
     "guide_1": "Começa em três passos",
     "guide_2": "Instalar e verificar",
@@ -173,11 +173,11 @@
     "action_newtask": "Nova tarefa",
     "action_openpage": "Abrir página",
     "action_modelswitch": "Mudar modelo",
-    "action_task1": "Tarefa 1",
-    "action_task2": "Tarefa 2",
-    "action_task3": "Tarefa 3",
-    "action_task4": "Tarefa 4",
-    "action_task5": "Tarefa 5",
+    "action_task1": "Tarefa recente 1",
+    "action_task2": "Tarefa recente 2",
+    "action_task3": "Tarefa recente 3",
+    "action_task4": "Tarefa recente 4",
+    "action_task5": "Tarefa recente 5",
     "action_skin": "Mudar tema",
     "action_currentsession": "Estado da conversa atual",
     "action_voice": "Entrada de voz",
@@ -205,9 +205,7 @@
     "Unexpected CDP target": "CDP do WorkBuddy indisponível (127.0.0.1:9223).",
     "Invalid WorkBuddy action": "Ação do WorkBuddy inválida.",
     "Model selection failed": "Falha ao selecionar o modelo.",
-    "chooseImageFile": "Escolher imagem",
-    "taskShowCredits": "Mostrar créditos consumidos",
-    "taskCreditsHelp": "Mostra o consumo acumulado da conversa no topo do GIF. Lê os ficheiros locais do WorkBuddy a cada minuto e quando o estado muda. Sem dados apresenta um traço. Desative para usar o GIF original."
+    "chooseImageFile": "Escolher imagem"
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",
@@ -242,47 +240,47 @@
       ]
     },
     {
-      "Name": "Tarefa 1",
+      "Name": "Tarefa recente 1",
       "Tooltip": "Mostra uma conversa recente por CDP. Prime para a abrir.",
       "States": [
         {
-          "Name": "Tarefa 1"
+          "Name": "Tarefa recente 1"
         }
       ]
     },
     {
-      "Name": "Tarefa 2",
+      "Name": "Tarefa recente 2",
       "Tooltip": "Mostra uma conversa recente por CDP. Prime para a abrir.",
       "States": [
         {
-          "Name": "Tarefa 2"
+          "Name": "Tarefa recente 2"
         }
       ]
     },
     {
-      "Name": "Tarefa 3",
+      "Name": "Tarefa recente 3",
       "Tooltip": "Mostra uma conversa recente por CDP. Prime para a abrir.",
       "States": [
         {
-          "Name": "Tarefa 3"
+          "Name": "Tarefa recente 3"
         }
       ]
     },
     {
-      "Name": "Tarefa 4",
+      "Name": "Tarefa recente 4",
       "Tooltip": "Mostra uma conversa recente por CDP. Prime para a abrir.",
       "States": [
         {
-          "Name": "Tarefa 4"
+          "Name": "Tarefa recente 4"
         }
       ]
     },
     {
-      "Name": "Tarefa 5",
+      "Name": "Tarefa recente 5",
       "Tooltip": "Mostra uma conversa recente por CDP. Prime para a abrir.",
       "States": [
         {
-          "Name": "Tarefa 5"
+          "Name": "Tarefa recente 5"
         }
       ]
     },
@@ -341,5 +339,5 @@
       ]
     }
   ],
-  "Detail": "Instala o WorkBuddy Desktop e arrasta «Iniciar WorkBuddy» para uma tecla. O painel de propriedades verifica o cliente e a ligação CDP.\nClica em «Reiniciar WorkBuddy» para iniciar o cliente com CDP ativo.\nNo Windows, reiniciar termina os processos do WorkBuddy e pode interromper tarefas. Guarda o trabalho primeiro.\n\nNova tarefa: Abre uma tarefa com um rascunho preenchido. Revê antes de enviar.\nAbrir página: Abre uma página do WorkBuddy. A disponibilidade depende da versão do cliente e das funcionalidades ativas.\nMudar modelo: Roda o seletor para mudar o modelo na área de escrita do WorkBuddy.\nTarefa 1: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa 2: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa 3: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa 4: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa 5: Mostra uma conversa recente por CDP. Prime para a abrir.\nMudar tema: Aplica o tema desta tecla. Prime novamente para restaurar o original.\nEstado da conversa atual: Roda para escolher uma aprovação ou resposta e prime para executar. Para escolhas múltiplas, marca opções e escolhe Enviar. Requer CDP.\nEntrada de voz: Inicia ou termina a entrada de voz no WorkBuddy.\nEnviar mensagem: Envia o rascunho atual ou para a resposta em curso quando aparece Parar.\nIniciar WorkBuddy: Inicia o WorkBuddy com CDP local; se já estiver ligado, traz a janela para a frente.\nSaldo de créditos: Mostra os créditos restantes por CDP. Atualiza a cada 30 segundos; prime para atualizar já. Suporta teclas e seletores.\n\nCria um modelo de instruções com {clipboard}, {date} e {time}. Podes definir diretório, especialista, competências, conectores e modelo. Máximo de 8000 caracteres."
+  "Detail": "Instala o WorkBuddy Desktop e arrasta «Iniciar WorkBuddy» para uma tecla. O painel de propriedades verifica o cliente e a ligação CDP.\nClica em «Reiniciar WorkBuddy» para iniciar o cliente com CDP ativo.\nNo Windows, reiniciar termina os processos do WorkBuddy e pode interromper tarefas. Guarda o trabalho primeiro.\n\nNova tarefa: Abre uma tarefa com um rascunho preenchido. Revê antes de enviar.\nAbrir página: Abre uma página do WorkBuddy. A disponibilidade depende da versão do cliente e das funcionalidades ativas.\nMudar modelo: Roda o seletor para mudar o modelo na área de escrita do WorkBuddy.\nTarefa recente 1: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 2: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 3: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 4: Mostra uma conversa recente por CDP. Prime para a abrir.\nTarefa recente 5: Mostra uma conversa recente por CDP. Prime para a abrir.\nMudar tema: Aplica o tema desta tecla. Prime novamente para restaurar o original.\nEstado da conversa atual: Roda para escolher uma aprovação ou resposta e prime para executar. Para escolhas múltiplas, marca opções e escolhe Enviar. Requer CDP.\nEntrada de voz: Inicia ou termina a entrada de voz no WorkBuddy.\nEnviar mensagem: Envia o rascunho atual ou para a resposta em curso quando aparece Parar.\nIniciar WorkBuddy: Inicia o WorkBuddy com CDP local; se já estiver ligado, traz a janela para a frente.\nSaldo de créditos: Mostra os créditos restantes por CDP. Atualiza a cada 30 segundos; prime para atualizar já. Suporta teclas e seletores.\n\nCria um modelo de instruções com {clipboard}, {date} e {time}. Podes definir diretório, especialista, competências, conectores e modelo. Máximo de 8000 caracteres."
 }

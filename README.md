@@ -17,13 +17,13 @@ D200X desktop visualization with illustrative session states; not a physical-dev
 | Launch WorkBuddy | Key | Start or restart WorkBuddy with local debugging enabled; bring it forward when already connected | CDP setup |
 | New Task | Key | Open an unsent draft with a reusable prompt and optional task parameters | Deep link |
 | Open Page | Key | Jump to a page or a specific task ID | Deep link |
-| WorkBuddy Task 1–5 | Five key actions | Show recent conversations, states and optional cumulative credits; press to open the conversation displayed | CDP + read-only session files |
+| Recent Task 1–5 | Five key actions | Show recent conversations and their states; press to open the conversation displayed | CDP |
 | Model Switch | Dial | Show the current model and its icon; turn to choose an available model and apply after a short pause, or press to apply | CDP |
 | Current Session Status | Dial | Show live status; turn to select a permission or question option, then press to act | CDP |
 | Voice Input | Key | Start or finish native voice input; show confirmed recording state with a blinking red dot | CDP |
 | Send Message | Key | Send the current draft, or stop the running response when Stop is shown | CDP |
 | Switch Theme | Key | Apply a chosen image and editable colors; press again to restore the native theme | CDP |
-| Credit Balance | Key or dial | Show remaining account credits; refresh every 30 seconds or on press | CDP |
+| Credit Balance | Key or dial | Show account balance. Turn the dial to see credits used by recent tasks ①–⑤. Press to refresh | CDP and local session files |
 
 Deep-link actions work without CDP setup. Live state and controls use **CDP only**, with no hook fallback, separate Bridge service or runtime npm installation. WorkBuddy remains responsible for authentication, model access, permissions and task execution.
 
@@ -88,7 +88,7 @@ Confirm the directory used by your Studio installation before copying. `manifest
 
 ### 3. Configure your layout
 
-Drag actions from the **WorkBuddy** category onto keys or dials in Studio. Select an action to configure it in the property inspector. Start with **Launch WorkBuddy**, **WorkBuddy Task 1–5** and, on an Encoder surface, **Model Switch** or **Current Session Status**.
+Drag actions from the **WorkBuddy** category onto keys or dials in Studio. Select an action to configure it in the property inspector. Start with **Launch WorkBuddy**, **Recent Task 1–5** and, on an Encoder surface, **Model Switch** or **Current Session Status**.
 
 New Task and Open Page work through deep links immediately after configuration. Live task status and controls require the CDP connection below.
 
@@ -148,7 +148,7 @@ npm run check
 | `plugin/deeplink.js` | Client URLs, input validation and prompt placeholders |
 | `plugin/sources/cdp.js`, `plugin/question-panel.js` | Local renderer discovery and WorkBuddy state/action adapters |
 | `plugin/sources/session-files.js` | Read-only transcripts, record deduplication and cumulative credits; no live-state inference |
-| `plugin/task-cards.js`, `plugin/task-gif.js` | Visible-task refresh coordination, stale-result guards, GIF composition and file caching |
+| `plugin/task-cards.js`, `plugin/task-art.js`, `plugin/task-art-worker.js` | Visible task updates, stale-result guards, worker-based PNG/GIF drawing and file caching |
 | `plugin/workbuddy-status.js` | Shared session snapshots and state subscriptions |
 | `plugin/enable-cdp.js`, `plugin/windows-workbuddy.ps1` | Platform launch, restart and foreground activation |
 | `plugin/*-art.js`, `layouts/`, `assets/` | Rendered graphics, Encoder layouts and artwork |

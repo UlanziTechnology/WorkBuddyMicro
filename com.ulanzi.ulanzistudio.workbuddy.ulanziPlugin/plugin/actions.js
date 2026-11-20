@@ -8,7 +8,7 @@
 const deeplink = require("./deeplink");
 const { questionSvg } = require("./question-art");
 const { modelSvg } = require("./model-art");
-const { statusArtwork } = require("./workbuddy-status");
+const { encoderCreditsSvg } = require("./credits-art");
 
 class BaseAction {
   constructor(app, event) {
@@ -286,68 +286,93 @@ class ModelSwitchAction extends BaseAction {
 
 class CreditsAction extends BaseAction {
   onActivated() {
-    this.revision = this.revision || 0;
-    this.connected = false;
-    if (this.controller === "Encoder") this.app.send({cmd:"setFeedbackLayout",
-      uuid:this.uuid, actionid:this.actionid, key:this.key, layout:"layouts/credits-encoder.json"});
-    // A layout or page activation can reset the host's image while a balance
-    // request is failing. Repaint the last confirmed balance on activation.
-    if (this.app.status.cdpState && this.balancePicture) this.drawBalance(this.balancePicture);
+    this.target = undefined;
     this.onStatus();
   }
+
   onStatus() {
-    if (!this.active) { this.destroy(); return; }
+    if (!this.active) return;
     const connected = Boolean(this.app.status.cdpState);
-    if (!connected) {
-      this.connected = false;
-      this.balancePicture = null;
-      clearTimeout(this.timer);
-      this.revision++;
-      this.drawBalance();
-    } else if (!this.connected) {
-      this.connected = true;
-      this.refreshCredits();
-    }
+    const slot = this.slot || 0;
+    const session = connected && slot ? this.app.status.taskSlots()[slot - 1]?.session : undefined;
+    const previous = this.target;
+    if (previous?.connected === connected && previous.slot === slot && previous.session === session) return;
+
+    this.target = {connected, slot, session};
+    this.amount = null;
+    this.balancePicture = null;
+    clearTimeout(this.timer);
+    this.drawBalance();
+    this.refreshCredits();
   }
+
   async refreshCredits() {
-    if (!this.active || this.busy) return;
+    const target = this.target;
+    if (!this.active || !target?.connected || (target.slot && !target.session) || this.busy) return;
     clearTimeout(this.timer);
     this.busy = true;
-    const revision = this.revision;
-    let refreshed = false;
+    let retry = false;
     try {
-      const result = await cdp.command("credits", {language:this.app.lang, encoder:this.controller === "Encoder"});
-      if (!this.active || revision !== this.revision || !this.app.status.cdpState) return;
-      if (result?.picture) {
-        this.balancePicture = result.picture;
-        this.drawBalance(this.balancePicture);
-        refreshed = true;
-      } else if (!this.balancePicture) this.drawBalance();
-    } catch (_) {
-      if (this.active && revision === this.revision && !this.balancePicture) this.drawBalance();
+      const result = target.slot
+        ? (await this.app.sessionFiles.read([target.session])).get(target.session) ?? null
+        : await cdp.command("credits", {language:this.app.lang, encoder:this.controller === "Encoder"});
+      if (!this.active || this.target !== target) return;
+      if (target.slot || result) {
+        this.amount = target.slot ? result : result.balance;
+        this.balancePicture = target.slot ? null : result.picture;
+        this.drawBalance();
+      } else retry = true;
+    } catch {
+      // Keep the last valid reading when the source temporarily fails.
+      retry = !target.slot;
     } finally {
       this.busy = false;
-      // CDP can connect before the account adapter is ready; do not wait a full refresh cycle.
-      if (this.active && this.app.status.cdpState) this.timer = setTimeout(() => this.refreshCredits(), revision === this.revision ? (refreshed ? 30000 : 1000) : 0);
+      if (this.active && this.target?.connected) {
+        const delay = this.target !== target ? 0 : retry ? 1000 : 30000;
+        this.timer = setTimeout(() => this.refreshCredits(), delay);
+        this.timer.unref?.();
+      }
     }
   }
-  drawBalance(picture) {
+
+  drawBalance() {
     if (this.controller === "Encoder") {
-      this.app.setFeedback(this, {icon:{value:picture || "assets/actions/credits-dial.png"}});
-    } else if (picture) {
+      const slot = this.slot || 0;
+      if (!slot && this.amount === null) {
+        this.app.setFeedback(this, {icon:{value:"assets/actions/credits-dial.png"}});
+        return;
+      }
+      const prefix = slot ? "①②③④⑤"[slot - 1] : "";
+      const svg = encoderCreditsSvg(prefix, this.amount, this.app.lang);
+      this.app.setFeedback(this, {icon:{value:"data:image/svg+xml;base64," + Buffer.from(svg).toString("base64")}});
+    } else if (this.balancePicture) {
       this.app.send({cmd:"state", param:{statelist:[{uuid:this.uuid, actionid:this.actionid,
-        key:this.key, type:1, data:picture, showtext:false}]}});
+        key:this.key, type:1, data:this.balancePicture, showtext:false}]}});
     } else this.app.setActionIcon(this, "assets/actions/credits-unavailable.png");
   }
+
+  handleDialRotate(direction) {
+    if (!this.active || this.controller !== "Encoder" || !["left","right"].includes(direction)) return;
+    this.slot = ((this.slot || 0) + (direction === "right" ? 1 : 5)) % 6;
+    this.onStatus();
+  }
+
   handleDialDown() { return this.invoke(); }
+
   invoke() {
     if (!this.app.status.cdpState) throw Error(this.app.t("cdpSetupRequired"));
     return this.refreshCredits();
   }
+
+  setActive(active) {
+    if (active === false) this.destroy();
+    super.setActive(active);
+  }
+
   destroy() {
     this.active = false;
+    this.target = undefined;
     clearTimeout(this.timer);
-    this.revision = (this.revision || 0) + 1;
   }
 }
 
@@ -360,21 +385,29 @@ class LaunchAction extends BaseAction {
 
 class CurrentSessionAction extends BaseAction {
   onActivated() {
-    this.app.send({cmd:"setFeedbackLayout", uuid:this.uuid, actionid:this.actionid, key:this.key, layout:"layouts/session-encoder.json"});
+    this.app.taskCards.remove(this.actionid);
     this.onStatus();
+  }
+  setActive(active) {
+    if (active === false) this.app.taskCards.remove(this.actionid);
+    super.setActive(active);
+  }
+  destroy() {
+    this.active = false;
+    this.app.taskCards.remove(this.actionid);
   }
   onStatus() {
     if (!this.active) return;
-    const {approval, question, state} = this.app.status;
+    const {approval, question, currentTask, session, state} = this.app.status;
     if (question) {
+      this.app.taskCards.remove(this.actionid);
       const available = question.choices.filter(c => !c.disabled);
       if (this.questionId !== question.id || !available.some(c => c.id === this.questionChoice)) {
         this.questionChoice = available[0]?.id;
       }
       this.questionId = question.id;
       this.questionToken = question.token;
-      const image = "data:image/svg+xml;base64," + Buffer.from(questionSvg(question, this.questionChoice)).toString("base64");
-      this.app.setFeedback(this, {icon:{value:image}});
+      this.drawChoices(question, this.questionChoice);
       return;
     }
     this.questionId = null;
@@ -384,21 +417,30 @@ class CurrentSessionAction extends BaseAction {
       this.choice = approval?.choices[0];
     }
     if (approval && !approval.choices.includes(this.choice)) this.choice = approval.choices[0];
-    let picture;
     if (approval && this.choice) {
+      this.app.taskCards.remove(this.actionid);
       const choices = ["allow_once", "allow_session", "deny"].map(id => ({
         id, label:this.app.t("approval_"+id), disabled:!approval.choices.includes(id), kind:"button"
       }));
-      picture = "data:image/svg+xml;base64," + Buffer.from(questionSvg({choices}, this.choice)).toString("base64");
-    } else {
-      picture = "assets/states/" + statusArtwork(state === "idle" && !this.app.status.session ? "empty" : state) + ".png";
+      this.drawChoices({choices}, this.choice);
+      return;
     }
-    this.app.setFeedback(this, {icon:{value:picture}});
+    this.app.taskCards.update(this, {
+      session:session || null,
+      state:state === "idle" && !session ? "empty" : state,
+      text:currentTask?.title || session?.slice(0,8) || this.app.t("noSessionYet")
+    });
+  }
+  drawChoices(question, choice) {
+    const data = "data:image/svg+xml;base64," + Buffer.from(questionSvg(question, choice)).toString("base64");
+    this.app.send({cmd:"state", param:{statelist:[{uuid:this.uuid, actionid:this.actionid,
+      key:this.key, type:1, data, showtext:false}]}});
   }
   handleDialRotate(direction) {
+    if (!this.active || this.busy || !["left","right"].includes(direction)) return;
     const question = this.app.status.question;
     if (question) {
-      if (!this.active || this.busy || question.token !== this.questionToken || !["left","right"].includes(direction)) return;
+      if (question.token !== this.questionToken) return;
       const choices = question.choices.filter(c => !c.disabled);
       const index = choices.findIndex(c => c.id === this.questionChoice) + (direction === "left" ? -1 : 1);
       this.questionChoice = choices[Math.max(0, Math.min(choices.length - 1, index))]?.id;
@@ -406,15 +448,16 @@ class CurrentSessionAction extends BaseAction {
       return;
     }
     const prompt = this.app.status.approval;
-    if (!this.active || this.busy || !prompt || this.token !== prompt.token || !["left","right"].includes(direction)) return;
+    if (!prompt || this.token !== prompt.token) return;
     const next = prompt.choices.indexOf(this.choice) + (direction === "left" ? -1 : 1);
     this.choice = prompt.choices[Math.max(0, Math.min(prompt.choices.length - 1, next))];
     this.onStatus();
   }
   async handleDialDown() {
+    if (!this.active || this.busy) return;
     const question = this.app.status.question;
     if (question) {
-      if (!this.active || this.busy || question.token !== this.questionToken || !this.questionChoice) return;
+      if (question.token !== this.questionToken || !this.questionChoice) return;
       this.busy = true;
       try {
         const choice = question.choices.find(c => c.id === this.questionChoice);
@@ -424,7 +467,7 @@ class CurrentSessionAction extends BaseAction {
       } finally { this.busy = false; }
       return;
     }
-    if (!this.active || this.busy || !this.token || this.token !== this.app.status.approval?.token) return;
+    if (!this.token || this.token !== this.app.status.approval?.token) return;
     this.busy = true;
     try {
       if (!await cdp.command("decide", this.choice, this.token)) {
@@ -448,12 +491,10 @@ class TaskAction extends BaseAction {
     this.slot = Number(this.uuid.slice(-1));
     this.displayedTask = this.app.status.taskSlots()[this.slot-1] || null;
     const task = this.displayedTask;
-    const title = task?.title ? Array.from(task.title) : [];
-    const subtitle = title.length ? title.slice(0,12).join("") + (title.length>12 ? "…" : "") : task?.session.slice(0,8);
+    const title = task?.title || task?.session.slice(0,8) || this.app.t("noSessionYet");
     this.app.taskCards.update(this, {session:task?.session || null,
       state:!this.app.status.cdpState ? "offline" : task?.state || "empty",
-      text:subtitle || "",
-      showCredits:this.settings.showCredits !== false && this.settings.showCredits !== "false"});
+      text:"①②③④⑤"[this.slot - 1] + title});
   }
   invoke() {
     const task = this.displayedTask;

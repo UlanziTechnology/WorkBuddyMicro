@@ -1,97 +1,78 @@
 "use strict";
 const {statusArtwork} = require("./workbuddy-status");
-const REFRESH_MS = 60000;
-
-/** Deep task-display module: owns minute reads, state-change reads, GIF composition and stale-result guards.
- * Interface: update(action, snapshot), remove(actionid), stop(). Only visible, enabled tasks consume I/O.
- * State changes and periodic credit reads are coalesced across all five slots into one file read batch.
- */
+const {DIAL_FRAME_COUNT} = require("./task-art");
+const DIAL_FRAME_MS = 200;
+// Track the current view so a slow render cannot repaint a changed or removed key.
 class TaskCards {
-  constructor({usage, artwork, send}) {
-    this.usage = usage;
+  constructor({artwork, send}) {
     this.artwork = artwork;
     this.send = send;
     this.views = new Map();
-    this.credits = new Map();
-    this.pending = new Set();
   }
+
   /** @param {{actionid:string, uuid:string, key:string, active:boolean}} action
-   * @param {{session:string|null, state:string, text:string, showCredits:boolean}} snapshot */
+   * @param {{session:string|null, state:string, text:string}} snapshot */
   update(action, snapshot) {
-    if (!action.active || this.stopped) { this.remove(action.actionid); return; }
+    if (this.stopped || !action.active) {
+      this.remove(action.actionid);
+      return;
+    }
     const previous = this.views.get(action.actionid);
     const signature = JSON.stringify(snapshot);
     if (previous?.action === action && previous.signature === signature) return;
-    const view = {action, snapshot, signature};
-    this.views.set(action.actionid,view);
-    if (!this.enabled(view)) this.paint(view);
-    else if (previous && previous.snapshot.session === snapshot.session && previous.snapshot.state === snapshot.state && this.enabled(previous)) this.paint(view);
-    else this.request(snapshot.session);
-    this.schedule();
+
+    this.remove(action.actionid);
+    const state = statusArtwork(snapshot.state);
+    const view = {action, snapshot, signature, state};
+    this.views.set(action.actionid, view);
+    this.paint(view, action.controller === "Encoder" && state === "running" ? 0 : undefined);
   }
-  enabled(view) { return view.snapshot.showCredits && view.snapshot.session && !["offline","empty"].includes(view.snapshot.state); }
-  request(session) {
-    if (this.stopped) return;
-    this.pending.add(session);
-    if (!this.queued && !this.loading) {
-      this.queued = setTimeout(() => { this.queued = null; this.refresh(); },0);
-      this.queued.unref?.();
-    }
-  }
-  schedule() {
-    const enabled = [...this.views.values()].some(view => this.enabled(view));
-    if (!enabled) { clearInterval(this.timer); this.timer = null; }
-    else if (!this.timer) {
-      this.timer = setInterval(() => {
-        for (const view of this.views.values()) if (this.enabled(view)) this.request(view.snapshot.session);
-      },REFRESH_MS);
-      this.timer.unref?.();
-    }
-  }
-  async refresh() {
-    if (this.loading || this.stopped) return;
-    const sessions = [...this.pending].filter(id => [...this.views.values()].some(view => this.enabled(view) && view.snapshot.session === id));
-    this.pending.clear();
-    if (!sessions.length) return;
-    this.loading = true;
+
+  async paint(view, frame, sendAt = 0) {
+    const {action, snapshot, state} = view;
+    if (this.views.get(action.actionid) !== view || !action.active) return;
+    let image;
     try {
-      const values = await this.usage.read(sessions);
-      for (const id of sessions) if (values.has(id)) this.credits.set(id,values.get(id));
-      for (const view of this.views.values()) {
-        if (this.enabled(view) && sessions.includes(view.snapshot.session) && !this.pending.has(view.snapshot.session)) await this.paint(view);
-      }
+      image = await this.artwork.render({state, title:snapshot.text, frame});
     } catch {
-      // Transient file errors keep the last measured amount; an unmeasured session gets a dash.
-      for (const view of this.views.values()) if (this.enabled(view) && sessions.includes(view.snapshot.session) && !this.pending.has(view.snapshot.session)) await this.paint(view);
-    } finally {
-      this.loading = false;
-      if (this.pending.size) this.request(this.pending.values().next().value);
-      const visible = new Set([...this.views.values()].map(view => view.snapshot.session));
-      for (const id of this.credits.keys()) if (!visible.has(id)) this.credits.delete(id);
+      const animated = state === "running" && frame === undefined;
+      const filename = frame === undefined ? state + (animated ? ".gif" : ".png") : `running-${frame}.png`;
+      image = {path:"assets/task-cards/" + filename, animated};
     }
-  }
-  async paint(view) {
-    const {action, snapshot} = view;
-    const artwork = statusArtwork(snapshot.state);
-    const icon = {uuid:action.uuid,actionid:action.actionid,key:action.key,
-      showtext:Boolean(snapshot.text),textdata:snapshot.text || ""};
-    if (["offline","empty"].includes(artwork)) Object.assign(icon,{type:2,path:"assets/states/"+artwork+".png"});
-    else {
-      let file = "assets/states/"+artwork+".gif";
-      if (this.enabled(view)) {
-        try { file = await this.artwork.render(artwork,this.credits.get(snapshot.session) ?? null); }
-        catch { /* A rendering error falls back to the original animation, never hides state. */ }
+    if (this.views.get(action.actionid) !== view || !action.active) return;
+
+    const icon = {
+      uuid:action.uuid, actionid:action.actionid, key:action.key,
+      showtext:false, textdata:"",
+      ...(image.animated ? {type:4, gifpath:image.path} : {type:2, path:image.path})
+    };
+    const sendFrame = () => {
+      if (this.views.get(action.actionid) !== view || !action.active) return;
+      const sent = this.send({cmd:"state", param:{statelist:[icon]}});
+      // Prepare one frame ahead so rendering stays within the 200 ms cadence.
+      if (frame !== undefined && sent !== false) {
+        this.paint(view, (frame + 1) % DIAL_FRAME_COUNT, performance.now() + DIAL_FRAME_MS);
       }
-      Object.assign(icon,{type:4,gifpath:file});
+    };
+    const delay = Math.ceil(sendAt - performance.now());
+    if (delay > 0) {
+      view.timer = setTimeout(sendFrame, delay);
+      view.timer.unref();
+    } else {
+      sendFrame();
     }
-    // Navigation/settings/state may change while the file or GIF is being read.
-    if (!this.stopped && action.active && this.views.get(action.actionid) === view) this.send({cmd:"state",param:{statelist:[icon]}});
   }
-  remove(actionid) { this.views.delete(actionid); this.schedule(); }
+
+  remove(actionid) {
+    clearTimeout(this.views.get(actionid)?.timer);
+    this.views.delete(actionid);
+  }
+
   stop() {
     this.stopped = true;
-    clearTimeout(this.queued);clearInterval(this.timer);
-    this.views.clear();this.pending.clear();this.credits.clear();
+    for (const id of this.views.keys()) this.remove(id);
+    this.artwork.stop();
   }
 }
-module.exports={TaskCards};
+
+module.exports = {TaskCards};

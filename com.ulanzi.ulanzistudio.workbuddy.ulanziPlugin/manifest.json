@@ -86,7 +86,7 @@
       "DisableAutomaticStates": true
     },
     {
-      "Name": "WorkBuddy Task 1",
+      "Name": "Recent Task 1",
       "UUID": "com.ulanzi.ulanzistudio.workbuddy.task1",
       "Icon": "assets/icons/task1.png",
       "PropertyInspectorPath": "property-inspector/task/inspector.html",
@@ -97,14 +97,14 @@
       "SupportedInMultiActions": false,
       "States": [
         {
-          "Name": "Task 1",
+          "Name": "Recent Task 1",
           "Image": "assets/icons/task1.png"
         }
       ],
       "Tooltip": "Show a recent chat via CDP. Press to open it."
     },
     {
-      "Name": "WorkBuddy Task 2",
+      "Name": "Recent Task 2",
       "UUID": "com.ulanzi.ulanzistudio.workbuddy.task2",
       "Icon": "assets/icons/task2.png",
       "PropertyInspectorPath": "property-inspector/task/inspector.html",
@@ -115,14 +115,14 @@
       "SupportedInMultiActions": false,
       "States": [
         {
-          "Name": "Task 2",
+          "Name": "Recent Task 2",
           "Image": "assets/icons/task2.png"
         }
       ],
       "Tooltip": "Show a recent chat via CDP. Press to open it."
     },
     {
-      "Name": "WorkBuddy Task 3",
+      "Name": "Recent Task 3",
       "UUID": "com.ulanzi.ulanzistudio.workbuddy.task3",
       "Icon": "assets/icons/task3.png",
       "PropertyInspectorPath": "property-inspector/task/inspector.html",
@@ -133,14 +133,14 @@
       "SupportedInMultiActions": false,
       "States": [
         {
-          "Name": "Task 3",
+          "Name": "Recent Task 3",
           "Image": "assets/icons/task3.png"
         }
       ],
       "Tooltip": "Show a recent chat via CDP. Press to open it."
     },
     {
-      "Name": "WorkBuddy Task 4",
+      "Name": "Recent Task 4",
       "UUID": "com.ulanzi.ulanzistudio.workbuddy.task4",
       "Icon": "assets/icons/task4.png",
       "PropertyInspectorPath": "property-inspector/task/inspector.html",
@@ -151,14 +151,14 @@
       "SupportedInMultiActions": false,
       "States": [
         {
-          "Name": "Task 4",
+          "Name": "Recent Task 4",
           "Image": "assets/icons/task4.png"
         }
       ],
       "Tooltip": "Show a recent chat via CDP. Press to open it."
     },
     {
-      "Name": "WorkBuddy Task 5",
+      "Name": "Recent Task 5",
       "UUID": "com.ulanzi.ulanzistudio.workbuddy.task5",
       "Icon": "assets/icons/task5.png",
       "PropertyInspectorPath": "property-inspector/task/inspector.html",
@@ -169,7 +169,7 @@
       "SupportedInMultiActions": false,
       "States": [
         {
-          "Name": "Task 5",
+          "Name": "Recent Task 5",
           "Image": "assets/icons/task5.png"
         }
       ],
@@ -195,13 +195,13 @@
     },
     {
       "Name": "Current Session Status",
-      "Icon": "assets/icons/action-status.png",
+      "Icon": "assets/icons/task1.png",
       "PropertyInspectorPath": "property-inspector/status/inspector.html",
       "state": 0,
       "States": [
         {
           "Name": "Status",
-          "Image": "assets/actions/status.png"
+          "Image": "assets/task-cards/offline.png"
         }
       ],
       "Tooltip": "Turn to choose an approval or question option and press to execute. For multi-select questions, toggle choices then select Submit. Requires CDP.",
@@ -271,7 +271,7 @@
     },
     {
       "Name": "Credit Balance",
-      "Tooltip": "Show remaining credits via CDP. Refreshes every 30 seconds. Press to refresh. Supports keys and encoders.",
+      "Tooltip": "Show account credits. Turn the dial for usage in recent tasks 1–5. Press to refresh.",
       "UUID": "com.ulanzi.ulanzistudio.workbuddy.credits",
       "Icon": "assets/actions/credits.png",
       "PropertyInspectorPath": "property-inspector/status/inspector.html",
@@ -292,6 +292,6 @@
       }
     }
   ],
-  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nWindows restart ends WorkBuddy processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nTask 1: Show a recent chat via CDP. Press to open it.\nTask 2: Show a recent chat via CDP. Press to open it.\nTask 3: Show a recent chat via CDP. Press to open it.\nTask 4: Show a recent chat via CDP. Press to open it.\nTask 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining credits through CDP. Refreshes every 30 seconds; press to refresh. Supports keys and encoders.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.",
+  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nWindows restart ends WorkBuddy processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nRecent Task 1: Show a recent chat via CDP. Press to open it.\nRecent Task 2: Show a recent chat via CDP. Press to open it.\nRecent Task 3: Show a recent chat via CDP. Press to open it.\nRecent Task 4: Show a recent chat via CDP. Press to open it.\nRecent Task 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining account credits. Turn the dial to view recent-task usage (1–5). Press to refresh.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.",
   "URL": "https://github.com/UlanziTechnology/WorkBuddyMicro"
 }

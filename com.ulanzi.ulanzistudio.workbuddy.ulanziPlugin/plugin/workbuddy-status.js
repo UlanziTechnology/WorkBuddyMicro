@@ -20,7 +20,7 @@ class WorkBuddyStatus extends EventEmitter {
     return {connected:Boolean(this.cdpState), installed:Boolean(this.installed || this.cdpState), state:this.state, tasks:this.taskSlots()};
   }
   publish() {
-    const selected = this.cdpTasks?.find(task => task.session === this.session);
+    const selected = this.currentTask;
     this.state = this.cdpState === "idle" ? selected?.state || "idle" : this.cdpState || "offline";
     this.emit("change", this.snapshot());
   }
@@ -42,16 +42,18 @@ class WorkBuddyStatus extends EventEmitter {
         if (this.stopped) return;
         const state = ["idle","notification","working"].includes(observed?.state) ? observed.state : null;
         const tasks = observed?.tasks ?? null;
+        const currentTask = observed?.currentTask ?? null;
         const approval = observed?.approval ?? null;
         const question = observed?.question ?? null;
         const voice = revision !== this.voiceRevision && observed && observed.session === this.session ? this.voice : observed?.voice ?? "unavailable";
         const send = observed?.send ?? "unavailable";
-        const changed = JSON.stringify(question) !== JSON.stringify(this.question) || voice !== this.voice || send !== this.send || JSON.stringify(approval) !== JSON.stringify(this.approval) || JSON.stringify(tasks) !== JSON.stringify(this.cdpTasks) || state !== this.cdpState || observed?.model !== this.model || observed?.session !== this.session;
+        const changed = JSON.stringify(question) !== JSON.stringify(this.question) || voice !== this.voice || send !== this.send || JSON.stringify(approval) !== JSON.stringify(this.approval) || JSON.stringify(tasks) !== JSON.stringify(this.cdpTasks) || JSON.stringify(currentTask) !== JSON.stringify(this.currentTask) || state !== this.cdpState || observed?.model !== this.model || observed?.session !== this.session;
         this.voice = voice;
         this.send = send;
         this.approval = approval;
         this.question = question;
         this.cdpTasks = tasks;
+        this.currentTask = currentTask;
         this.model = observed?.model;
         this.session = observed?.session;
         this.cdpState = state;

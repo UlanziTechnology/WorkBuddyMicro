@@ -7,6 +7,7 @@ const { drawCreditsCard, creditGlyphData } = require("../credits-art");
 const { samplePalette } = require("../skin-palette");
 const { readQuestionPanel } = require("../question-panel");
 const { applyTheme } = require("../skin-theme");
+const { readConversations } = require("./conversations");
 const endpoint = "http://127.0.0.1:9223";
 const renderer = /^file:\/\/\/[^?#]*(?:\/WorkBuddy(?:%20AI| AI)?\.app\/Contents\/Resources|\/WorkBuddy(?:%20AI| AI)?\/resources)\/app\.asar\/renderer\/index\.html(?:[?#]|$)/i;
 async function target() {
@@ -20,7 +21,7 @@ async function target() {
 }
 
 // Runs inside the verified renderer. Query only known controls; never match chat text.
-async function renderCommand(op, image, drawCard, applySkin, palette, sampler, questionPanel) {
+async function renderCommand(op, image, drawCard, applySkin, palette, sampler, questionPanel, conversationRows) {
   if (!document.getElementById("root")) return null;
   const visible = el => el.getClientRects().length && getComputedStyle(el).visibility !== "hidden";
   const session = () => document.querySelector('.cb-agent-card[data-conversation-id][data-selected="true"],.cb-agent-card[data-conversation-id][class*="_selected_"],.conversation-item [aria-selected=true][data-conversation-id]')?.dataset.conversationId || "";
@@ -39,7 +40,7 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
     const raw = account?.usageLeft;
     const balance = (typeof raw === "number" || (typeof raw === "string" && /^\d+(?:\.\d+)?$/.test(raw))) ? Number(raw) : NaN;
     if (!Number.isFinite(balance) || balance < 0) return null;
-    return {balance, picture:await drawCard(balance, image?.language || "en")};
+    return image?.encoder ? {balance} : {balance, picture:await drawCard(balance, image?.language || "en")};
   }
   if (op === "currentModel" || op === "currentCard") {
     const labels=[...document.querySelectorAll(".cr-model-selector__trigger-label")].filter(visible);
@@ -256,61 +257,34 @@ async function renderCommand(op, image, drawCard, applySkin, palette, sampler, q
     const state = groups.length || sandboxPending || toolLists.length || questionPending ? "notification" : Array.from(document.querySelectorAll(".conversation-input__stop-button,.cr-send-button--stop,.cb-task-loading-text")).some(visible) ? "working" : "idle";
     if (op === "state") return state;
     const labels = [...document.querySelectorAll(".cr-model-selector__trigger-label")].filter(visible);
-    // The sidebar groups pinned and project tasks. Its loaded conversation list
-    // carries sortAt across groups; DOM order alone is not recency order.
-    const anchor = document.querySelector(".cb-agent-card[data-conversation-id]") || document.querySelector(".conversation-list");
-    let tasks = null;
-    if (anchor) {
-      let fiber = anchor[Object.keys(anchor).find(key => key.startsWith("__reactFiber$"))];
-      let root = fiber;
-      while (root?.return) root = root.return;
-      // Reused DOM fibers can retain old parents even when their return chain
-      // reaches the current root. Read list props only from the committed tree.
-      const pending = root?.stateNode?.current ? [root.stateNode.current] : [];
-      while (pending.length) {
-        const current = pending.pop();
-        if (current.sibling) pending.push(current.sibling);
-        if (current.child) pending.push(current.child);
-        const list = current.memoizedProps?.allConversations;
-        if (!Array.isArray(list)) continue;
-        const valid = list.filter(row => typeof row?.id === "string" && row.id && Number.isFinite(row.sortAt) && row.lifecycle !== "archived");
-        if (list.length && !valid.length) break;
-        const selected = session();
-        const active = new Set(["planning", "working", "running"]);
-        const cards = [...document.querySelectorAll(".cb-agent-card[data-conversation-id]")];
-        const seen = new Set();
-        tasks = [];
-        for (const row of valid.sort((a,b) => b.sortAt-a.sortAt || a.id.localeCompare(b.id))) {
-          if (seen.has(row.id)) continue;
-          seen.add(row.id);
-          const status = String(row.status || "").toLowerCase();
-          const matches = cards.filter(card => card.dataset.conversationId === row.id);
-          let taskState = "idle";
-          if (status === "pending" || status === "waiting_for_approval" || (row.id === selected && state === "notification")) {
-            taskState = "notification";
-          } else if (active.has(status) || (row.id === selected && state === "working") ||
-                     matches.some(card => card.querySelector('[class*="statusIconSpin"], [class*="trailingStatus"] [class*="spin" i]'))) {
-            taskState = "working";
-          } else if (["failed", "error", "terminated"].includes(status)) {
-            taskState = "error";
-          } else if (status === "completed") {
-            // Mounted cards reflect the sidebar's final display decision. Collapsed
-            // groups expose the same unread flag via their conversation record.
-            const unread = matches.length
-              ? matches.some(card => card.querySelector('[class*="unreadDot"]'))
-              : row.unread === true;
-            if (unread) taskState = "attention";
-          }
-          tasks.push({session:row.id, title:String(row.title || row.taskTitle || "").slice(0,120), state:taskState});
-          if (tasks.length === 5) break;
-        }
-        break;
+    const rows = conversationRows();
+    const selected = session(), active = new Set(["planning", "working", "running"]);
+    const cards = [...document.querySelectorAll(".cb-agent-card[data-conversation-id]")];
+    const taskSnapshot = row => {
+      const status = String(row.status || "").toLowerCase();
+      const matches = cards.filter(card => card.dataset.conversationId === row.id);
+      let taskState = "idle";
+      if (status === "pending" || status === "waiting_for_approval" || (row.id === selected && state === "notification")) {
+        taskState = "notification";
+      } else if (active.has(status) || (row.id === selected && state === "working") ||
+                 matches.some(card => card.querySelector('[class*="statusIconSpin"], [class*="trailingStatus"] [class*="spin" i]'))) {
+        taskState = "working";
+      } else if (["failed", "error", "terminated"].includes(status)) {
+        taskState = "error";
+      } else if (status === "completed") {
+        // Completion still requires the sidebar's unread reminder, including collapsed groups.
+        const unread = matches.length ? matches.some(card => card.querySelector('[class*="unreadDot"]')) : row.unread === true;
+        if (unread) taskState = "attention";
       }
-    }
+      return {session:row.id,title:String(row.title || row.taskTitle || "").slice(0,120),state:taskState};
+    };
+    const tasks = rows?.slice(0,5).map(taskSnapshot) ?? null;
+    const currentRow = rows?.find(row => row.id === selected);
+    const currentTask = currentRow ? taskSnapshot(currentRow) : null;
     const approval = state === "notification" ? approvalControls() : null;
     const prompt = approval && !approval.request.submitted ? {token:approval.request.token,
       choices:["allow_once","allow_session","deny"].filter(choice => approval.controls.has(choice))} : null;
-    return {state, tasks, voice:composerControl("voice").state, send:composerControl("send").state, approval:prompt, question:question?.snapshot || null, session:session(), model:labels.length === 1 ? labels[0].textContent.trim() : ""};
+    return {state, tasks, currentTask, voice:composerControl("voice").state, send:composerControl("send").state, approval:prompt, question:question?.snapshot || null, session:selected, model:labels.length === 1 ? labels[0].textContent.trim() : ""};
   }
   if (op === "restoreTheme") {
     document.querySelector("style#ulanzi-workbuddy-background")?.remove();
@@ -324,7 +298,7 @@ async function command(op, image, palette) {
   const composerStates = op === "voice" ? ["ready","recording"] : ["ready","stop"];
   if (!["credits","foreground","state","observe","watchStatus","watchVoice","voice","send","decide","answerQuestion","skin","toggleTheme","restoreTheme","models","selectModel","currentModel","currentCard"].includes(op) || (["voice","send"].includes(op) && (typeof image?.session !== "string" || !composerStates.includes(image?.state))) || (op === "answerQuestion" && (typeof image !== "string" || image.length > 80 || typeof palette !== "string")) || (op === "decide" && (!["allow_once","allow_session","deny"].includes(image) || typeof palette !== "string")) || (op==="selectModel" && (typeof image!=="string" || !image.length || image.length>160)) || (["skin","toggleTheme"].includes(op) && !jpeg(image))) throw Error("Invalid WorkBuddy action");
   const ws = new WebSocketClient(await target());
-  const expression = '(' + renderer.toString() + ').test(location.href) ? (' + renderCommand.toString() + ')(' + JSON.stringify(op) + ',' + (image ? JSON.stringify(image) : 'null') + ',' + (op === 'credits' ? '(balance, language) => (' + drawCreditsCard.toString() + ')(balance, language, ' + JSON.stringify(creditGlyphData) + ')' : op === 'models' || op === 'currentCard' ? '(() => { const modelSvg = ' + modelSvg.toString() + '; return ' + drawModelCard.toString() + '; })()' : 'null' ) + ',' + ((op === 'skin' || op === 'toggleTheme') ? applyTheme.toString() : 'null') + ',' + ((op === 'skin' || op === 'toggleTheme') ? JSON.stringify(palette || {}) + ',' + samplePalette.toString() : (op === 'selectModel' || op === 'decide' || op === 'answerQuestion') ? JSON.stringify(palette ?? null) + ',null' : 'null,null') + ',' + readQuestionPanel.toString() + ') : null';
+  const expression = '(' + renderer.toString() + ').test(location.href) ? (' + renderCommand.toString() + ')(' + JSON.stringify(op) + ',' + (image ? JSON.stringify(image) : 'null') + ',' + (op === 'credits' && !image?.encoder ? '(balance, language) => (' + drawCreditsCard.toString() + ')(balance, language, ' + JSON.stringify(creditGlyphData) + ')' : op === 'models' || op === 'currentCard' ? '(() => { const modelSvg = ' + modelSvg.toString() + '; return ' + drawModelCard.toString() + '; })()' : 'null' ) + ',' + ((op === 'skin' || op === 'toggleTheme') ? applyTheme.toString() : 'null') + ',' + ((op === 'skin' || op === 'toggleTheme') ? JSON.stringify(palette || {}) + ',' + samplePalette.toString() : (op === 'selectModel' || op === 'decide' || op === 'answerQuestion') ? JSON.stringify(palette ?? null) + ',null' : 'null,null') + ',' + readQuestionPanel.toString() + ',' + readConversations.toString() + ') : null';
   return new Promise((resolve,reject) => {
     let done = false;
     const finish = (err,val) => { if(done)return; done=true; clearTimeout(timer); ws.close(); err ? reject(err) : resolve(val); };

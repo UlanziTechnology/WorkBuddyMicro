@@ -79,7 +79,7 @@
     "cdpSetupRequired": "Selecciona «Reiniciar WorkBuddy» en la configuración para conectar CDP.",
     "questionChanged": "La pregunta cambió. Comprueba la conversación actual.",
     "approvalChanged": "La aprobación cambió. Comprueba la conversación actual.",
-    "taskLabel": "Tarea {n}",
+    "taskLabel": "Tarea reciente {n}",
     "noSession": "No hay conversación en esta posición. Envía primero un mensaje en WorkBuddy.",
     "chooseImage": "Elige primero una imagen en los ajustes de la tecla.",
     "cdpUnavailable": "CDP de WorkBuddy no disponible (127.0.0.1:9223).",
@@ -134,7 +134,7 @@
     "guide_20": "Desconectado",
     "guide_25": "Iniciar WorkBuddy",
     "guide_26": "Inicia WorkBuddy con CDP local; si ya está conectado, muestra su ventana en primer plano.",
-    "guide_27": "Tarea 1–5",
+    "guide_27": "Tarea reciente 1–5",
     "guide_28": "Muestra las cinco tareas cargadas con actividad más reciente. Pulsa la tecla para abrir la conversación mostrada.",
     "guide_29": "Nueva tarea",
     "guide_31": "Abrir página",
@@ -145,7 +145,7 @@
     "guide_37": "Cambiar tema",
     "guide_39": "Entrada de voz / Enviar mensaje",
     "guide_41": "Saldo de créditos",
-    "guide_42": "Muestra los créditos restantes mediante CDP. Actualiza cada 30 segundos; pulsa para actualizar ya. Admite teclas y diales.",
+    "guide_42": "La tecla muestra el saldo de la cuenta. Gira el dial para alternar entre el total y el consumo de las tareas recientes ①–⑤. Pulsa para actualizar.",
     "guide_0": "Tu espacio de trabajo con IA, a una pulsación.",
     "guide_1": "Empieza en tres pasos",
     "guide_2": "Instalar y comprobar",
@@ -173,11 +173,11 @@
     "action_newtask": "Nueva tarea",
     "action_openpage": "Abrir página",
     "action_modelswitch": "Cambiar modelo",
-    "action_task1": "Tarea 1",
-    "action_task2": "Tarea 2",
-    "action_task3": "Tarea 3",
-    "action_task4": "Tarea 4",
-    "action_task5": "Tarea 5",
+    "action_task1": "Tarea reciente 1",
+    "action_task2": "Tarea reciente 2",
+    "action_task3": "Tarea reciente 3",
+    "action_task4": "Tarea reciente 4",
+    "action_task5": "Tarea reciente 5",
     "action_skin": "Cambiar tema",
     "action_currentsession": "Estado de la conversación",
     "action_voice": "Entrada de voz",
@@ -205,9 +205,7 @@
     "Unexpected CDP target": "CDP de WorkBuddy no disponible (127.0.0.1:9223).",
     "Invalid WorkBuddy action": "Acción de WorkBuddy no válida.",
     "Model selection failed": "Error al seleccionar el modelo.",
-    "chooseImageFile": "Elegir imagen",
-    "taskShowCredits": "Mostrar créditos consumidos",
-    "taskCreditsHelp": "Muestra el consumo acumulado de la conversación en la parte superior del GIF. Lee los archivos locales de WorkBuddy cada minuto y al cambiar el estado. Sin datos muestra un guion. Desactiva la opción para usar el GIF original."
+    "chooseImageFile": "Elegir imagen"
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",
@@ -242,47 +240,47 @@
       ]
     },
     {
-      "Name": "Tarea 1",
+      "Name": "Tarea reciente 1",
       "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
       "States": [
         {
-          "Name": "Tarea 1"
+          "Name": "Tarea reciente 1"
         }
       ]
     },
     {
-      "Name": "Tarea 2",
+      "Name": "Tarea reciente 2",
       "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
       "States": [
         {
-          "Name": "Tarea 2"
+          "Name": "Tarea reciente 2"
         }
       ]
     },
     {
-      "Name": "Tarea 3",
+      "Name": "Tarea reciente 3",
       "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
       "States": [
         {
-          "Name": "Tarea 3"
+          "Name": "Tarea reciente 3"
         }
       ]
     },
     {
-      "Name": "Tarea 4",
+      "Name": "Tarea reciente 4",
       "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
       "States": [
         {
-          "Name": "Tarea 4"
+          "Name": "Tarea reciente 4"
         }
       ]
     },
     {
-      "Name": "Tarea 5",
+      "Name": "Tarea reciente 5",
       "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
       "States": [
         {
-          "Name": "Tarea 5"
+          "Name": "Tarea reciente 5"
         }
       ]
     },
@@ -341,5 +339,5 @@
       ]
     }
   ],
-  "Detail": "Instala WorkBuddy Desktop y arrastra «Iniciar WorkBuddy» a una tecla. El panel de propiedades comprueba el cliente y la conexión CDP.\nPulsa «Reiniciar WorkBuddy» para iniciar el cliente con CDP activado.\nEn Windows, reiniciar cierra los procesos de WorkBuddy y puede interrumpir tareas. Guarda el trabajo primero.\n\nNueva tarea: Abre una tarea con un borrador rellenado. Revísalo antes de enviarlo.\nAbrir página: Abre una página de WorkBuddy. La disponibilidad depende de la versión y las funciones activadas.\nCambiar modelo: Gira el dial para cambiar el modelo en el área de escritura de WorkBuddy.\nTarea 1: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea 2: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea 3: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea 4: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea 5: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nCambiar tema: Aplica el tema de esta tecla. Pulsa de nuevo para restaurar el original.\nEstado de la conversación: Gira para elegir una aprobación o respuesta y pulsa para ejecutarla. En preguntas múltiples, marca opciones y elige Enviar. Requiere CDP.\nEntrada de voz: Inicia o termina la entrada de voz en WorkBuddy.\nEnviar mensaje: Envía el borrador actual o detiene la respuesta en curso cuando se muestra Detener.\nIniciar WorkBuddy: Inicia WorkBuddy con CDP local; si ya está conectado, muestra su ventana en primer plano.\nSaldo de créditos: Muestra los créditos restantes mediante CDP. Actualiza cada 30 segundos; pulsa para actualizar ya. Admite teclas y diales.\n\nCrea una plantilla de instrucciones con {clipboard}, {date} y {time}. Puedes indicar directorio, experto, habilidades, conectores y modelo. Máximo de 8000 caracteres."
+  "Detail": "Instala WorkBuddy Desktop y arrastra «Iniciar WorkBuddy» a una tecla. El panel de propiedades comprueba el cliente y la conexión CDP.\nPulsa «Reiniciar WorkBuddy» para iniciar el cliente con CDP activado.\nEn Windows, reiniciar cierra los procesos de WorkBuddy y puede interrumpir tareas. Guarda el trabajo primero.\n\nNueva tarea: Abre una tarea con un borrador rellenado. Revísalo antes de enviarlo.\nAbrir página: Abre una página de WorkBuddy. La disponibilidad depende de la versión y las funciones activadas.\nCambiar modelo: Gira el dial para cambiar el modelo en el área de escritura de WorkBuddy.\nTarea reciente 1: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea reciente 2: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea reciente 3: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea reciente 4: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea reciente 5: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nCambiar tema: Aplica el tema de esta tecla. Pulsa de nuevo para restaurar el original.\nEstado de la conversación: Gira para elegir una aprobación o respuesta y pulsa para ejecutarla. En preguntas múltiples, marca opciones y elige Enviar. Requiere CDP.\nEntrada de voz: Inicia o termina la entrada de voz en WorkBuddy.\nEnviar mensaje: Envía el borrador actual o detiene la respuesta en curso cuando se muestra Detener.\nIniciar WorkBuddy: Inicia WorkBuddy con CDP local; si ya está conectado, muestra su ventana en primer plano.\nSaldo de créditos: Muestra los créditos restantes mediante CDP. Actualiza cada 30 segundos; pulsa para actualizar ya. Admite teclas y diales.\n\nCrea una plantilla de instrucciones con {clipboard}, {date} y {time}. Puedes indicar directorio, experto, habilidades, conectores y modelo. Máximo de 8000 caracteres."
 }

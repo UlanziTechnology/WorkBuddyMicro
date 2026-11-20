@@ -16,8 +16,8 @@ const { createAction } = require("./actions");
 const { WorkBuddyStatus } = require("./workbuddy-status");
 const deeplink = require("./deeplink");
 const {TaskCards} = require("./task-cards");
-const {TaskGif} = require("./task-gif");
 const {SessionFiles} = require("./sources/session-files");
+const {TaskArtwork} = require("./task-art");
 const i18n = require("../libs/i18n");
 
 const PLUGIN_UUID = "com.ulanzi.ulanzistudio.workbuddy";
@@ -42,7 +42,8 @@ class PluginApp {
     this.ws = null;
     this.actions = new Map(); // actionid -> action instance
     this.displayCache = new Map();
-    this.taskCards = new TaskCards({usage:new SessionFiles(), artwork:new TaskGif(), send:message => this.send(message)});
+    this.taskCards = new TaskCards({artwork:new TaskArtwork(), send:message => this.send(message)});
+    this.sessionFiles = new SessionFiles();
     this.sessionModelCards = new Map(); // Shared by model dials when Studio recreates an instance.
     this.globalSettings = { scheme: "workbuddy://" };
     this.status = new WorkBuddyStatus(() => {
@@ -217,14 +218,12 @@ class PluginApp {
   // -- instance lifecycle ---------------------------------------------------
 
   onAdd(msg) {
-    this.displayCache.delete(msg.actionid);
     const existing = this.actions.get(msg.actionid);
     if (existing) {
-      existing.key = msg.key || existing.key;
-      existing.updateSettings(msg.param || {});
-      existing.setActive(true);
+      this.updateActivation(existing, msg, true);
       return;
     }
+    this.displayCache.delete(msg.actionid);
     const action = createAction(this, msg);
     if (!action) {
       this.log("warn", `unknown action uuid: ${msg.uuid}`);
@@ -240,11 +239,18 @@ class PluginApp {
 
   onSetActive(msg) {
     const action = this.actions.get(msg.actionid);
-    if (action) {
-      this.displayCache.delete(msg.actionid);
-      if (msg.param) action.updateSettings(msg.param);
-      action.setActive(msg.active);
-    }
+    if (action) this.updateActivation(action, msg, msg.active !== false);
+  }
+
+  updateActivation(action, message, active) {
+    const key = message.key || action.key;
+    const changed = action.active !== active || action.key !== key;
+    // Studio may resend add/setactive for a live instance. Keep its confirmed display.
+    if (changed) this.displayCache.delete(action.actionid);
+    action.key = key;
+    if (changed && !active) action.setActive(false);
+    if (message.param) action.updateSettings(message.param);
+    if (changed && active) action.setActive(true);
   }
 
   onClear(msg) {

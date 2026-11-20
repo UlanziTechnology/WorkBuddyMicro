@@ -40,17 +40,19 @@ Working directories must be absolute paths. Prompts are limited to 8,000 charact
 
 ## Recent tasks and session status
 
-Each task key has **Show session credits** enabled by default. It draws cumulative credits in a top-center pixel label, with the robot at 86% size, preserving its animation. Disable the option to use the original GIF. Consumption is read only from `%USERPROFILE%/.workbuddy/projects` on Windows or `~/.workbuddy/projects` on macOS. Credits refresh once a minute; a real status change reads the latest amount and sends the state and amount together. Unknown usage shows `-`, distinct from a measured zero. Unchanged images are not sent again. This is conversation consumption, separate from account Credit Balance.
+Each recent-task key draws its title over the supplied round status artwork: a conversation title of up to two lines at the top and a colored status pill below. Idle keys have no status pill. Running keys keep the loading GIF’s original frames and timing; completed, approval, error and disconnected use green, amber, red and gray badges. Long titles end with an ellipsis. Status labels are part of the supplied images and stay the same across Studio languages.
 
-Task identity and live status still come from CDP. File access supplies usage only and does not infer completion or approvals. Only visible, enabled conversation keys read usage. Generated GIFs are cached locally; no Python, npm installation or extra background process is needed.
+Each recent-task key draws its title over the supplied round status artwork: a conversation title of up to two lines at the top and a colored status pill below. Idle keys have no status pill. Running keys keep the loading GIF’s original frames and timing; completed, approval, error and disconnected use green, amber, red and gray badges. Long titles end with an ellipsis. Status labels are part of the supplied images and stay the same across Studio languages.
 
-Add **WorkBuddy Task 1–5** to keys to show up to five recent conversations loaded by the client. Each key tracks its own conversation's state. Press to open the conversation displayed on that key. Slots follow the recent list rather than permanent assignments or a complete history query.
+Task identity and live status come from CDP. Title rasterization and GIF compositing run in a worker thread using the bundled WebAssembly renderer and a system font; no Python or runtime npm installation is needed. Generated PNGs/GIFs are cached locally and unchanged images are not sent again.
 
-The new artwork distinguishes idle, working, completed, approval/reply needed, error and disconnected. Completed shows check-mark eyes, approval shows yellow pause eyes, and error shows red cross eyes. Completion attention requires an unread notification in WorkBuddy's conversation list. A task simply becoming idle does not create a completion alert.
+Add **Recent Task 1–5** to keys to show up to five recent conversations loaded by the client. Each key tracks its own conversation's state. Press to open the conversation displayed on that key. Slots follow the recent list rather than permanent assignments or a complete history query.
 
-**Current Session Status** is a separate Encoder action. During an approval, turn to choose an available native action, such as allow once, allow for the conversation or deny, and press to execute. There are no separate Allow/Deny key actions.
+Completion attention requires an unread notification in WorkBuddy's conversation list. A task simply becoming idle does not create a completion alert. The Current Session Status dial uses the same cards and updates the running animation with PNG frames at five frames per second.
 
-For standard question panels, turn through the actual options. Three rows are visible at a time, with a WorkBuddy marker on the highlighted row; long text is ellipsized. Single-choice actions follow the native panel's behavior. For multiple choices, press to toggle each item, then choose Submit. Paging and skip controls appear when the native panel provides them. **Other** brings WorkBuddy forward for typing; enter free text there. Custom dialogs may require separate support.
+**Current Session Status** is a separate Encoder action. Approval and question options appear automatically. Turn to select an option and press to execute. There are no separate Allow/Deny key actions.
+
+For standard question panels, turn through the actual options. Three rows are visible at a time, with a white arrow at the right of the highlighted row; long text is ellipsized. Single-choice actions follow the native panel's behavior. For multiple choices, press to toggle each item, then choose Submit. Paging and skip controls appear when the native panel provides them. **Other** brings WorkBuddy forward for typing; enter free text there. Custom dialogs may require separate support.
 
 ## Model Switch dial
 
@@ -74,7 +76,7 @@ You can also use **Restore native WorkBuddy theme** in the inspector. Different 
 
 ## Credit Balance
 
-Add **Credit Balance** to either a key or a dial. It reads the remaining account credits through CDP, refreshes every 30 seconds and refreshes on press. Dial rotation has no balance action.
+Add **Credit Balance** to a key or dial. The key shows the account balance. Turn the dial to cycle from the account balance through recent tasks **①–⑤**. A circled number before the amount identifies credits used by the corresponding task, read from local WorkBuddy session files. The visible amount refreshes every 30 seconds or on press. A dash indicates unavailable data.
 
 Initial or transient read failures retry every second. A temporary failure retains the last valid balance; disconnecting clears it. Without a readable balance, the display uses a gray unavailable image with a dash.
 

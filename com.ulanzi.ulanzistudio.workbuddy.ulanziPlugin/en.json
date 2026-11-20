@@ -31,47 +31,47 @@
       ]
     },
     {
-      "Name": "Task 1",
+      "Name": "Recent Task 1",
       "Tooltip": "Show a recent chat via CDP. Press to open it.",
       "States": [
         {
-          "Name": "Task 1"
+          "Name": "Recent Task 1"
         }
       ]
     },
     {
-      "Name": "Task 2",
+      "Name": "Recent Task 2",
       "Tooltip": "Show a recent chat via CDP. Press to open it.",
       "States": [
         {
-          "Name": "Task 2"
+          "Name": "Recent Task 2"
         }
       ]
     },
     {
-      "Name": "Task 3",
+      "Name": "Recent Task 3",
       "Tooltip": "Show a recent chat via CDP. Press to open it.",
       "States": [
         {
-          "Name": "Task 3"
+          "Name": "Recent Task 3"
         }
       ]
     },
     {
-      "Name": "Task 4",
+      "Name": "Recent Task 4",
       "Tooltip": "Show a recent chat via CDP. Press to open it.",
       "States": [
         {
-          "Name": "Task 4"
+          "Name": "Recent Task 4"
         }
       ]
     },
     {
-      "Name": "Task 5",
+      "Name": "Recent Task 5",
       "Tooltip": "Show a recent chat via CDP. Press to open it.",
       "States": [
         {
-          "Name": "Task 5"
+          "Name": "Recent Task 5"
         }
       ]
     },
@@ -122,7 +122,7 @@
     },
     {
       "Name": "Credit Balance",
-      "Tooltip": "Show remaining credits through CDP. Refreshes every 30 seconds; press to refresh. Supports keys and encoders.",
+      "Tooltip": "Show remaining account credits. Turn the dial to view recent-task usage (1–5). Press to refresh.",
       "States": [
         {
           "Name": "Credit Balance"
@@ -210,7 +210,7 @@
     "cdpSetupRequired": "Choose Restart WorkBuddy in setup to connect CDP.",
     "questionChanged": "Question changed. Check the current chat.",
     "approvalChanged": "Approval changed. Check the current chat.",
-    "taskLabel": "Task {n}",
+    "taskLabel": "Recent Task {n}",
     "noSession": "No session in this slot. Send a message in WorkBuddy first.",
     "chooseImage": "Choose an image in key settings first.",
     "cdpUnavailable": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
@@ -282,7 +282,7 @@
     "guide_24": "How to use it",
     "guide_25": "Launch WorkBuddy",
     "guide_26": "Start or restart the client in CDP mode when disconnected; bring it forward when connected.",
-    "guide_27": "Task 1–5",
+    "guide_27": "Recent Task 1–5",
     "guide_28": "Show the five most recent loaded WorkBuddy tasks. Press to open the displayed chat.",
     "guide_29": "New Task",
     "guide_30": "Set a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters.",
@@ -297,18 +297,18 @@
     "guide_39": "Voice Input / Send Message",
     "guide_40": "Enable CDP. Press Voice Input to start or finish recording. Press Send Message to send the current draft, or to stop the current response when Stop is shown. Gray means unavailable.",
     "guide_41": "Credit Balance",
-    "guide_42": "Show remaining account credits on a key or encoder through CDP every 30 seconds. Press to refresh. A gray dash indicates a disconnected or unavailable balance.",
+    "guide_42": "The key shows the account balance. Turn the dial through Total and recent tasks ①–⑤. Total is the account balance, and each task shows credits used. Press to refresh. A dash means unavailable.",
     "guide_43": "New Task only prefills a draft; you confirm sending. The domestic client uses workbuddy://; WorkBuddy AI uses workbuddy-ai://.",
     "guide_44": "How do I enable CDP?",
     "guide_45": "Open the Launch WorkBuddy setup and select Restart WorkBuddy. Click to start or restart WorkBuddy directly. On Windows this forcibly ends processes from the selected installation and may interrupt tasks; save work first. macOS quits normally before reopening. The status source shows CDP after connection and shows Disconnected if the connection drops.",
     "action_newtask": "New Task",
     "action_openpage": "Open Page",
     "action_modelswitch": "Model Switch",
-    "action_task1": "Task 1",
-    "action_task2": "Task 2",
-    "action_task3": "Task 3",
-    "action_task4": "Task 4",
-    "action_task5": "Task 5",
+    "action_task1": "Recent Task 1",
+    "action_task2": "Recent Task 2",
+    "action_task3": "Recent Task 3",
+    "action_task4": "Recent Task 4",
+    "action_task5": "Recent Task 5",
     "action_skin": "Switch Theme",
     "action_currentsession": "Current Session Status",
     "action_voice": "Voice Input",
@@ -336,10 +336,8 @@
     "Unexpected CDP target": "WorkBuddy CDP unavailable (127.0.0.1:9223).",
     "Invalid WorkBuddy action": "Invalid WorkBuddy action.",
     "Model selection failed": "Model selection failed.",
-    "chooseImageFile": "Choose image",
-    "taskShowCredits": "Show session credits",
-    "taskCreditsHelp": "Draw cumulative session credits at the top of the status GIF. Reads local WorkBuddy session files every minute and when the status changes. Missing data shows a dash; turn off to use the original GIF."
+    "chooseImageFile": "Choose image"
   },
   "Category": "WorkBuddy",
-  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nRestarting WorkBuddy on Windows ends its processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nTask 1: Show a recent chat via CDP. Press to open it.\nTask 2: Show a recent chat via CDP. Press to open it.\nTask 3: Show a recent chat via CDP. Press to open it.\nTask 4: Show a recent chat via CDP. Press to open it.\nTask 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining credits through CDP. Refreshes every 30 seconds; press to refresh. Supports keys and encoders.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters."
+  "Detail": "Install WorkBuddy Desktop. Drag Launch WorkBuddy onto a key. The inspector checks the client, status sync and current state.\nClick Restart WorkBuddy to launch the client with CDP enabled.\nRestarting WorkBuddy on Windows ends its processes and may interrupt active tasks. Save your work first.\n\nNew Task: Open a task with a prefilled draft. Review before sending.\nOpen Page: Open a WorkBuddy page. Available pages depend on the client version and enabled features.\nModel Switch: Turn the dial to switch the model in the WorkBuddy composer.\nRecent Task 1: Show a recent chat via CDP. Press to open it.\nRecent Task 2: Show a recent chat via CDP. Press to open it.\nRecent Task 3: Show a recent chat via CDP. Press to open it.\nRecent Task 4: Show a recent chat via CDP. Press to open it.\nRecent Task 5: Show a recent chat via CDP. Press to open it.\nSwitch Theme: Apply this key's theme. Press again to restore the default.\nCurrent Session Status: Turn to choose an approval or question option, then press. For multiple choices, select options and then Submit. Requires CDP.\nVoice Input: Start or finish voice input in WorkBuddy.\nSend Message: Send the current draft, or stop the current response when Stop is shown.\nLaunch WorkBuddy: Start WorkBuddy with local CDP; when connected, bring its window forward.\nCredit Balance: Show remaining account credits. Turn the dial to view recent-task usage (1–5). Press to refresh.\n\nSet a prompt template with {clipboard}, {date} and {time}, plus directory, expert, skills, connectors and model. Maximum 8000 characters."
 }

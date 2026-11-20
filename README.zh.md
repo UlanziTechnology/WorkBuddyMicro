@@ -17,13 +17,13 @@ D200X 桌面场景与会话状态示意渲染图，非实体设备实测照片�
 | 启动 WorkBuddy | 按键 | 以本地调试模式启动或重启；已连接时唤醒到前台 | CDP 引导 |
 | 新建任务 | 按键 | 根据提示词模板和可选任务参数预填草稿，不自动发送 | 深度链接 |
 | 页面直达 | 按键 | 打开指定页面，或按任务 ID 进入会话 | 深度链接 |
-| WorkBuddy 任务 1–5 | 五个按键功能 | 显示最近会话、状态及可选的累计消耗积分；按下进入键面上显示的会话 | CDP + 只读会话文件 |
+| 最近任务 1–5 | 五个按键功能 | 显示最近会话及其状态；按下进入键面上显示的会话 | CDP |
 | 模型切换 | 旋钮 | 显示当前模型及图标；旋转选择，停下后自动应用，也可按下应用 | CDP |
 | 当前会话状态 | 旋钮 | 显示实时状态；旋转选择审批或问题选项，按下执行 | CDP |
 | 语音输入 | 按键 | 开始或结束原生语音输入；根据实际录制状态显示闪烁红点 | CDP |
 | 发送消息 | 按键 | 发送当前草稿；显示 Stop 时按下停止当前回复 | CDP |
 | 主题切换 | 按键 | 应用自选图片和可调整的配色；再次按下恢复原生主题 | CDP |
-| 积分余额 | 按键或旋钮 | 显示账户剩余积分；每 30 秒刷新，也可按下刷新 | CDP |
+| 积分余额 | 按键或旋钮 | 显示账户剩余积分。转动旋钮查看最近任务 ①–⑤ 的消耗，按下刷新 | CDP 与本机会话文件 |
 
 深度链接功能无需 CDP 引导。实时状态与控制功能**只使用 CDP**，不回退到 hooks，无需独立 Bridge 服务或运行时 npm 安装。登录、模型权限、审批规则和任务执行仍由 WorkBuddy 负责。
 
@@ -87,7 +87,7 @@ git archive --format=zip --output=com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin
 
 ### 3. 配置设备布局
 
-从 Studio 的 **WorkBuddy** 分类将功能拖到按键或旋钮，选中功能后在属性栏配置。建议先添加「启动 WorkBuddy」「WorkBuddy 任务 1–5」，在 Encoder 控件上添加「模型切换」或「当前会话状态」。
+从 Studio 的 **WorkBuddy** 分类将功能拖到按键或旋钮，选中功能后在属性栏配置。建议先添加「启动 WorkBuddy」「最近任务 1–5」，在 Encoder 控件上添加「模型切换」或「当前会话状态」。
 
 「新建任务」「页面直达」配置后即可通过深度链接使用；实时任务状态与控制功能需继续连接 CDP。
 
@@ -147,7 +147,7 @@ npm run check
 | `plugin/deeplink.js` | 客户端 URL、输入校验和提示词占位符 |
 | `plugin/sources/cdp.js`、`plugin/question-panel.js` | 本地渲染进程定位，以及 WorkBuddy 状态和操作适配 |
 | `plugin/sources/session-files.js` | 只读会话文件、记录去重与积分汇总，不推断实时状态 |
-| `plugin/task-cards.js`、`plugin/task-gif.js` | 可见任务的刷新合并、异步结果校验、GIF 合成与文件缓存 |
+| `plugin/task-cards.js`、`plugin/task-art.js`、`plugin/task-art-worker.js` | 可见任务更新、异步结果校验、工作线程 PNG/GIF 绘制与文件缓存 |
 | `plugin/workbuddy-status.js` | 共享会话快照和状态订阅 |
 | `plugin/enable-cdp.js`、`plugin/windows-workbuddy.ps1` | 各平台的启动、重启和前台唤醒 |
 | `plugin/*-art.js`、`layouts/`、`assets/` | 图像绘制、Encoder 布局和素材 |
