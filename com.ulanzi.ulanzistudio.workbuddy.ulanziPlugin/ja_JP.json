@@ -36,8 +36,8 @@
     "PageAvailability": "利用できるページはクライアントのバージョンと有効な機能によって異なります。未対応の移動先では現在のページに留まるかホームに戻ることがあります。",
     "skinImage": "背景画像",
     "ModelDialGuide": "WorkBuddy のタスク入力画面を開いてください。ダイヤルでモデルを選ぶと自動適用されます。モデル ID の入力は不要です。",
-    "setupTitle": "CDP 接続",
-    "setupIntro": "「WorkBuddy を再起動」で CDP を有効にして起動します。",
+    "setupTitle": "WorkBuddy の状態",
+    "setupIntro": "「WorkBuddy を再起動」を押すと、通信インターフェースを有効にしてクライアントを起動します。",
     "client": "クライアント",
     "installed": "インストール済み",
     "missing": "未検出",
@@ -47,13 +47,13 @@
     "pluginDisconnected": "プラグインが切断されました",
     "connecting": "接続中…",
     "connected": "接続済み",
-    "disconnected": "未接続",
+    "disconnected": "WorkBuddy に未接続",
     "restart": "WorkBuddy を再起動",
     "restarting": "再起動中…",
     "windowsRestartWarning": "Windows で再起動すると WorkBuddy のプロセスが終了し、実行中のタスクが中断される場合があります。先に作業を保存してください。",
     "noStatus": "プラグインの状態を受信できません。アクションを選び直すか Ulanzi Studio を再起動してください。",
     "limitItems": "最大 20 件",
-    "state_offline": "未起動",
+    "state_offline": "WorkBuddy に未接続",
     "state_idle": "待機中",
     "state_thinking": "思考中",
     "state_working": "実行中",
@@ -70,20 +70,20 @@
     "noModels": "モデルが未設定です",
     "configureModels": "先に属性パネルでモデル一覧を設定してください。",
     "schemeMissing": "プロトコルが未登録です。WorkBuddy のインストールを確認してください。",
-    "modelComposerRequired": "WorkBuddy のタスク入力画面を開き、CDP を有効にしてください。",
+    "modelComposerRequired": "WorkBuddy のタスク入力画面を開き、WorkBuddy 通信インターフェース を有効にしてください。",
     "chatChanged": "会話が変わりました。モデルを選び直してください。",
     "modelSelectionFailed": "モデルを選択できませんでした。",
     "modelNotSwitched": "モデルが切り替わりません。WorkBuddy の入力画面を確認してください。",
-    "cdpSetupRequired": "設定の「WorkBuddy を再起動」で CDP に接続してください。",
+    "cdpSetupRequired": "プロパティ欄で「WorkBuddy を再起動」を選んで接続してください。",
     "questionChanged": "質問が変わりました。現在の会話を確認してください。",
     "approvalChanged": "承認内容が変わりました。現在の会話を確認してください。",
     "taskLabel": "最近のタスク {n}",
     "noSession": "この枠に会話はありません。先に WorkBuddy でメッセージを送信してください。",
     "chooseImage": "先にキーの設定で画像を選んでください。",
-    "cdpUnavailable": "WorkBuddy CDP に接続できません（127.0.0.1:9223）。",
+    "cdpUnavailable": "WorkBuddy に未接続",
     "noApproval": "操作対象の承認を一意に特定できません。WorkBuddy を確認してください。",
     "themeRestored": "WorkBuddy の標準テーマに戻しました。",
-    "connectCdp": "先に WorkBuddy CDP に接続してください。",
+    "connectCdp": "先に WorkBuddy 通信インターフェース に接続してください。",
     "clipboardTimeout": "クリップボードの読み取りがタイムアウトしました。プレースホルダーを保持します。",
     "clipboardFailed": "クリップボードを読めません。プレースホルダーを保持します。",
     "studioDisconnected": "Ulanzi Studio が切断されました",
@@ -111,27 +111,27 @@
     "taskIdRequired": "タスク ID を入力してください。",
     "unsupportedPlatform": "このシステムには対応していません。",
     "cdpPortOccupied": "ローカルポート 9223 が使用中です。使用しているプログラムを閉じて再試行してください。",
-    "cdpStartupFailed": "WorkBuddy CDP（127.0.0.1:9223）に接続できません。クライアントを確認して再試行してください。",
-    "windowsSetupFailed": "Windows の CDP 設定を実行できません。WorkBuddy を開いて再試行してください。",
+    "cdpStartupFailed": "WorkBuddy 通信インターフェース（127.0.0.1:9223）に接続できません。クライアントを確認して再試行してください。",
+    "windowsSetupFailed": "Windows の WorkBuddy 通信インターフェース 設定を実行できません。WorkBuddy を開いて再試行してください。",
     "workbuddyNotFound": "WorkBuddy が見つかりません。インストールするか WORKBUDDY_EXE に実行ファイルのパスを設定してください。",
     "configuredExeInvalid": "WORKBUDDY_EXE は選択した WorkBuddy の実行ファイルを指す必要があります。",
     "workbuddyStopFailed": "WorkBuddy を終了できません。作業を保存し、トレイから終了して再試行してください。",
-    "cdpTimeout": "WorkBuddy CDP の要求がタイムアウトしました。起動完了後に再試行してください。",
+    "cdpTimeout": "WorkBuddy 通信インターフェース の要求がタイムアウトしました。起動完了後に再試行してください。",
     "invalidAction": "無効な WorkBuddy 操作です。",
     "noSessionYet": "会話はまだありません",
     "Welcome_coding": "開発",
     "Welcome_working": "オフィス作業",
     "Welcome_design": "デザイン",
     "guide_5": "WorkBuddy を起動",
-    "guide_6": "ローカル CDP を有効にして WorkBuddy を起動します。接続済みの場合はウィンドウを前面に表示します。",
+    "guide_6": "ローカル WorkBuddy 通信インターフェース を有効にして WorkBuddy を起動します。接続済みの場合はウィンドウを前面に表示します。",
     "guide_10": "待機中",
     "guide_12": "実行中",
     "guide_14": "完了・要確認",
     "guide_16": "承認・回答待ち",
     "guide_18": "エラー",
-    "guide_20": "未接続",
+    "guide_20": "WorkBuddy に未接続",
     "guide_25": "WorkBuddy を起動",
-    "guide_26": "ローカル CDP を有効にして WorkBuddy を起動します。接続済みの場合はウィンドウを前面に表示します。",
+    "guide_26": "ローカル WorkBuddy 通信インターフェース を有効にして WorkBuddy を起動します。接続済みの場合はウィンドウを前面に表示します。",
     "guide_27": "最近のタスク 1–5",
     "guide_28": "読み込み済みの最近 5 件のタスクを表示します。キーを押すと該当する会話を開きます。",
     "guide_29": "新規タスク",
@@ -143,11 +143,11 @@
     "guide_37": "テーマ切り替え",
     "guide_39": "音声入力 / メッセージ送信",
     "guide_41": "クレジット残高",
-    "guide_42": "キーはアカウント残高を表示します。ダイヤルで合計と最近のタスク①〜⑤を切り替え、各タスクの消費クレジットを確認できます。押すと再取得します。横線は取得できない状態です。",
+    "guide_42": "キーを押すかダイヤルを回すと、アカウント残高と最近のタスク①〜⑤の消費クレジットを順に表示します。ダイヤルを押すと更新します。横線は取得できない状態を示します。",
     "guide_0": "AI ワークスペースをワンタッチで操作。",
     "guide_1": "3 ステップで始める",
     "guide_2": "インストールと確認",
-    "guide_3": "WorkBuddy デスクトップ版をインストールし、「WorkBuddy を起動」をキーに配置してください。属性パネルでクライアントと CDP 接続を確認できます。",
+    "guide_3": "WorkBuddy デスクトップ版をインストールし、「WorkBuddy を起動」をキーに配置してください。属性パネルでクライアントと WorkBuddy 通信インターフェース 接続を確認できます。",
     "guide_4": "WorkBuddy をダウンロード ↗",
     "guide_7": "接続を確認",
     "guide_8": "接続済みと表示されたら、音声入力、メッセージ送信、現在の会話の状態、テーマ切り替えを利用できます。",
@@ -162,12 +162,12 @@
     "guide_23": "アクション",
     "guide_24": "使い方",
     "guide_30": "プロンプトに {clipboard}、{date}、{time} を使用できます。フォルダー、エキスパート、スキル、コネクター、モデルも設定できます。最大 8000 文字です。",
-    "guide_36": "CDP 接続後は現在の会話の状態を表示します。承認では 1 回許可、セッション中の許可、拒否を選んで押します。無効な選択肢は薄く表示されます。質問では実際の選択肢、単一・複数選択、前後の質問、送信、スキップに対応します。「その他」は入力用にクライアントを前面に表示します。入力済みの回答はダイヤルで送信できます。独自ダイアログは個別の対応が必要です。",
-    "guide_38": "キーごとにローカル画像を選びます。キーには 96×96 のプレビューを表示します。押すと CDP でテーマを適用し、もう一度押すと標準に戻ります。",
-    "guide_40": "音声キーで録音を開始・終了します。送信キーで現在の下書きを送信し、停止表示中は応答を停止します。灰色は利用不可を示します。CDP が必要です。",
+    "guide_36": "WorkBuddy 通信インターフェース 接続後は現在の会話の状態を表示します。承認では 1 回許可、セッション中の許可、拒否を選んで押します。無効な選択肢は薄く表示されます。質問では実際の選択肢、単一・複数選択、前後の質問、送信、スキップに対応します。「その他」は入力用にクライアントを前面に表示します。入力済みの回答はダイヤルで送信できます。独自ダイアログは個別の対応が必要です。",
+    "guide_38": "キーごとにローカル画像を選びます。キーには 96×96 のプレビューを表示します。押すと WorkBuddy 通信インターフェース でテーマを適用し、もう一度押すと標準に戻ります。",
+    "guide_40": "音声キーで録音を開始・終了します。送信キーで現在の下書きを送信し、停止表示中は応答を停止します。灰色は利用不可を示します。WorkBuddy 通信インターフェース が必要です。",
     "guide_43": "新規タスクは下書きのみを入力し、送信は確認後に行います。国内版は workbuddy://、WorkBuddy AI は workbuddy-ai:// を使用します。",
-    "guide_44": "CDP を有効にするには？",
-    "guide_45": "「WorkBuddy を起動」の属性パネルで「WorkBuddy を再起動」を選びます。Windows では指定したインストール先のプロセスを終了するため、作業を先に保存してください。macOS は通常終了後に再起動します。成功すると CDP が接続済みと表示されます。",
+    "guide_44": "WorkBuddy 通信インターフェース を有効にするには？",
+    "guide_45": "「WorkBuddy を起動」の属性パネルで「WorkBuddy を再起動」を選びます。Windows では指定したインストール先のプロセスを終了するため、作業を先に保存してください。macOS は通常終了後に再起動します。クライアントの準備ができると、WorkBuddy の状態に「接続済み」と表示されます。",
     "action_newtask": "新規タスク",
     "action_openpage": "ページを開く",
     "action_modelswitch": "モデル切り替え",
@@ -187,20 +187,20 @@
     "Enter a task ID / 请填写任务 ID": "タスク ID を入力してください。",
     "Unsupported platform": "このシステムには対応していません。",
     "127.0.0.1:9223 is in use.": "ローカルポート 9223 が使用中です。使用しているプログラムを閉じて再試行してください。",
-    "WorkBuddy CDP did not connect (127.0.0.1:9223).": "WorkBuddy CDP（127.0.0.1:9223）に接続できません。クライアントを確認して再試行してください。",
-    "Could not run Windows CDP setup. Open WorkBuddy and retry.": "Windows の CDP 設定を実行できません。WorkBuddy を開いて再試行してください。",
+    "WorkBuddy CDP did not connect (127.0.0.1:9223).": "WorkBuddy 通信インターフェース（127.0.0.1:9223）に接続できません。クライアントを確認して再試行してください。",
+    "Could not run Windows CDP setup. Open WorkBuddy and retry.": "Windows の WorkBuddy 通信インターフェース 設定を実行できません。WorkBuddy を開いて再試行してください。",
     "WorkBuddy not found. Install it or set WORKBUDDY_EXE to its executable path.": "WorkBuddy が見つかりません。インストールするか WORKBUDDY_EXE に実行ファイルのパスを設定してください。",
     "WORKBUDDY_EXE must point to the selected WorkBuddy executable.": "WORKBUDDY_EXE は選択した WorkBuddy の実行ファイルを指す必要があります。",
     "Could not stop WorkBuddy. Quit it from the tray menu and retry.": "WorkBuddy を終了できません。作業を保存し、トレイから終了して再試行してください。",
     "WorkBuddy did not quit. Save your work and retry.": "WorkBuddy を終了できません。作業を保存し、トレイから終了して再試行してください。",
     "WorkBuddy not installed": "WorkBuddy が見つかりません。先にデスクトップ版をインストールしてください。",
     "WorkBuddy AI not installed": "WorkBuddy が見つかりません。先にデスクトップ版をインストールしてください。",
-    "CDP timeout": "WorkBuddy CDP の要求がタイムアウトしました。起動完了後に再試行してください。",
-    "CDP unavailable": "WorkBuddy CDP に接続できません（127.0.0.1:9223）。",
-    "CDP disconnected": "WorkBuddy CDP に接続できません（127.0.0.1:9223）。",
-    "WorkBuddy renderer unavailable": "WorkBuddy CDP に接続できません（127.0.0.1:9223）。",
-    "No unique WorkBuddy renderer": "WorkBuddy CDP に接続できません（127.0.0.1:9223）。",
-    "Unexpected CDP target": "WorkBuddy CDP に接続できません（127.0.0.1:9223）。",
+    "CDP timeout": "WorkBuddy 通信インターフェース の要求がタイムアウトしました。起動完了後に再試行してください。",
+    "CDP unavailable": "WorkBuddy に未接続",
+    "CDP disconnected": "WorkBuddy に未接続",
+    "WorkBuddy renderer unavailable": "WorkBuddy に未接続",
+    "No unique WorkBuddy renderer": "WorkBuddy に未接続",
+    "Unexpected CDP target": "WorkBuddy に未接続",
     "Invalid WorkBuddy action": "無効な WorkBuddy 操作です。",
     "Model selection failed": "モデルを選択できませんでした。",
     "chooseImageFile": "画像を選択",
@@ -209,17 +209,18 @@
     "chooseConversation": "会話を選択",
     "refreshConversations": "会話一覧を更新",
     "loadingConversations": "会話を読み込み中…",
-    "connectToLoadConversations": "CDP に接続して会話一覧を読み込んでください。",
+    "connectToLoadConversations": "WorkBuddy 通信インターフェース に接続して会話一覧を読み込んでください。",
     "noConversations": "読み込まれた会話がありません。WorkBuddy で会話を開き、更新してください。",
     "savedConversation": "保存済みの会話",
     "untitledConversation": "無題の会話",
     "selectedConversationMissing": "保存済みの会話は現在の一覧にありません。設定は保持されます。別の会話を選択すると置き換わります。",
-    "conversationHelp": "WorkBuddy に読み込まれた会話を最近の活動順に表示します。選択した会話は一覧の並びが変わっても固定されます。一覧の更新には CDP が必要です。保存済みの会話はディープリンクで開きます。",
+    "conversationHelp": "WorkBuddy に読み込まれた会話を最近の活動順に表示します。選択した会話は一覧の並びが変わっても固定されます。一覧の更新には WorkBuddy 通信インターフェース が必要です。保存済みの会話はディープリンクで開きます。",
     "legacyPageHelp": "このキーは一覧から削除された旧項目を使用しています。既存のリンクは保持されます。別のページを選ぶか「会話を開く」を追加してください。",
     "guide_openchat": "会話を開く",
-    "guide_openchat_help": "WorkBuddy に読み込まれた会話を最近の活動順に表示します。選択した会話は一覧の並びが変わっても固定されます。一覧の更新には CDP が必要です。保存済みの会話はディープリンクで開きます。",
-    "workbuddyWebsite": "WorkBuddy 公式サイト",
-    "autoConversationTitle": "タイトルを自動更新"
+    "guide_openchat_help": "WorkBuddy に読み込まれた会話を最近の活動順に表示します。選択した会話は一覧の並びが変わっても固定されます。一覧の更新には WorkBuddy 通信インターフェース が必要です。保存済みの会話はディープリンクで開きます。",
+    "workbuddyDownload": "未インストール。クリックしてダウンロード",
+    "autoConversationTitle": "タイトルを自動更新",
+    "workbuddyInterface": "WorkBuddy 通信インターフェース"
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",
@@ -246,7 +247,7 @@
     },
     {
       "Name": "会話を開く",
-      "Tooltip": "WorkBuddy に読み込まれた会話を最近の活動順に表示します。選択した会話は一覧の並びが変わっても固定されます。一覧の更新には CDP が必要です。保存済みの会話はディープリンクで開きます。",
+      "Tooltip": "WorkBuddy に読み込まれた会話を最近の活動順に表示します。選択した会話は一覧の並びが変わっても固定されます。一覧の更新には WorkBuddy 通信インターフェース が必要です。保存済みの会話はディープリンクで開きます。",
       "States": [
         {
           "Name": "会話を開く"
@@ -264,7 +265,7 @@
     },
     {
       "Name": "最近のタスク 1",
-      "Tooltip": "CDP で最近の会話を表示し、押すと開きます。",
+      "Tooltip": "WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。",
       "States": [
         {
           "Name": "最近のタスク 1"
@@ -273,7 +274,7 @@
     },
     {
       "Name": "最近のタスク 2",
-      "Tooltip": "CDP で最近の会話を表示し、押すと開きます。",
+      "Tooltip": "WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。",
       "States": [
         {
           "Name": "最近のタスク 2"
@@ -282,7 +283,7 @@
     },
     {
       "Name": "最近のタスク 3",
-      "Tooltip": "CDP で最近の会話を表示し、押すと開きます。",
+      "Tooltip": "WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。",
       "States": [
         {
           "Name": "最近のタスク 3"
@@ -291,7 +292,7 @@
     },
     {
       "Name": "最近のタスク 4",
-      "Tooltip": "CDP で最近の会話を表示し、押すと開きます。",
+      "Tooltip": "WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。",
       "States": [
         {
           "Name": "最近のタスク 4"
@@ -300,7 +301,7 @@
     },
     {
       "Name": "最近のタスク 5",
-      "Tooltip": "CDP で最近の会話を表示し、押すと開きます。",
+      "Tooltip": "WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。",
       "States": [
         {
           "Name": "最近のタスク 5"
@@ -318,7 +319,7 @@
     },
     {
       "Name": "現在の会話の状態",
-      "Tooltip": "ダイヤルで承認や質問の選択肢を選び、押して実行します。複数選択では選択後に送信を選びます。CDP が必要です。",
+      "Tooltip": "ダイヤルで承認や質問の選択肢を選び、押して実行します。複数選択では選択後に送信を選びます。WorkBuddy 通信インターフェース が必要です。",
       "States": [
         {
           "Name": "現在の会話の状態"
@@ -345,7 +346,7 @@
     },
     {
       "Name": "WorkBuddy を起動",
-      "Tooltip": "ローカル CDP を有効にして WorkBuddy を起動します。接続済みの場合はウィンドウを前面に表示します。",
+      "Tooltip": "ローカル WorkBuddy 通信インターフェース を有効にして WorkBuddy を起動します。接続済みの場合はウィンドウを前面に表示します。",
       "States": [
         {
           "Name": "WorkBuddy を起動"
@@ -354,7 +355,7 @@
     },
     {
       "Name": "クレジット残高",
-      "Tooltip": "CDP で残高を表示します。30 秒ごとに更新し、押すと即時更新します。キーとダイヤルに対応。",
+      "Tooltip": "キーを押すかダイヤルを回すと、アカウント残高と最近のタスク①〜⑤の消費クレジットを切り替えます。ダイヤルを押すと更新します。",
       "States": [
         {
           "Name": "クレジット残高"
@@ -362,5 +363,5 @@
       ]
     }
   ],
-  "Detail": "WorkBuddy デスクトップ版をインストールし、「WorkBuddy を起動」をキーに配置してください。属性パネルでクライアントと CDP 接続を確認できます。\n「WorkBuddy を再起動」で CDP を有効にして起動します。\nWindows で再起動すると WorkBuddy のプロセスが終了し、実行中のタスクが中断される場合があります。先に作業を保存してください。\n\n新規タスク: 下書きを入力したタスクを開きます。確認してから送信してください。\nページを開く: WorkBuddy のページを開きます。利用可能なページはバージョンと有効な機能によって異なります。\nモデル切り替え: ダイヤルで WorkBuddy の入力欄のモデルを切り替えます。\n最近のタスク 1: CDP で最近の会話を表示し、押すと開きます。\n最近のタスク 2: CDP で最近の会話を表示し、押すと開きます。\n最近のタスク 3: CDP で最近の会話を表示し、押すと開きます。\n最近のタスク 4: CDP で最近の会話を表示し、押すと開きます。\n最近のタスク 5: CDP で最近の会話を表示し、押すと開きます。\nテーマ切り替え: このキーのテーマを適用します。もう一度押すと標準に戻ります。\n現在の会話の状態: ダイヤルで承認や質問の選択肢を選び、押して実行します。複数選択では選択後に送信を選びます。CDP が必要です。\n音声入力: WorkBuddy の音声入力を開始または終了します。\nメッセージ送信: 現在の下書きを送信します。停止表示中は現在の応答を停止します。\nWorkBuddy を起動: ローカル CDP を有効にして WorkBuddy を起動します。接続済みの場合はウィンドウを前面に表示します。\nクレジット残高: CDP で残高を表示します。30 秒ごとに更新し、押すと即時更新します。キーとダイヤルに対応。\n\nプロンプトに {clipboard}、{date}、{time} を使用できます。フォルダー、エキスパート、スキル、コネクター、モデルも設定できます。最大 8000 文字です。\n\n会話を開く: WorkBuddy に読み込まれた会話を最近の活動順に表示します。選択した会話は一覧の並びが変わっても固定されます。一覧の更新には CDP が必要です。保存済みの会話はディープリンクで開きます。"
+  "Detail": "WorkBuddy デスクトップ版をインストールし、「WorkBuddy を起動」をキーに配置してください。属性パネルでクライアントと WorkBuddy 通信インターフェース 接続を確認できます。\n「WorkBuddy を再起動」で WorkBuddy 通信インターフェース を有効にして起動します。\nWindows で再起動すると WorkBuddy のプロセスが終了し、実行中のタスクが中断される場合があります。先に作業を保存してください。\n\n新規タスク: 下書きを入力したタスクを開きます。確認してから送信してください。\nページを開く: WorkBuddy のページを開きます。利用可能なページはバージョンと有効な機能によって異なります。\nモデル切り替え: ダイヤルで WorkBuddy の入力欄のモデルを切り替えます。\n最近のタスク 1: WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。\n最近のタスク 2: WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。\n最近のタスク 3: WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。\n最近のタスク 4: WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。\n最近のタスク 5: WorkBuddy 通信インターフェース で最近の会話を表示し、押すと開きます。\nテーマ切り替え: このキーのテーマを適用します。もう一度押すと標準に戻ります。\n現在の会話の状態: ダイヤルで承認や質問の選択肢を選び、押して実行します。複数選択では選択後に送信を選びます。WorkBuddy 通信インターフェース が必要です。\n音声入力: WorkBuddy の音声入力を開始または終了します。\nメッセージ送信: 現在の下書きを送信します。停止表示中は現在の応答を停止します。\nWorkBuddy を起動: ローカル WorkBuddy 通信インターフェース を有効にして WorkBuddy を起動します。接続済みの場合はウィンドウを前面に表示します。\nクレジット残高: キーを押すかダイヤルを回すと、アカウント残高と最近のタスク①〜⑤の消費クレジットを切り替えます。ダイヤルを押すと更新します。\n\nプロンプトに {clipboard}、{date}、{time} を使用できます。フォルダー、エキスパート、スキル、コネクター、モデルも設定できます。最大 8000 文字です。\n\n会話を開く: WorkBuddy に読み込まれた会話を最近の活動順に表示します。選択した会話は一覧の並びが変わっても固定されます。一覧の更新には WorkBuddy 通信インターフェース が必要です。保存済みの会話はディープリンクで開きます。"
 }

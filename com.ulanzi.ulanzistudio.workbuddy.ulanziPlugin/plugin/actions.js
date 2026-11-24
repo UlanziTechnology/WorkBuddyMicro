@@ -8,7 +8,8 @@
 const deeplink = require("./deeplink");
 const { questionSvg } = require("./question-art");
 const { modelSvg } = require("./model-art");
-const { encoderCreditsSvg } = require("./credits-art");
+const { creditsIcon, creditsSvg, creditsDialSvg } = require("./credits-art");
+const defaultSessionIcon = require("../layouts/session-encoder.json").items[0].value;
 
 class BaseAction {
   constructor(app, event) {
@@ -211,12 +212,10 @@ class ModelSwitchAction extends BaseAction {
   pushFeedback() {
     if (!this.active) return;
     const model = this.current();
-    const name = this.live?.names[this.liveIndex] || this.currentLabel || model?.name || (!this.app.status.cdpState ? "N" : this.app.t("Model"));
+    const name = this.live?.names[this.liveIndex] || this.currentLabel || model?.name || this.app.t("Model");
     let picture = this.live?.pictures?.[name];
     if (!picture && this.currentCard?.name === name) picture = this.currentCard.picture;
-    if (!this.app.status.cdpState) {
-      picture = "data:image/svg+xml;base64," + Buffer.from(modelSvg(name, undefined, false, picture)).toString("base64");
-    } else if (!picture) picture = "data:image/svg+xml;base64," + Buffer.from(modelSvg(name)).toString("base64");
+    if (!picture) picture = "data:image/svg+xml;base64," + Buffer.from(modelSvg(name)).toString("base64");
     this.app.setFeedback(this, {icon:{value:picture}});
   }
 
@@ -233,17 +232,15 @@ class ModelSwitchAction extends BaseAction {
     this.live=result; this.liveIndex=Math.max(0,result.names.indexOf(result.selected)); this.liveAt=Date.now();
   }
   handleDialRotate(rotateEvent) {
-    if(this.app.status.cdpState || !this.models.length) return this.enqueue(async()=>{
+    if (!this.active) return;
+    if (this.app.status.cdpState) return this.enqueue(async()=>{
       if(!this.live || Date.now()-this.liveAt>15000)await this.loadLive();
       const n=this.live.names.length;
       this.liveIndex=(this.liveIndex+(/left$/.test(rotateEvent)?-1:1)+n)%n;this.liveAt=Date.now();this.pushFeedback();
       this.scheduleApply();
     });
     this.live=null;
-    if (!this.models.length) {
-      this.pushFeedback();
-      return;
-    }
+    if (!this.models.length) return;
     const dir = rotateEvent === "left" || rotateEvent === "hold-left" ? -1 : 1;
     this.index = (this.index + dir + this.models.length) % this.models.length;
     this.pushFeedback();
@@ -272,7 +269,9 @@ class ModelSwitchAction extends BaseAction {
   handleDialDown() {
     clearTimeout(this.applyTimer);
     this.applyTimer = null;
-    if(this.live || this.app.status.cdpState || !this.models.length) return this.enqueue(async()=>{
+    if (!this.active) return;
+    if (!this.app.status.cdpState && !this.models.length) return this.app.showConnectionWarning(this);
+    if (this.app.status.cdpState) return this.enqueue(async()=>{
       clearTimeout(this.applyTimer);
       if (!this.active) return;
       if(!this.live)await this.loadLive();
@@ -322,7 +321,6 @@ class CreditsAction extends BaseAction {
 
     this.target = {connected, slot, session};
     this.amount = null;
-    this.balancePicture = null;
     clearTimeout(this.timer);
     this.drawBalance();
     this.refreshCredits();
@@ -337,11 +335,10 @@ class CreditsAction extends BaseAction {
     try {
       const result = target.slot
         ? (await this.app.sessionFiles.read([target.session])).get(target.session) ?? null
-        : await cdp.command("credits", {language:this.app.lang, encoder:this.controller === "Encoder"});
+        : await cdp.command("credits");
       if (!this.active || this.target !== target) return;
-      if (target.slot || result) {
-        this.amount = target.slot ? result : result.balance;
-        this.balancePicture = target.slot ? null : result.picture;
+      if (target.slot || Number.isFinite(result)) {
+        this.amount = result;
         this.drawBalance();
       } else retry = true;
     } catch {
@@ -358,32 +355,46 @@ class CreditsAction extends BaseAction {
   }
 
   drawBalance() {
-    if (this.controller === "Encoder") {
-      const slot = this.slot || 0;
-      if (!slot && this.amount === null) {
-        this.app.setFeedback(this, {icon:{value:"assets/actions/credits-dial.png"}});
-        return;
-      }
-      const prefix = slot ? "①②③④⑤"[slot - 1] : "";
-      const svg = encoderCreditsSvg(prefix, this.amount, this.app.lang);
-      this.app.setFeedback(this, {icon:{value:"data:image/svg+xml;base64," + Buffer.from(svg).toString("base64")}});
-    } else if (this.balancePicture) {
+    const slot = this.slot || 0;
+    const encoder = this.controller === "Encoder";
+    const connected = this.target?.connected;
+    if (!encoder && !connected) {
+      this.app.setActionIcon(this, creditsIcon(slot));
+      return;
+    }
+    const svg = encoder
+      ? creditsDialSvg(slot, connected ? this.amount : undefined, this.app.lang)
+      : creditsSvg(slot, this.amount, this.app.lang);
+    const picture = "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64");
+    if (encoder) {
+      this.app.setFeedback(this, {icon:{value:picture}});
+    } else {
       this.app.send({cmd:"state", param:{statelist:[{uuid:this.uuid, actionid:this.actionid,
-        key:this.key, type:1, data:this.balancePicture, showtext:false}]}});
-    } else this.app.setActionIcon(this, "assets/actions/credits-unavailable.png");
+        key:this.key, type:1, data:picture, showtext:false}]}});
+    }
   }
 
-  handleDialRotate(direction) {
-    if (!this.active || this.controller !== "Encoder" || !["left","right"].includes(direction)) return;
-    this.slot = ((this.slot || 0) + (direction === "right" ? 1 : 5)) % 6;
+  stepSlot(step) {
+    this.slot = ((this.slot || 0) + step + 6) % 6;
     this.onStatus();
   }
 
-  handleDialDown() { return this.invoke(); }
+  handleDialRotate(direction) {
+    if (!this.active || !this.app.status.cdpState || this.controller !== "Encoder" || !["left","right"].includes(direction)) return;
+    this.stepSlot(direction === "right" ? 1 : -1);
+  }
+
+  handleDialDown() {
+    if (!this.active) return;
+    if (!this.app.status.cdpState) return this.app.showConnectionWarning(this);
+    return this.refreshCredits();
+  }
 
   invoke() {
-    if (!this.app.status.cdpState) throw Error(this.app.t("cdpSetupRequired"));
-    return this.refreshCredits();
+    if (!this.active) return;
+    if (this.controller === "Encoder") return this.handleDialDown();
+    if (!this.app.status.cdpState) return this.app.showConnectionWarning(this);
+    this.stepSlot(1);
   }
 
   setActive(active) {
@@ -420,7 +431,12 @@ class CurrentSessionAction extends BaseAction {
   }
   onStatus() {
     if (!this.active) return;
-    const {approval, question, currentTask, session, state} = this.app.status;
+    const {approval, question, currentTask, session, state, cdpState} = this.app.status;
+    if (!cdpState) {
+      this.app.taskCards.remove(this.actionid);
+      this.app.setActionIcon(this, defaultSessionIcon);
+      return;
+    }
     if (question) {
       this.app.taskCards.remove(this.actionid);
       const available = question.choices.filter(c => !c.disabled);
@@ -449,7 +465,7 @@ class CurrentSessionAction extends BaseAction {
     }
     this.app.taskCards.update(this, {
       session:session || null,
-      state:state === "idle" && !session ? "empty" : state,
+      state,
       text:currentTask?.title || session?.slice(0,8) || this.app.t("noSessionYet")
     });
   }
@@ -459,7 +475,7 @@ class CurrentSessionAction extends BaseAction {
       key:this.key, type:1, data, showtext:false}]}});
   }
   handleDialRotate(direction) {
-    if (!this.active || this.busy || !["left","right"].includes(direction)) return;
+    if (!this.active || this.busy || !this.app.status.cdpState || !["left","right"].includes(direction)) return;
     const question = this.app.status.question;
     if (question) {
       if (question.token !== this.questionToken) return;
@@ -477,6 +493,7 @@ class CurrentSessionAction extends BaseAction {
   }
   async handleDialDown() {
     if (!this.active || this.busy) return;
+    if (!this.app.status.cdpState) return this.app.showConnectionWarning(this);
     const question = this.app.status.question;
     if (question) {
       if (question.token !== this.questionToken || !this.questionChoice) return;
@@ -511,16 +528,23 @@ class TaskAction extends BaseAction {
   onStatus() {
     if (!this.active) return;
     this.slot = Number(this.uuid.slice(-1));
+    if (!this.app.status.cdpState) {
+      this.displayedTask = null;
+      this.app.taskCards.remove(this.actionid);
+      this.app.setActionIcon(this, `assets/icons/task${this.slot}.png`);
+      return;
+    }
     this.displayedTask = this.app.status.taskSlots()[this.slot-1] || null;
     const task = this.displayedTask;
     const title = task?.title || task?.session.slice(0,8) || this.app.t("noSessionYet");
     this.app.taskCards.update(this, {session:task?.session || null,
-      state:!this.app.status.cdpState ? "offline" : task?.state || "empty",
+      state:task?.state || "empty",
       text:"①②③④⑤"[this.slot - 1] + title});
   }
   invoke() {
     const task = this.displayedTask;
-    if (!task || !this.app.status.cdpState) {
+    if (!this.app.status.cdpState) return this.app.showConnectionWarning(this);
+    if (!task) {
       this.app.toast(this.app.t("noSession"));
       return;
     }
@@ -538,7 +562,7 @@ class ComposerAction extends BaseAction {
   }
   onStatus() {
     if (!this.active) return;
-    const state = this.app.status[this.kind] || "unavailable";
+    const state = this.app.status.cdpState ? this.app.status[this.kind] || "unavailable" : "ready";
     const session = this.app.status.session;
     this.session = session;
     this.draw(state);
@@ -555,7 +579,9 @@ class ComposerAction extends BaseAction {
   }
   async invoke() {
     const states = this.kind === "send" ? ["ready","stop"] : ["ready","recording"];
-    if (!this.active || this.busy || !states.includes(this.drawn)) return;
+    if (!this.active || this.busy) return;
+    if (!this.app.status.cdpState) return this.app.showConnectionWarning(this);
+    if (!states.includes(this.drawn)) return;
     this.busy = true;
     try {
       const expected = {session:this.session ?? "", state:this.drawn};
@@ -569,13 +595,14 @@ class ComposerAction extends BaseAction {
 
 class CdpAction extends BaseAction {
   async invoke() {
-    if (this.busy) return;
+    if (!this.active || this.busy) return;
+    if (!this.app.status.cdpState) return this.app.showConnectionWarning(this);
     this.busy = true;
     const op = this.uuid.split(".").pop();
     try {
       if (op === "skin" && !cdp.jpeg(this.settings.image)) throw Error(this.app.t("chooseImage"));
       const result = await cdp.command(op === "skin" ? "toggleTheme" : op, op === "skin" ? this.settings.image : undefined, this.settings.palette).catch(() => null);
-      if (result === null) throw Error(this.app.t("cdpUnavailable"));
+      if (result === null) return this.app.showAlert(this);
       if (!result) throw Error(this.app.t("noApproval"));
     } finally { this.busy = false; }
   }
@@ -583,8 +610,12 @@ class CdpAction extends BaseAction {
 class SkinAction extends CdpAction {
   onSettings() { this.onActivated(); }
   onActivated() {
-    if (this.active && cdp.jpeg(this.settings.thumbnail) && this.settings.thumbnail.length < 24000)
-      this.app.send({cmd:"state",param:{statelist:[{uuid:this.uuid,actionid:this.actionid,key:this.key,type:1,data:this.settings.thumbnail,showtext:false}]}});
+    if (!this.active) return;
+    const thumbnail = this.settings.thumbnail;
+    const image = cdp.jpeg(thumbnail) && thumbnail.length < 24000
+      ? {type:1, data:thumbnail} : {type:0, state:0};
+    this.app.send({cmd:"state", param:{statelist:[{uuid:this.uuid, actionid:this.actionid,
+      key:this.key, showtext:false, ...image}]}});
   }
 }
 const ACTION_CLASSES = {

@@ -14,19 +14,19 @@ D200X desktop visualization with illustrative session states; not a physical-dev
 
 | Action | Control | Behavior | Connection |
 | --- | --- | --- | --- |
-| Launch WorkBuddy | Key | Start or restart WorkBuddy with local debugging enabled; bring it forward when already connected | CDP setup |
+| Launch WorkBuddy | Key | Start or restart WorkBuddy with local debugging enabled; bring it forward when already connected | WorkBuddy communication interface setup |
 | New Task | Key | Open an unsent draft with a reusable prompt and optional task parameters | Deep link |
 | Open Page | Key | Jump to a selected WorkBuddy page | Deep link |
-| Open Conversation | Key | Choose a loaded conversation from a dropdown; press to open the saved selection | CDP for selection; deep link for opening |
-| Recent Task 1–5 | Five key actions | Show recent conversations and their states; press to open the conversation displayed | CDP |
-| Model Switch | Dial | Show the current model and its icon; turn to choose an available model and apply after a short pause, or press to apply | CDP |
-| Current Session Status | Dial | Show live status; turn to select a permission or question option, then press to act | CDP |
-| Voice Input | Key | Start or finish native voice input; show confirmed recording state with a blinking red dot | CDP |
-| Send Message | Key | Send the current draft, or stop the running response when Stop is shown | CDP |
-| Switch Theme | Key | Apply a chosen image and editable colors; press again to restore the native theme | CDP |
-| Credit Balance | Key or dial | Show account balance. Turn the dial to see credits used by recent tasks ①–⑤. Press to refresh | CDP and local session files |
+| Open Conversation | Key | Choose a loaded conversation from a dropdown; press to open the saved selection | WorkBuddy communication interface for selection; deep link for opening |
+| Recent Task 1–5 | Five key actions | Show recent conversations and their states; press to open the conversation displayed | WorkBuddy communication interface |
+| Model Switch | Dial | Show the current model and its icon; turn to choose an available model and apply after a short pause, or press to apply | WorkBuddy communication interface |
+| Current Session Status | Dial | Show live status; turn to select a permission or question option, then press to act | WorkBuddy communication interface |
+| Voice Input | Key | Start or finish native voice input; show confirmed recording state with a blinking red dot | WorkBuddy communication interface |
+| Send Message | Key | Send the current draft, or stop the running response when Stop is shown | WorkBuddy communication interface |
+| Switch Theme | Key | Apply a chosen image and editable colors; press again to restore the native theme | WorkBuddy communication interface |
+| Credit Balance | Key or dial | Press the key or turn the dial to switch between the account balance and recent-task usage ①–⑤. Press the dial to refresh | WorkBuddy communication interface and local session files |
 
-Deep-link actions work without CDP setup. Live state and controls use **CDP only**, with no hook fallback, separate Bridge service or runtime npm installation. WorkBuddy remains responsible for authentication, model access, permissions and task execution.
+Deep-link actions work without WorkBuddy communication interface setup. Live state and controls use only the WorkBuddy communication interface, with no hook fallback, separate Bridge service or runtime npm installation. WorkBuddy remains responsible for authentication, model access, permissions and task execution.
 
 ## Requirements
 
@@ -36,7 +36,7 @@ Deep-link actions work without CDP setup. Live state and controls use **CDP only
 - A compatible Ulanzi device and the corresponding Keypad or Encoder surface. D200, D200H and D200X are intended device families; actual dial availability depends on the hardware and Studio version.
 - Node.js 20 or later for development checks. Normal use relies on Studio's host runtime.
 
-Deep-link actions offer `workbuddy://` for the domestic client and `workbuddy-ai://` for the overseas client; this selection is shared across plugin actions. **CDP features currently target the domestic WorkBuddy client. WorkBuddy AI is outside the current CDP support scope.**
+Deep-link actions offer `workbuddy://` for the domestic client and `workbuddy-ai://` for the overseas client; this selection is shared across plugin actions. **WorkBuddy communication interface features currently target the domestic WorkBuddy client. WorkBuddy AI is outside the current WorkBuddy communication interface support scope.**
 
 ## Installation
 
@@ -47,7 +47,7 @@ Give an LLM or coding agent this request:
 ```text
 Install WorkBuddy Micro from https://github.com/UlanziTechnology/WorkBuddyMicro
 for my local Ulanzi Studio. Check the existing installation first, preserve
-my layouts and settings, and report plugin installation and CDP connectivity
+my layouts and settings, and report plugin installation and WorkBuddy communication interface connectivity
 separately. Follow the repository README's installation instructions.
 ```
 
@@ -57,8 +57,8 @@ The agent should:
 2. Inspect existing plugin manifests. WorkBuddy Micro is installed when UUID `com.ulanzi.ulanzistudio.workbuddy` is present and its `CodePath` (`plugin/app.js`) resolves to an existing file. Check the version, asset paths and inspector paths as well; folder presence alone is insufficient.
 3. For a missing or broken installation, obtain the repository and validate the complete `com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin` folder. With Node.js 20 or later available, run `npm run check` inside that folder. A valid installation can be reused; update it when requested.
 4. Quit Studio before replacing plugin files. Back up an existing destination outside the scanned Plugins directory, then install the complete plugin folder as described under Manual installation. Preserve other plugins, device layouts and user settings.
-5. Reopen Studio and verify that the WorkBuddy category and the intended key/dial actions are recognized. Connect CDP through the plugin's connection panel after active WorkBuddy tasks have been saved.
-6. Report the installed path, manifest version and entry-point check, Studio recognition, CDP connection and any physical-device checks separately. An installed folder does not establish a live connection or successful hardware input.
+5. Reopen Studio and verify that the WorkBuddy category and the intended key/dial actions are recognized. Connect through the plugin's WorkBuddy status panel after active WorkBuddy tasks have been saved.
+6. Report the installed path, manifest version and entry-point check, Studio recognition, WorkBuddy connection and any physical-device checks separately. An installed folder does not establish a live connection or successful hardware input.
 
 ### 2. Manual installation
 
@@ -91,20 +91,20 @@ Confirm the directory used by your Studio installation before copying. `manifest
 
 Drag actions from the **WorkBuddy** category onto keys or dials in Studio. Select an action to configure it in the property inspector. Start with **Launch WorkBuddy**, **Recent Task 1–5** and, on an Encoder surface, **Model Switch** or **Current Session Status**.
 
-New Task and Open Page work through deep links immediately after configuration. Live task status and controls require the CDP connection below.
+New Task and Open Page work through deep links immediately after configuration. Live task status and controls require the WorkBuddy connection below.
 
 ### 4. Connect live controls
 
-Use the domestic WorkBuddy client for CDP features. Save active work in WorkBuddy first. Press **Launch WorkBuddy**, or select **Restart WorkBuddy** in a CDP action's connection panel. The plugin starts the client with a debugging endpoint at `127.0.0.1:9223`. The panel changes to **Connected** when ready; use **Check again** to refresh it.
+Use the domestic WorkBuddy client for WorkBuddy communication interface features. Save active work in WorkBuddy first. Press **Launch WorkBuddy**, or select **Restart WorkBuddy** in a action that requires WorkBuddy's connection panel. The plugin starts the client with a debugging endpoint at `127.0.0.1:9223`. The panel changes to **Connected** when ready; use **Check again** to refresh it.
 
 When already connected, the Launch key brings WorkBuddy to the foreground. When disconnected, it starts or restarts the selected client. **On Windows, restarting ends the selected installation's processes, including tray processes, and can interrupt tasks.** The setup panel handles launching and connection detection without a terminal command.
 
-Open a conversation with its composer visible to use model, voice and send controls. WorkBuddy's microphone permissions and enabled controls still apply. WorkBuddy AI is outside the current CDP support scope.
+Open a conversation with its composer visible to use model, voice and send controls. WorkBuddy's microphone permissions and enabled controls still apply. WorkBuddy AI is outside the current WorkBuddy communication interface support scope.
 
 ### 5. Verify installation
 
 - **Plugin:** the WorkBuddy category appears in Studio; configured actions show their property inspectors and images.
-- **Connection:** the CDP panel reports Connected. For a read-only diagnostic, `http://127.0.0.1:9223/json/list` should include a WorkBuddy renderer; an HTTP response alone does not prove the plugin has connected to the correct client.
+- **Connection:** the WorkBuddy status panel reports Connected. For a read-only diagnostic, `http://127.0.0.1:9223/json/list` should include a WorkBuddy renderer; an HTTP response alone does not prove the plugin has connected to the correct client.
 - **Actions:** a task key opens the displayed conversation, and an assigned model dial reflects the active composer's model. Check physical key/dial input on your device when available.
 
 If the category is missing, quit and reopen Studio, check the folder nesting and manifest paths, and inspect `debug.log` in the installed plugin folder. For connection failures, use [Troubleshooting](#troubleshooting). See the [action guide](com.ulanzi.ulanzistudio.workbuddy.ulanziPlugin/README.md) for prompt templates, approval selection, themes and credit behavior.
@@ -123,11 +123,11 @@ If the category is missing, quit and reopen Studio, check the folder nesting and
 
 | Symptom | What to check |
 | --- | --- |
-| CDP stays disconnected | Save work, use Restart WorkBuddy, then Check again. Verify the selected client is installed. Another process occupying port 9223 prevents a restart. |
+| WorkBuddy stays disconnected | Save work, use Restart WorkBuddy, then Check again. Verify the selected client is installed. Another process occupying port 9223 prevents a restart. |
 | Windows client is not found | Set `WORKBUDDY_EXE` to the intended client's full executable path, then restart Studio. Discovery also checks running processes, protocol registration, common install paths and uninstall registry entries. |
 | Model, microphone or send control is unavailable | Open the active conversation's composer and check the same control inside WorkBuddy. Press to send when the native send control is ready, or to stop when the Stop control is enabled. |
 | No conversation appears in a task slot | Open or create a conversation in WorkBuddy and let its recent list load. |
-| Credits show a gray dash | Check CDP and account availability. Transient read failures retain the last valid balance; disconnecting clears it. Press to retry. |
+| Credits show a gray dash | Check the WorkBuddy communication interface and account availability. Transient read failures retain the last valid balance; disconnecting clears it. Press to retry. |
 | A theme needs resetting | Press the same theme key again, or use Restore native WorkBuddy theme in its inspector. |
 | A page does not open as expected | Page routes depend on the client version, region and enabled features; some destinations may fall back or be unavailable. |
 
@@ -158,9 +158,9 @@ Run the syntax check and a Ulanzi plugin validator before packaging changes. Val
 
 ### Compatibility evidence
 
-Existing project verification records cover macOS with WorkBuddy 5.3.14, Studio 3.4.13 and Node 20.18.0, and Windows launch, reconnect, foreground activation and CDP reads with WorkBuddy 5.9.3, Studio 3.4.13 and Node 20.12.2. These are historical checks, not a certification of every feature in every release. Physical AU05/D200X dial operation requires separate verification.
+Existing project verification records cover macOS with WorkBuddy 5.3.14, Studio 3.4.13 and Node 20.18.0, and Windows launch, reconnect, foreground activation and WorkBuddy communication interface reads with WorkBuddy 5.9.3, Studio 3.4.13 and Node 20.12.2. These are historical checks, not a certification of every feature in every release. Physical AU05/D200X dial operation requires separate verification.
 
-CDP adapters read WorkBuddy UI and internal renderer state. WorkBuddy updates can change those structures; report the client version when a control stops working.
+WorkBuddy communication interface adapters read WorkBuddy UI and internal renderer state. WorkBuddy updates can change those structures; report the client version when a control stops working.
 
 ## Local access and data
 

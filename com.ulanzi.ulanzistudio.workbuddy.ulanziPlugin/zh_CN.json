@@ -23,7 +23,7 @@
     },
     {
       "Name": "打开会话",
-      "Tooltip": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 CDP；已保存的会话通过深度链接打开。",
+      "Tooltip": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 WorkBuddy 通讯接口；已保存的会话通过深度链接打开。",
       "States": [
         {
           "Name": "打开会话"
@@ -41,7 +41,7 @@
     },
     {
       "Name": "最近任务 1",
-      "Tooltip": "通过 CDP 显示最近会话，按下打开。",
+      "Tooltip": "通过 WorkBuddy 通讯接口 显示最近会话，按下打开。",
       "States": [
         {
           "Name": "最近任务 1"
@@ -50,7 +50,7 @@
     },
     {
       "Name": "最近任务 2",
-      "Tooltip": "通过 CDP 显示最近会话，按下打开。",
+      "Tooltip": "通过 WorkBuddy 通讯接口 显示最近会话，按下打开。",
       "States": [
         {
           "Name": "最近任务 2"
@@ -59,7 +59,7 @@
     },
     {
       "Name": "最近任务 3",
-      "Tooltip": "通过 CDP 显示最近会话，按下打开。",
+      "Tooltip": "通过 WorkBuddy 通讯接口 显示最近会话，按下打开。",
       "States": [
         {
           "Name": "最近任务 3"
@@ -68,7 +68,7 @@
     },
     {
       "Name": "最近任务 4",
-      "Tooltip": "通过 CDP 显示最近会话，按下打开。",
+      "Tooltip": "通过 WorkBuddy 通讯接口 显示最近会话，按下打开。",
       "States": [
         {
           "Name": "最近任务 4"
@@ -77,7 +77,7 @@
     },
     {
       "Name": "最近任务 5",
-      "Tooltip": "通过 CDP 显示最近会话，按下打开。",
+      "Tooltip": "通过 WorkBuddy 通讯接口 显示最近会话，按下打开。",
       "States": [
         {
           "Name": "最近任务 5"
@@ -95,7 +95,7 @@
     },
     {
       "Name": "当前会话状态",
-      "Tooltip": "转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 CDP。",
+      "Tooltip": "转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 WorkBuddy 通讯接口。",
       "States": [
         {
           "Name": "当前会话状态"
@@ -122,7 +122,7 @@
     },
     {
       "Name": "启动 WorkBuddy",
-      "Tooltip": "以本机 CDP 模式启动 WorkBuddy；已连接时唤醒窗口。",
+      "Tooltip": "以本机 WorkBuddy 通讯接口 模式启动 WorkBuddy；已连接时唤醒窗口。",
       "States": [
         {
           "Name": "启动 WorkBuddy"
@@ -131,7 +131,7 @@
     },
     {
       "Name": "积分余额",
-      "Tooltip": "显示账户剩余积分，转动旋钮可查看最近任务 ①–⑤ 的累计消耗。按下立即刷新。",
+      "Tooltip": "按键或转动旋钮可在账户剩余积分和最近任务 ①–⑤ 的消耗间切换。按下旋钮刷新。",
       "States": [
         {
           "Name": "积分余额"
@@ -176,8 +176,8 @@
     "PageAvailability": "页面是否可用取决于 WorkBuddy 版本和已启用功能；不支持的入口可能停在当前页或返回首页。",
     "skinImage": "背景图片",
     "ModelDialGuide": "打开 WorkBuddy 的任务输入页。旋转选择模型，停下后自动应用，无需填写模型 ID。",
-    "setupTitle": "CDP 连接",
-    "setupIntro": "点击「重启 WorkBuddy」，以 CDP 模式启动客户端。",
+    "setupTitle": "WorkBuddy 状态",
+    "setupIntro": "点击「重启 WorkBuddy」启动客户端并启用通讯接口。",
     "client": "客户端",
     "installed": "已安装",
     "missing": "未检测到",
@@ -187,13 +187,13 @@
     "pluginDisconnected": "插件连接已断开",
     "connecting": "正在连接…",
     "connected": "已连接",
-    "disconnected": "未连接",
+    "disconnected": "未连接 Workbuddy",
     "restart": "重启 WorkBuddy",
     "restarting": "正在重启…",
     "windowsRestartWarning": "在 Windows 中重启 WorkBuddy 会结束其进程，可能中断当前任务。请先保存工作。",
     "noStatus": "未收到插件状态，请重新选择动作或重启 Ulanzi Studio。",
     "limitItems": "最多 20 项",
-    "state_offline": "未启动",
+    "state_offline": "未连接 Workbuddy",
     "state_idle": "待机",
     "state_thinking": "思考中",
     "state_working": "执行中",
@@ -210,20 +210,20 @@
     "noModels": "未配置模型",
     "configureModels": "请先在属性面板中配置模型列表。",
     "schemeMissing": "协议未注册，请检查 WorkBuddy 安装。",
-    "modelComposerRequired": "请打开 WorkBuddy 任务输入页并启用 CDP。",
+    "modelComposerRequired": "请打开 WorkBuddy 任务输入页并启用 WorkBuddy 通讯接口。",
     "chatChanged": "会话已切换，请重新选择模型。",
     "modelSelectionFailed": "模型选择失败。",
     "modelNotSwitched": "模型未切换，请检查 WorkBuddy 任务输入页。",
-    "cdpSetupRequired": "请在属性栏点击「重启 WorkBuddy」连接 CDP。",
+    "cdpSetupRequired": "请在属性栏点击「重启 WorkBuddy」连接通讯接口。",
     "questionChanged": "问题已变化，请查看当前会话。",
     "approvalChanged": "审批已变化，请查看当前会话。",
     "taskLabel": "最近任务 {n}",
     "noSession": "此任务位暂无会话，请先在 WorkBuddy 发送消息。",
     "chooseImage": "请先在按键设置中选择图片。",
-    "cdpUnavailable": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
+    "cdpUnavailable": "未连接 Workbuddy",
     "noApproval": "未找到唯一可操作的审批，请在 WorkBuddy 中查看。",
     "themeRestored": "已恢复 WorkBuddy 原生主题。",
-    "connectCdp": "请先连接 WorkBuddy CDP。",
+    "connectCdp": "请先连接 WorkBuddy 通讯接口。",
     "clipboardTimeout": "剪贴板读取超时，保留占位符。",
     "clipboardFailed": "无法读取剪贴板，保留占位符。",
     "studioDisconnected": "Ulanzi Studio 连接已断开",
@@ -251,12 +251,12 @@
     "taskIdRequired": "请填写任务 ID。",
     "unsupportedPlatform": "不支持当前系统。",
     "cdpPortOccupied": "本机 9223 端口已被占用，请关闭占用程序后重试。",
-    "cdpStartupFailed": "未连接 WorkBuddy CDP（127.0.0.1:9223），请检查客户端后重试。",
-    "windowsSetupFailed": "无法运行 Windows CDP 设置，请打开 WorkBuddy 后重试。",
+    "cdpStartupFailed": "未连接 WorkBuddy 通讯接口（127.0.0.1:9223），请检查客户端后重试。",
+    "windowsSetupFailed": "无法运行 Windows WorkBuddy 通讯接口 设置，请打开 WorkBuddy 后重试。",
     "workbuddyNotFound": "未找到 WorkBuddy，请安装客户端或将 WORKBUDDY_EXE 设为客户端完整路径。",
     "configuredExeInvalid": "WORKBUDDY_EXE 必须指向所选 WorkBuddy 客户端的可执行文件。",
     "workbuddyStopFailed": "无法结束 WorkBuddy，请保存工作、从托盘退出后重试。",
-    "cdpTimeout": "WorkBuddy CDP 请求超时，请在客户端就绪后重试。",
+    "cdpTimeout": "WorkBuddy 通讯接口 请求超时，请在客户端就绪后重试。",
     "invalidAction": "无效的 WorkBuddy 操作。",
     "noSessionYet": "暂无会话",
     "Welcome_coding": "开发",
@@ -268,9 +268,9 @@
     "guide_3": "安装 WorkBuddy 桌面客户端。把插件的「启动 WorkBuddy」拖到按键上，属性面板会显示客户端、同步和当前状态。",
     "guide_4": "下载 WorkBuddy ↗",
     "guide_5": "启动 WorkBuddy",
-    "guide_6": "按「启动 WorkBuddy」以 CDP 模式打开客户端。已连接时按键唤醒到前台，未连接时启动或重启至 CDP 模式。",
+    "guide_6": "按「启动 WorkBuddy」启动客户端并启用 WorkBuddy 通讯接口。已连接时按键唤醒到前台，未连接时重启客户端以启用通讯接口。",
     "guide_7": "检查连接",
-    "guide_8": "属性栏显示 CDP 已连接后，即可使用语音输入、发送消息、当前会话状态和主题切换。",
+    "guide_8": "属性栏的「WorkBuddy 状态」显示「已连接」后，即可使用语音输入、发送消息、当前会话状态和主题切换。",
     "guide_9": "看懂按键状态",
     "guide_10": "待机",
     "guide_11": "WorkBuddy 已连接，等待任务。",
@@ -282,13 +282,13 @@
     "guide_17": "等待权限审批或回答问题，可用当前会话旋钮选择操作。",
     "guide_18": "错误",
     "guide_19": "会话报告错误或执行失败，请在 WorkBuddy 中查看原因。",
-    "guide_20": "未连接",
+    "guide_20": "未连接 Workbuddy",
     "guide_21": "使用「启动 WorkBuddy」连接客户端。",
     "guide_22": "配置你的动作",
     "guide_23": "动作",
     "guide_24": "怎么用",
     "guide_25": "启动 WorkBuddy",
-    "guide_26": "未连接时以 CDP 模式启动或重启客户端；已连接时唤醒到前台。",
+    "guide_26": "未连接时启动或重启客户端并启用 WorkBuddy 通讯接口；已连接时唤醒到前台。",
     "guide_27": "最近任务 1–5",
     "guide_28": "按 WorkBuddy 最近活动顺序显示已加载的五个任务，按键打开对应会话。",
     "guide_29": "新建任务",
@@ -296,18 +296,18 @@
     "guide_31": "页面直达",
     "guide_32": "选择项目、助理、技能、连接器等页面；指定会话请使用“打开会话”。可用页面取决于客户端版本。",
     "guide_33": "模型切换 · 旋钮",
-    "guide_34": "打开任务输入页并启用 CDP。转动旋钮切换客户端提供的模型，无需填写 ID。",
+    "guide_34": "打开任务输入页并启用 WorkBuddy 通讯接口。转动旋钮切换客户端提供的模型，无需填写 ID。",
     "guide_35": "当前会话状态 · 旋钮",
-    "guide_36": "启用 CDP 后，旋钮显示当前会话状态。遇到审批，左右转动选择允许一次、本次会话允许或拒绝，按下执行。灰色选项不可用。问题弹窗显示实际选项，支持单选、多选、上一题、下一题、提交和跳过。选择「其他」会唤醒客户端供你输入；已填写的答案可选择提交。自定义弹窗需单独适配。",
+    "guide_36": "启用 WorkBuddy 通讯接口 后，旋钮显示当前会话状态。遇到审批，左右转动选择允许一次、本次会话允许或拒绝，按下执行。灰色选项不可用。问题弹窗显示实际选项，支持单选、多选、上一题、下一题、提交和跳过。选择「其他」会唤醒客户端供你输入；已填写的答案可选择提交。自定义弹窗需单独适配。",
     "guide_37": "一键换肤",
-    "guide_38": "为每个按键选择本地图片。键面显示 96×96 预览，按一次通过 CDP 应用主题，再按一次恢复默认主题。",
+    "guide_38": "为每个按键选择本地图片。键面显示 96×96 预览，按一次通过 WorkBuddy 通讯接口 应用主题，再按一次恢复默认主题。",
     "guide_39": "语音输入 / 发送消息",
-    "guide_40": "启用 CDP 后，按语音键开始或结束录音，按发送键发送当前草稿，显示 Stop 时按下停止当前回复。灰色表示不可用。",
+    "guide_40": "启用 WorkBuddy 通讯接口 后，按语音键开始或结束录音，按发送键发送当前草稿，显示 Stop 时按下停止当前回复。灰色表示不可用。",
     "guide_41": "积分余额",
-    "guide_42": "按键显示账户剩余积分。旋钮可在「总」与最近任务 ①–⑤ 间切换。「总」显示账户剩余积分，任务页显示该会话累计消耗。按下刷新，无法读取时显示横线。",
+    "guide_42": "按键或转动旋钮可在账户剩余积分和最近任务 ①–⑤ 的累计消耗间循环切换。按下旋钮可立即刷新，无法读取时显示横线。",
     "guide_43": "新建任务只预填草稿，由你确认发送。国内客户端使用 workbuddy://，海外 WorkBuddy AI 使用 workbuddy-ai://。",
-    "guide_44": "如何启用 CDP？",
-    "guide_45": "打开「启动 WorkBuddy」的属性栏，点击「重启 WorkBuddy」。点击后直接启动或重启 WorkBuddy。Windows 会强制结束所选安装路径的 WorkBuddy 进程（可能中断任务，请先保存）；macOS 正常退出后重新打开。连接成功后当前状态显示 CDP，断开后显示未连接。",
+    "guide_44": "如何启用 WorkBuddy 通讯接口？",
+    "guide_45": "打开「启动 WorkBuddy」的属性栏，点击「重启 WorkBuddy」。点击后直接启动或重启 WorkBuddy。Windows 会强制结束所选安装路径的 WorkBuddy 进程（可能中断任务，请先保存）；macOS 正常退出后重新打开。连接成功后，「WorkBuddy 状态」显示「已连接」。",
     "action_newtask": "新建任务",
     "action_openpage": "页面直达",
     "action_modelswitch": "模型切换",
@@ -327,20 +327,20 @@
     "Enter a task ID / 请填写任务 ID": "请填写任务 ID。",
     "Unsupported platform": "不支持当前系统。",
     "127.0.0.1:9223 is in use.": "本机 9223 端口已被占用，请关闭占用程序后重试。",
-    "WorkBuddy CDP did not connect (127.0.0.1:9223).": "未连接 WorkBuddy CDP（127.0.0.1:9223），请检查客户端后重试。",
-    "Could not run Windows CDP setup. Open WorkBuddy and retry.": "无法运行 Windows CDP 设置，请打开 WorkBuddy 后重试。",
+    "WorkBuddy CDP did not connect (127.0.0.1:9223).": "未连接 WorkBuddy 通讯接口（127.0.0.1:9223），请检查客户端后重试。",
+    "Could not run Windows CDP setup. Open WorkBuddy and retry.": "无法运行 Windows WorkBuddy 通讯接口 设置，请打开 WorkBuddy 后重试。",
     "WorkBuddy not found. Install it or set WORKBUDDY_EXE to its executable path.": "未找到 WorkBuddy，请安装客户端或将 WORKBUDDY_EXE 设为客户端完整路径。",
     "WORKBUDDY_EXE must point to the selected WorkBuddy executable.": "WORKBUDDY_EXE 必须指向所选 WorkBuddy 客户端的可执行文件。",
     "Could not stop WorkBuddy. Quit it from the tray menu and retry.": "无法结束 WorkBuddy，请保存工作、从托盘退出后重试。",
     "WorkBuddy did not quit. Save your work and retry.": "无法结束 WorkBuddy，请保存工作、从托盘退出后重试。",
     "WorkBuddy not installed": "未检测到 WorkBuddy，请先安装桌面客户端。",
     "WorkBuddy AI not installed": "未检测到 WorkBuddy，请先安装桌面客户端。",
-    "CDP timeout": "WorkBuddy CDP 请求超时，请在客户端就绪后重试。",
-    "CDP unavailable": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
-    "CDP disconnected": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
-    "WorkBuddy renderer unavailable": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
-    "No unique WorkBuddy renderer": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
-    "Unexpected CDP target": "未连接 WorkBuddy CDP（127.0.0.1:9223）。",
+    "CDP timeout": "WorkBuddy 通讯接口 请求超时，请在客户端就绪后重试。",
+    "CDP unavailable": "未连接 Workbuddy",
+    "CDP disconnected": "未连接 Workbuddy",
+    "WorkBuddy renderer unavailable": "未连接 Workbuddy",
+    "No unique WorkBuddy renderer": "未连接 Workbuddy",
+    "Unexpected CDP target": "未连接 Workbuddy",
     "Invalid WorkBuddy action": "无效的 WorkBuddy 操作。",
     "Model selection failed": "模型选择失败。",
     "chooseImageFile": "选择图片",
@@ -349,18 +349,19 @@
     "chooseConversation": "请选择会话",
     "refreshConversations": "刷新会话列表",
     "loadingConversations": "正在加载会话…",
-    "connectToLoadConversations": "请连接 CDP 后加载会话列表。",
+    "connectToLoadConversations": "请连接 WorkBuddy 后加载会话列表。",
     "noConversations": "没有已加载的会话，请在 WorkBuddy 中打开会话后刷新。",
     "savedConversation": "已保存的会话",
     "untitledConversation": "未命名会话",
     "selectedConversationMissing": "已保存的会话不在当前列表中，原绑定已保留；选择其他会话可替换。",
-    "conversationHelp": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 CDP；已保存的会话通过深度链接打开。",
+    "conversationHelp": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 WorkBuddy 通讯接口；已保存的会话通过深度链接打开。",
     "legacyPageHelp": "此按键使用了已移出列表的旧入口，原跳转仍保留。请选择新页面，或添加“打开会话”来选择会话。",
     "guide_openchat": "打开会话",
-    "guide_openchat_help": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 CDP；已保存的会话通过深度链接打开。",
-    "workbuddyWebsite": "WorkBuddy 官网",
-    "autoConversationTitle": "自动更新标题"
+    "guide_openchat_help": "从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 WorkBuddy 通讯接口；已保存的会话通过深度链接打开。",
+    "workbuddyDownload": "未安装，点击下载",
+    "autoConversationTitle": "自动更新标题",
+    "workbuddyInterface": "WorkBuddy 通讯接口"
   },
   "Category": "WorkBuddy",
-  "Detail": "安装 WorkBuddy 桌面客户端。把插件的「启动 WorkBuddy」拖到按键上，属性面板会显示客户端、同步和当前状态。\n点击「重启 WorkBuddy」，以 CDP 模式启动客户端。\n在 Windows 中重启 WorkBuddy 会结束其进程，可能中断当前任务。请先保存工作。\n\n新建任务: 打开预填草稿的任务，确认后发送。\n页面直达: 打开 WorkBuddy 页面，可用页面取决于客户端版本和功能开关。\n模型切换: 转动旋钮切换 WorkBuddy 输入框中的模型。\n最近任务 1: 通过 CDP 显示最近会话，按下打开。\n最近任务 2: 通过 CDP 显示最近会话，按下打开。\n最近任务 3: 通过 CDP 显示最近会话，按下打开。\n最近任务 4: 通过 CDP 显示最近会话，按下打开。\n最近任务 5: 通过 CDP 显示最近会话，按下打开。\n主题切换: 应用本键主题，再按一次恢复默认主题。\n当前会话状态: 转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 CDP。\n语音输入: 在 WorkBuddy 中开始或结束语音输入。\n发送消息: 发送当前草稿；显示 Stop 时停止当前回复。\n启动 WorkBuddy: 以本机 CDP 模式启动 WorkBuddy；已连接时唤醒窗口。\n积分余额: 显示账户剩余积分，转动旋钮可查看最近任务 ①–⑤ 的累计消耗。按下立即刷新。\n\n设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。\n\n打开会话: 从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 CDP；已保存的会话通过深度链接打开。"
+  "Detail": "安装 WorkBuddy 桌面客户端。把插件的「启动 WorkBuddy」拖到按键上，属性面板会显示客户端、同步和当前状态。\n点击「重启 WorkBuddy」，启动客户端并启用 WorkBuddy 通讯接口。\n在 Windows 中重启 WorkBuddy 会结束其进程，可能中断当前任务。请先保存工作。\n\n新建任务: 打开预填草稿的任务，确认后发送。\n页面直达: 打开 WorkBuddy 页面，可用页面取决于客户端版本和功能开关。\n模型切换: 转动旋钮切换 WorkBuddy 输入框中的模型。\n最近任务 1: 通过 WorkBuddy 通讯接口 显示最近会话，按下打开。\n最近任务 2: 通过 WorkBuddy 通讯接口 显示最近会话，按下打开。\n最近任务 3: 通过 WorkBuddy 通讯接口 显示最近会话，按下打开。\n最近任务 4: 通过 WorkBuddy 通讯接口 显示最近会话，按下打开。\n最近任务 5: 通过 WorkBuddy 通讯接口 显示最近会话，按下打开。\n主题切换: 应用本键主题，再按一次恢复默认主题。\n当前会话状态: 转动选择审批或问题选项，按下执行。多选题先勾选，再选择提交。需要 WorkBuddy 通讯接口。\n语音输入: 在 WorkBuddy 中开始或结束语音输入。\n发送消息: 发送当前草稿；显示 Stop 时停止当前回复。\n启动 WorkBuddy: 以本机 WorkBuddy 通讯接口 模式启动 WorkBuddy；已连接时唤醒窗口。\n积分余额: 按键或转动旋钮可在账户剩余积分和最近任务 ①–⑤ 的消耗间切换。按下旋钮刷新。\n\n设置提示词模板。支持 {clipboard}、{date}、{time}，以及目录、专家、技能、连接器和模型。最多 8000 字符。\n\n打开会话: 从 WorkBuddy 当前已加载的会话中选择，按最近活动排序。按键固定打开所选会话，不随最近列表变化。刷新列表需要 WorkBuddy 通讯接口；已保存的会话通过深度链接打开。"
 }

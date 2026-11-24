@@ -36,8 +36,8 @@
     "PageAvailability": "Las páginas disponibles dependen de la versión del cliente y las funciones activadas. Los destinos no compatibles pueden mantener la página actual o volver al inicio.",
     "skinImage": "Imagen de fondo",
     "ModelDialGuide": "Abre el área de escritura de tareas de WorkBuddy. Gira el dial para elegir un modelo; se aplicará automáticamente. No necesitas indicar IDs.",
-    "setupTitle": "Conexión CDP",
-    "setupIntro": "Pulsa «Reiniciar WorkBuddy» para iniciar el cliente con CDP activado.",
+    "setupTitle": "Estado de WorkBuddy",
+    "setupIntro": "Pulsa «Reiniciar WorkBuddy» para iniciar el cliente con su interfaz de comunicación habilitada.",
     "client": "Cliente",
     "installed": "Instalado",
     "missing": "No detectado",
@@ -47,13 +47,13 @@
     "pluginDisconnected": "Plugin desconectado",
     "connecting": "Conectando…",
     "connected": "Conectado",
-    "disconnected": "Desconectado",
+    "disconnected": "Sin conexión con WorkBuddy",
     "restart": "Reiniciar WorkBuddy",
     "restarting": "Reiniciando…",
     "windowsRestartWarning": "En Windows, reiniciar cierra los procesos de WorkBuddy y puede interrumpir tareas. Guarda el trabajo primero.",
     "noStatus": "No se recibió el estado del plugin. Selecciona de nuevo la acción o reinicia Ulanzi Studio.",
     "limitItems": "Máximo 20 elementos",
-    "state_offline": "Sin iniciar",
+    "state_offline": "Sin conexión con WorkBuddy",
     "state_idle": "En espera",
     "state_thinking": "Pensando",
     "state_working": "En ejecución",
@@ -70,20 +70,20 @@
     "noModels": "No hay modelos configurados",
     "configureModels": "Configura primero la lista de modelos en el panel de propiedades.",
     "schemeMissing": "Protocolo no registrado. Comprueba la instalación de WorkBuddy.",
-    "modelComposerRequired": "Abre el área de escritura de WorkBuddy y activa CDP.",
+    "modelComposerRequired": "Abre el área de escritura de WorkBuddy y activa Interfaz de comunicación de WorkBuddy.",
     "chatChanged": "La conversación cambió. Selecciona de nuevo el modelo.",
     "modelSelectionFailed": "Error al seleccionar el modelo.",
     "modelNotSwitched": "El modelo no cambió. Comprueba el área de escritura de WorkBuddy.",
-    "cdpSetupRequired": "Selecciona «Reiniciar WorkBuddy» en la configuración para conectar CDP.",
+    "cdpSetupRequired": "Pulsa «Reiniciar WorkBuddy» en las propiedades para conectar.",
     "questionChanged": "La pregunta cambió. Comprueba la conversación actual.",
     "approvalChanged": "La aprobación cambió. Comprueba la conversación actual.",
     "taskLabel": "Tarea reciente {n}",
     "noSession": "No hay conversación en esta posición. Envía primero un mensaje en WorkBuddy.",
     "chooseImage": "Elige primero una imagen en los ajustes de la tecla.",
-    "cdpUnavailable": "CDP de WorkBuddy no disponible (127.0.0.1:9223).",
+    "cdpUnavailable": "Sin conexión con WorkBuddy",
     "noApproval": "No se encontró una aprobación única. Comprueba WorkBuddy.",
     "themeRestored": "Se restauró el tema original de WorkBuddy.",
-    "connectCdp": "Conecta primero el CDP de WorkBuddy.",
+    "connectCdp": "Conecta primero el Interfaz de comunicación de WorkBuddy.",
     "clipboardTimeout": "Se agotó el tiempo de lectura del portapapeles; se conservó el marcador.",
     "clipboardFailed": "No se pudo leer el portapapeles; se conservó el marcador.",
     "studioDisconnected": "Ulanzi Studio desconectado",
@@ -111,27 +111,27 @@
     "taskIdRequired": "Introduce un ID de tarea.",
     "unsupportedPlatform": "Esta plataforma no es compatible.",
     "cdpPortOccupied": "El puerto local 9223 está ocupado. Cierra el programa que lo utiliza e inténtalo de nuevo.",
-    "cdpStartupFailed": "CDP de WorkBuddy no conectó en 127.0.0.1:9223. Comprueba el cliente e inténtalo de nuevo.",
-    "windowsSetupFailed": "No se pudo configurar CDP en Windows. Abre WorkBuddy e inténtalo de nuevo.",
+    "cdpStartupFailed": "Interfaz de comunicación de WorkBuddy no conectó en 127.0.0.1:9223. Comprueba el cliente e inténtalo de nuevo.",
+    "windowsSetupFailed": "No se pudo configurar Interfaz de comunicación de WorkBuddy en Windows. Abre WorkBuddy e inténtalo de nuevo.",
     "workbuddyNotFound": "WorkBuddy no encontrado. Instálalo o configura WORKBUDDY_EXE con la ruta completa del ejecutable.",
     "configuredExeInvalid": "WORKBUDDY_EXE debe apuntar al ejecutable de WorkBuddy seleccionado.",
     "workbuddyStopFailed": "No se pudo cerrar WorkBuddy. Guarda el trabajo, sal desde la bandeja del sistema e inténtalo de nuevo.",
-    "cdpTimeout": "La solicitud CDP de WorkBuddy agotó el tiempo de espera. Reintenta cuando el cliente esté listo.",
+    "cdpTimeout": "La solicitud Interfaz de comunicación de WorkBuddy agotó el tiempo de espera. Reintenta cuando el cliente esté listo.",
     "invalidAction": "Acción de WorkBuddy no válida.",
     "noSessionYet": "Aún no hay conversación",
     "Welcome_coding": "Desarrollo",
     "Welcome_working": "Trabajo de oficina",
     "Welcome_design": "Diseño",
     "guide_5": "Iniciar WorkBuddy",
-    "guide_6": "Inicia WorkBuddy con CDP local; si ya está conectado, muestra su ventana en primer plano.",
+    "guide_6": "Inicia WorkBuddy con Interfaz de comunicación de WorkBuddy local; si ya está conectado, muestra su ventana en primer plano.",
     "guide_10": "En espera",
     "guide_12": "En ejecución",
     "guide_14": "Completado · revisar",
     "guide_16": "Requiere aprobación / respuesta",
     "guide_18": "Error",
-    "guide_20": "Desconectado",
+    "guide_20": "Sin conexión con WorkBuddy",
     "guide_25": "Iniciar WorkBuddy",
-    "guide_26": "Inicia WorkBuddy con CDP local; si ya está conectado, muestra su ventana en primer plano.",
+    "guide_26": "Inicia WorkBuddy con Interfaz de comunicación de WorkBuddy local; si ya está conectado, muestra su ventana en primer plano.",
     "guide_27": "Tarea reciente 1–5",
     "guide_28": "Muestra las cinco tareas cargadas con actividad más reciente. Pulsa la tecla para abrir la conversación mostrada.",
     "guide_29": "Nueva tarea",
@@ -143,11 +143,11 @@
     "guide_37": "Cambiar tema",
     "guide_39": "Entrada de voz / Enviar mensaje",
     "guide_41": "Saldo de créditos",
-    "guide_42": "La tecla muestra el saldo de la cuenta. Gira el dial para alternar entre el total y el consumo de las tareas recientes ①–⑤. Pulsa para actualizar.",
+    "guide_42": "Pulsa la tecla o gira el dial para alternar entre el saldo de la cuenta y los créditos usados por las tareas recientes ①–⑤. Pulsa el dial para actualizar. Un guion indica que no hay datos.",
     "guide_0": "Tu espacio de trabajo con IA, a una pulsación.",
     "guide_1": "Empieza en tres pasos",
     "guide_2": "Instalar y comprobar",
-    "guide_3": "Instala WorkBuddy Desktop y arrastra «Iniciar WorkBuddy» a una tecla. El panel de propiedades comprueba el cliente y la conexión CDP.",
+    "guide_3": "Instala WorkBuddy Desktop y arrastra «Iniciar WorkBuddy» a una tecla. El panel de propiedades comprueba el cliente y la conexión Interfaz de comunicación de WorkBuddy.",
     "guide_4": "Descargar WorkBuddy ↗",
     "guide_7": "Comprobar la conexión",
     "guide_8": "Cuando se muestre «Conectado», podrás usar la entrada de voz, enviar mensajes, ver el estado de la conversación y cambiar el tema.",
@@ -162,12 +162,12 @@
     "guide_23": "Acción",
     "guide_24": "Cómo se usa",
     "guide_30": "Crea una plantilla de instrucciones con {clipboard}, {date} y {time}. Puedes indicar directorio, experto, habilidades, conectores y modelo. Máximo de 8000 caracteres.",
-    "guide_36": "Con CDP activado, el dial muestra el estado de la conversación. En las aprobaciones, elige permitir una vez, permitir esta sesión o rechazar y pulsa. Las opciones no disponibles aparecen atenuadas. Las preguntas muestran sus opciones reales y admiten selección única o múltiple, anterior/siguiente, enviar y omitir. «Otro» muestra el cliente para escribir. Las respuestas ya escritas se pueden enviar con el dial. Los diálogos personalizados requieren soporte específico.",
-    "guide_38": "Elige una imagen local por tecla. La tecla muestra una vista previa de 96×96. Pulsa para aplicar el tema mediante CDP y otra vez para restaurar el original.",
-    "guide_40": "Pulsa la tecla de voz para iniciar o terminar la grabación. La tecla de envío envía el borrador o detiene la respuesta cuando aparece Detener. Gris significa no disponible. Requiere CDP.",
+    "guide_36": "Con Interfaz de comunicación de WorkBuddy activado, el dial muestra el estado de la conversación. En las aprobaciones, elige permitir una vez, permitir esta sesión o rechazar y pulsa. Las opciones no disponibles aparecen atenuadas. Las preguntas muestran sus opciones reales y admiten selección única o múltiple, anterior/siguiente, enviar y omitir. «Otro» muestra el cliente para escribir. Las respuestas ya escritas se pueden enviar con el dial. Los diálogos personalizados requieren soporte específico.",
+    "guide_38": "Elige una imagen local por tecla. La tecla muestra una vista previa de 96×96. Pulsa para aplicar el tema mediante Interfaz de comunicación de WorkBuddy y otra vez para restaurar el original.",
+    "guide_40": "Pulsa la tecla de voz para iniciar o terminar la grabación. La tecla de envío envía el borrador o detiene la respuesta cuando aparece Detener. Gris significa no disponible. Requiere Interfaz de comunicación de WorkBuddy.",
     "guide_43": "Nueva tarea solo rellena un borrador; tú confirmas el envío. La versión china usa workbuddy:// y WorkBuddy AI usa workbuddy-ai://.",
-    "guide_44": "¿Cómo activo CDP?",
-    "guide_45": "En las propiedades de «Iniciar WorkBuddy», selecciona «Reiniciar WorkBuddy». En Windows se cierran los procesos de la instalación elegida; guarda el trabajo primero. En macOS, el cliente se cierra normalmente y vuelve a abrirse. Al conectar, CDP muestra «Conectado».",
+    "guide_44": "¿Cómo activo Interfaz de comunicación de WorkBuddy?",
+    "guide_45": "En las propiedades de «Iniciar WorkBuddy», selecciona «Reiniciar WorkBuddy». En Windows se cierran los procesos de la instalación elegida; guarda el trabajo primero. En macOS, el cliente se cierra normalmente y vuelve a abrirse. El estado de WorkBuddy muestra «Conectado» cuando el cliente está listo.",
     "action_newtask": "Nueva tarea",
     "action_openpage": "Abrir página",
     "action_modelswitch": "Cambiar modelo",
@@ -187,20 +187,20 @@
     "Enter a task ID / 请填写任务 ID": "Introduce un ID de tarea.",
     "Unsupported platform": "Esta plataforma no es compatible.",
     "127.0.0.1:9223 is in use.": "El puerto local 9223 está ocupado. Cierra el programa que lo utiliza e inténtalo de nuevo.",
-    "WorkBuddy CDP did not connect (127.0.0.1:9223).": "CDP de WorkBuddy no conectó en 127.0.0.1:9223. Comprueba el cliente e inténtalo de nuevo.",
-    "Could not run Windows CDP setup. Open WorkBuddy and retry.": "No se pudo configurar CDP en Windows. Abre WorkBuddy e inténtalo de nuevo.",
+    "WorkBuddy CDP did not connect (127.0.0.1:9223).": "Interfaz de comunicación de WorkBuddy no conectó en 127.0.0.1:9223. Comprueba el cliente e inténtalo de nuevo.",
+    "Could not run Windows CDP setup. Open WorkBuddy and retry.": "No se pudo configurar Interfaz de comunicación de WorkBuddy en Windows. Abre WorkBuddy e inténtalo de nuevo.",
     "WorkBuddy not found. Install it or set WORKBUDDY_EXE to its executable path.": "WorkBuddy no encontrado. Instálalo o configura WORKBUDDY_EXE con la ruta completa del ejecutable.",
     "WORKBUDDY_EXE must point to the selected WorkBuddy executable.": "WORKBUDDY_EXE debe apuntar al ejecutable de WorkBuddy seleccionado.",
     "Could not stop WorkBuddy. Quit it from the tray menu and retry.": "No se pudo cerrar WorkBuddy. Guarda el trabajo, sal desde la bandeja del sistema e inténtalo de nuevo.",
     "WorkBuddy did not quit. Save your work and retry.": "No se pudo cerrar WorkBuddy. Guarda el trabajo, sal desde la bandeja del sistema e inténtalo de nuevo.",
     "WorkBuddy not installed": "WorkBuddy no detectado. Instala primero el cliente de escritorio.",
     "WorkBuddy AI not installed": "WorkBuddy no detectado. Instala primero el cliente de escritorio.",
-    "CDP timeout": "La solicitud CDP de WorkBuddy agotó el tiempo de espera. Reintenta cuando el cliente esté listo.",
-    "CDP unavailable": "CDP de WorkBuddy no disponible (127.0.0.1:9223).",
-    "CDP disconnected": "CDP de WorkBuddy no disponible (127.0.0.1:9223).",
-    "WorkBuddy renderer unavailable": "CDP de WorkBuddy no disponible (127.0.0.1:9223).",
-    "No unique WorkBuddy renderer": "CDP de WorkBuddy no disponible (127.0.0.1:9223).",
-    "Unexpected CDP target": "CDP de WorkBuddy no disponible (127.0.0.1:9223).",
+    "CDP timeout": "La solicitud Interfaz de comunicación de WorkBuddy agotó el tiempo de espera. Reintenta cuando el cliente esté listo.",
+    "CDP unavailable": "Sin conexión con WorkBuddy",
+    "CDP disconnected": "Sin conexión con WorkBuddy",
+    "WorkBuddy renderer unavailable": "Sin conexión con WorkBuddy",
+    "No unique WorkBuddy renderer": "Sin conexión con WorkBuddy",
+    "Unexpected CDP target": "Sin conexión con WorkBuddy",
     "Invalid WorkBuddy action": "Acción de WorkBuddy no válida.",
     "Model selection failed": "Error al seleccionar el modelo.",
     "chooseImageFile": "Elegir imagen",
@@ -209,17 +209,18 @@
     "chooseConversation": "Seleccionar conversación",
     "refreshConversations": "Actualizar conversaciones",
     "loadingConversations": "Cargando conversaciones…",
-    "connectToLoadConversations": "Conecta CDP para cargar las conversaciones.",
+    "connectToLoadConversations": "Conecta Interfaz de comunicación de WorkBuddy para cargar las conversaciones.",
     "noConversations": "No hay conversaciones cargadas. Abre una conversación en WorkBuddy y actualiza.",
     "savedConversation": "Conversación guardada",
     "untitledConversation": "Conversación sin título",
     "selectedConversationMissing": "La conversación guardada no está en la lista cargada. La asignación se conserva hasta elegir otra.",
-    "conversationHelp": "Selecciona una conversación cargada en WorkBuddy, ordenada por actividad reciente. La tecla mantiene esa conversación aunque cambie el orden. Actualizar la lista requiere CDP; una selección guardada se abre mediante enlace profundo.",
+    "conversationHelp": "Selecciona una conversación cargada en WorkBuddy, ordenada por actividad reciente. La tecla mantiene esa conversación aunque cambie el orden. Actualizar la lista requiere Interfaz de comunicación de WorkBuddy; una selección guardada se abre mediante enlace profundo.",
     "legacyPageHelp": "Esta tecla usa un destino retirado de la lista. Se conserva su enlace. Elige otra página o añade Abrir conversación.",
     "guide_openchat": "Abrir conversación",
-    "guide_openchat_help": "Selecciona una conversación cargada en WorkBuddy, ordenada por actividad reciente. La tecla mantiene esa conversación aunque cambie el orden. Actualizar la lista requiere CDP; una selección guardada se abre mediante enlace profundo.",
-    "workbuddyWebsite": "Web de WorkBuddy",
-    "autoConversationTitle": "Actualizar título automáticamente"
+    "guide_openchat_help": "Selecciona una conversación cargada en WorkBuddy, ordenada por actividad reciente. La tecla mantiene esa conversación aunque cambie el orden. Actualizar la lista requiere Interfaz de comunicación de WorkBuddy; una selección guardada se abre mediante enlace profundo.",
+    "workbuddyDownload": "Sin instalar. Haz clic para descargar",
+    "autoConversationTitle": "Actualizar título automáticamente",
+    "workbuddyInterface": "Interfaz de comunicación de WorkBuddy"
   },
   "Name": "WorkBuddy",
   "Category": "WorkBuddy",
@@ -246,7 +247,7 @@
     },
     {
       "Name": "Abrir conversación",
-      "Tooltip": "Selecciona una conversación cargada en WorkBuddy, ordenada por actividad reciente. La tecla mantiene esa conversación aunque cambie el orden. Actualizar la lista requiere CDP; una selección guardada se abre mediante enlace profundo.",
+      "Tooltip": "Selecciona una conversación cargada en WorkBuddy, ordenada por actividad reciente. La tecla mantiene esa conversación aunque cambie el orden. Actualizar la lista requiere Interfaz de comunicación de WorkBuddy; una selección guardada se abre mediante enlace profundo.",
       "States": [
         {
           "Name": "Abrir conversación"
@@ -264,7 +265,7 @@
     },
     {
       "Name": "Tarea reciente 1",
-      "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
+      "Tooltip": "Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.",
       "States": [
         {
           "Name": "Tarea reciente 1"
@@ -273,7 +274,7 @@
     },
     {
       "Name": "Tarea reciente 2",
-      "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
+      "Tooltip": "Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.",
       "States": [
         {
           "Name": "Tarea reciente 2"
@@ -282,7 +283,7 @@
     },
     {
       "Name": "Tarea reciente 3",
-      "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
+      "Tooltip": "Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.",
       "States": [
         {
           "Name": "Tarea reciente 3"
@@ -291,7 +292,7 @@
     },
     {
       "Name": "Tarea reciente 4",
-      "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
+      "Tooltip": "Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.",
       "States": [
         {
           "Name": "Tarea reciente 4"
@@ -300,7 +301,7 @@
     },
     {
       "Name": "Tarea reciente 5",
-      "Tooltip": "Muestra una conversación reciente mediante CDP. Pulsa para abrirla.",
+      "Tooltip": "Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.",
       "States": [
         {
           "Name": "Tarea reciente 5"
@@ -318,7 +319,7 @@
     },
     {
       "Name": "Estado de la conversación",
-      "Tooltip": "Gira para elegir una aprobación o respuesta y pulsa para ejecutarla. En preguntas múltiples, marca opciones y elige Enviar. Requiere CDP.",
+      "Tooltip": "Gira para elegir una aprobación o respuesta y pulsa para ejecutarla. En preguntas múltiples, marca opciones y elige Enviar. Requiere Interfaz de comunicación de WorkBuddy.",
       "States": [
         {
           "Name": "Estado de la conversación"
@@ -345,7 +346,7 @@
     },
     {
       "Name": "Iniciar WorkBuddy",
-      "Tooltip": "Inicia WorkBuddy con CDP local; si ya está conectado, muestra su ventana en primer plano.",
+      "Tooltip": "Inicia WorkBuddy con Interfaz de comunicación de WorkBuddy local; si ya está conectado, muestra su ventana en primer plano.",
       "States": [
         {
           "Name": "Iniciar WorkBuddy"
@@ -354,7 +355,7 @@
     },
     {
       "Name": "Saldo de créditos",
-      "Tooltip": "Muestra los créditos restantes mediante CDP. Actualiza cada 30 segundos; pulsa para actualizar ya. Admite teclas y diales.",
+      "Tooltip": "Pulsa la tecla o gira el dial para alternar entre el saldo de la cuenta y el consumo de las tareas recientes ①–⑤. Pulsa el dial para actualizar.",
       "States": [
         {
           "Name": "Saldo de créditos"
@@ -362,5 +363,5 @@
       ]
     }
   ],
-  "Detail": "Instala WorkBuddy Desktop y arrastra «Iniciar WorkBuddy» a una tecla. El panel de propiedades comprueba el cliente y la conexión CDP.\nPulsa «Reiniciar WorkBuddy» para iniciar el cliente con CDP activado.\nEn Windows, reiniciar cierra los procesos de WorkBuddy y puede interrumpir tareas. Guarda el trabajo primero.\n\nNueva tarea: Abre una tarea con un borrador rellenado. Revísalo antes de enviarlo.\nAbrir página: Abre una página de WorkBuddy. La disponibilidad depende de la versión y las funciones activadas.\nCambiar modelo: Gira el dial para cambiar el modelo en el área de escritura de WorkBuddy.\nTarea reciente 1: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea reciente 2: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea reciente 3: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea reciente 4: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nTarea reciente 5: Muestra una conversación reciente mediante CDP. Pulsa para abrirla.\nCambiar tema: Aplica el tema de esta tecla. Pulsa de nuevo para restaurar el original.\nEstado de la conversación: Gira para elegir una aprobación o respuesta y pulsa para ejecutarla. En preguntas múltiples, marca opciones y elige Enviar. Requiere CDP.\nEntrada de voz: Inicia o termina la entrada de voz en WorkBuddy.\nEnviar mensaje: Envía el borrador actual o detiene la respuesta en curso cuando se muestra Detener.\nIniciar WorkBuddy: Inicia WorkBuddy con CDP local; si ya está conectado, muestra su ventana en primer plano.\nSaldo de créditos: Muestra los créditos restantes mediante CDP. Actualiza cada 30 segundos; pulsa para actualizar ya. Admite teclas y diales.\n\nCrea una plantilla de instrucciones con {clipboard}, {date} y {time}. Puedes indicar directorio, experto, habilidades, conectores y modelo. Máximo de 8000 caracteres.\n\nAbrir conversación: Selecciona una conversación cargada en WorkBuddy, ordenada por actividad reciente. La tecla mantiene esa conversación aunque cambie el orden. Actualizar la lista requiere CDP; una selección guardada se abre mediante enlace profundo."
+  "Detail": "Instala WorkBuddy Desktop y arrastra «Iniciar WorkBuddy» a una tecla. El panel de propiedades comprueba el cliente y la conexión Interfaz de comunicación de WorkBuddy.\nPulsa «Reiniciar WorkBuddy» para iniciar el cliente con Interfaz de comunicación de WorkBuddy activado.\nEn Windows, reiniciar cierra los procesos de WorkBuddy y puede interrumpir tareas. Guarda el trabajo primero.\n\nNueva tarea: Abre una tarea con un borrador rellenado. Revísalo antes de enviarlo.\nAbrir página: Abre una página de WorkBuddy. La disponibilidad depende de la versión y las funciones activadas.\nCambiar modelo: Gira el dial para cambiar el modelo en el área de escritura de WorkBuddy.\nTarea reciente 1: Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.\nTarea reciente 2: Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.\nTarea reciente 3: Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.\nTarea reciente 4: Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.\nTarea reciente 5: Muestra una conversación reciente mediante Interfaz de comunicación de WorkBuddy. Pulsa para abrirla.\nCambiar tema: Aplica el tema de esta tecla. Pulsa de nuevo para restaurar el original.\nEstado de la conversación: Gira para elegir una aprobación o respuesta y pulsa para ejecutarla. En preguntas múltiples, marca opciones y elige Enviar. Requiere Interfaz de comunicación de WorkBuddy.\nEntrada de voz: Inicia o termina la entrada de voz en WorkBuddy.\nEnviar mensaje: Envía el borrador actual o detiene la respuesta en curso cuando se muestra Detener.\nIniciar WorkBuddy: Inicia WorkBuddy con Interfaz de comunicación de WorkBuddy local; si ya está conectado, muestra su ventana en primer plano.\nSaldo de créditos: Pulsa la tecla o gira el dial para alternar entre el saldo de la cuenta y el consumo de las tareas recientes ①–⑤. Pulsa el dial para actualizar.\n\nCrea una plantilla de instrucciones con {clipboard}, {date} y {time}. Puedes indicar directorio, experto, habilidades, conectores y modelo. Máximo de 8000 caracteres.\n\nAbrir conversación: Selecciona una conversación cargada en WorkBuddy, ordenada por actividad reciente. La tecla mantiene esa conversación aunque cambie el orden. Actualizar la lista requiere Interfaz de comunicación de WorkBuddy; una selección guardada se abre mediante enlace profundo."
 }

@@ -1,7 +1,9 @@
 "use strict";
 const fs=require("node:fs/promises"),path=require("node:path");
 const {parentPort}=require("node:worker_threads");
-const {Resvg,initWasm}=require("../libs/vendor/resvg");
+const {Resvg}=require("../libs/vendor/resvg");
+const {svgFonts}=require("./svg-fonts");
+const {sessionCard}=require("./session-card");
 const {GifReader,GifWriter} = require("../libs/vendor/omggif");
 const assets = path.join(__dirname, "../assets/task-cards");
 const SIZE = 192;
@@ -10,20 +12,6 @@ const CORNER_RADIUS = 23;
 const TITLE_BOTTOM = 90;
 const TITLE_SIZE=28;
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&apos;"})[c]);
-let ready;
-async function initialize(){
-  await initWasm(await fs.readFile(path.join(__dirname,"../libs/vendor/resvg/index_bg.wasm")));
-  const windows=path.join(process.env.SystemRoot||"C:\\Windows","Fonts");
-  const candidates=process.platform==="win32" ? [
-    [path.join(windows,"msyhbd.ttc"),"Microsoft YaHei"],[path.join(windows,"msyh.ttc"),"Microsoft YaHei"],
-    [path.join(windows,"malgun.ttf"),"Malgun Gothic"],[path.join(windows,"arialbd.ttf"),"Arial"]
-  ] : [["/System/Library/Fonts/Supplemental/Arial Unicode.ttf","Arial Unicode MS"],
-       ["/System/Library/Fonts/STHeiti Medium.ttc","Heiti SC"],["/System/Library/Fonts/Supplemental/Arial.ttf","Arial"]];
-  for(const [file,family] of candidates){
-    try{return {fontBuffers:[await fs.readFile(file)],defaultFontFamily:family,sansSerifFamily:family};}catch{}
-  }
-  throw Error("No readable system font for task cards");
-}
 function width(text,size){
   return Array.from(text).reduce((n,c)=>n+(/[^\x00-\x7f]/.test(c)?size:/[MWmw@#%&]/.test(c)?size*.9:/[ilI.,'!:;| ]/.test(c)?size*.3:size*.6),0);
 }
@@ -60,25 +48,26 @@ function titleSvg(title) {
     </g>`;
 }
 
-function svg(size, background, overlay) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${SIZE} ${SIZE}">
-    <clipPath id="card"><rect width="${SIZE}" height="${SIZE}" rx="${CORNER_RADIUS}"/></clipPath>
-    <g clip-path="url(#card)">${background}<g fill="white" font-family="sans-serif" font-weight="700" text-anchor="middle">${overlay}</g></g>
-  </svg>`;
+function svg(size, background, overlay, dial = false) {
+  const content = `<clipPath id="card"><rect width="${SIZE}" height="${SIZE}" rx="${CORNER_RADIUS}"/></clipPath>
+    <g clip-path="url(#card)">${background}<g fill="white" font-family="sans-serif" font-weight="700" text-anchor="middle">${overlay}</g></g>`;
+  return dial ? sessionCard(content, SIZE) :
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${SIZE} ${SIZE}">${content}</svg>`;
 }
 
 async function staticArtwork(card) {
   const title = titleSvg(card.title);
-  if (card.state === "idle" || card.state === "empty") {
-    return svg(PNG_SIZE, `<rect width="${SIZE}" height="${SIZE}" fill="black"/>`, title);
+  if (card.state === "empty") {
+    return svg(PNG_SIZE, `<rect width="${SIZE}" height="${SIZE}" fill="black"/>`, title, card.dial);
   }
-  const dialFrame = card.frame !== undefined;
-  const filename = dialFrame ? `running-${card.frame}.png` : card.state + ".jpg";
+  const frame = card.frame ?? (card.state === "running" ? 0 : undefined);
+  const extension = frame !== undefined || card.state === "idle" ? "png" : "jpg";
+  const filename = frame !== undefined ? `running-${frame}.png` : `${card.state}.${extension}`;
   const image = await fs.readFile(path.join(assets, filename));
-  const mimeType = dialFrame ? "image/png" : "image/jpeg";
+  const mimeType = extension === "png" ? "image/png" : "image/jpeg";
   const source = `data:${mimeType};base64,${image.toString("base64")}`;
   const background = `<image href="${source}" width="${SIZE}" height="${SIZE}"/>`;
-  return svg(PNG_SIZE, background, title);
+  return svg(PNG_SIZE, background, title, card.dial);
 }
 
 let loadingTemplate;
@@ -149,8 +138,7 @@ async function runningGif(pixels) {
 }
 
 async function render(card,file) {
-  ready ||= initialize();
-  const font = await ready;
+  const font = await svgFonts();
   const animated = card.animated;
   const markup = animated ? svg(SIZE, "", titleSvg(card.title)) : await staticArtwork(card);
   const renderer = new Resvg(markup, {font});

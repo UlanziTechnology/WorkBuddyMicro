@@ -1,6 +1,10 @@
 "use strict";
 const {statusArtwork} = require("./workbuddy-status");
 const {DIAL_FRAME_COUNT} = require("./task-art");
+const {sessionCard} = require("./session-card");
+const fs = require("node:fs/promises");
+const path = require("node:path");
+const defaultSessionIcon = require("../layouts/session-encoder.json").items[0].value;
 const DIAL_FRAME_MS = 200;
 // Track the current view so a slow render cannot repaint a changed or removed key.
 class TaskCards {
@@ -31,21 +35,30 @@ class TaskCards {
   async paint(view, frame, sendAt = 0) {
     const {action, snapshot, state} = view;
     if (this.views.get(action.actionid) !== view || !action.active) return;
+    const dial = action.controller === "Encoder";
     let image;
     try {
-      image = await this.artwork.render({state, title:snapshot.text, frame});
+      image = await this.artwork.render({state, title:snapshot.text, frame, dial});
     } catch {
       const animated = state === "running" && frame === undefined;
       const filename = frame === undefined ? state + (animated ? ".gif" : ".png") : `running-${frame}.png`;
       image = {path:"assets/task-cards/" + filename, animated};
+      if (dial) {
+        const png = await fs.readFile(path.join(__dirname, "..", image.path)).catch(() => null);
+        if (png) {
+          const svg = sessionCard(`<image width="126" height="126" xlink:href="data:image/png;base64,${png.toString("base64")}"/>`);
+          image.data = "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64");
+        } else {
+          image.path = defaultSessionIcon;
+        }
+      }
     }
     if (this.views.get(action.actionid) !== view || !action.active) return;
 
-    const icon = {
-      uuid:action.uuid, actionid:action.actionid, key:action.key,
-      showtext:false, textdata:"",
-      ...(image.animated ? {type:4, gifpath:image.path} : {type:2, path:image.path})
-    };
+    const imageData = image.data ? {type:1, data:image.data}
+      : image.animated ? {type:4, gifpath:image.path} : {type:2, path:image.path};
+    const icon = {uuid:action.uuid, actionid:action.actionid, key:action.key,
+      showtext:false, textdata:"", ...imageData};
     const sendFrame = () => {
       if (this.views.get(action.actionid) !== view || !action.active) return;
       const sent = this.send({cmd:"state", param:{statelist:[icon]}});

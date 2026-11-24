@@ -2,7 +2,7 @@
 
 [中文说明](README.zh.md) · [Repository](https://github.com/UlanziTechnology/WorkBuddyMicro)
 
-This guide describes the actions shipped with WorkBuddy Micro **1.12.0**. For source installation, development, compatibility records and licensing, see the [repository README](https://github.com/UlanziTechnology/WorkBuddyMicro#readme). The bundled [usage guide](usage-guide/index.html?language=en) is also available from the connection panel.
+This guide describes the actions shipped with WorkBuddy Micro **1.15.10**. For source installation, development, compatibility records and licensing, see the [repository README](https://github.com/UlanziTechnology/WorkBuddyMicro#readme). The bundled [usage guide](usage-guide/index.html?language=en) is also available from the connection panel.
 
 ## Languages
 
@@ -12,15 +12,15 @@ Action names, properties, connection messages, status labels, approval choices a
 
 ## Connect WorkBuddy
 
-Deep-link actions—New Task and Open Page—can be used directly. Deep-link routing uses `workbuddy://` for the domestic client or `workbuddy-ai://` for the overseas client. The scheme is a shared plugin setting; its selector is hidden in New Task and Open Page. **CDP features currently target the domestic WorkBuddy client; WorkBuddy AI is outside the current CDP support scope.**
+Deep-link actions—New Task and Open Page—can be used directly. Deep-link routing uses `workbuddy://` for the domestic client or `workbuddy-ai://` for the overseas client. The scheme is a shared plugin setting; its selector is hidden in New Task and Open Page. **WorkBuddy communication interface features currently target the domestic WorkBuddy client; WorkBuddy AI is outside the current WorkBuddy communication interface support scope.**
 
-Live tasks, model switching, session interaction, voice input, sending, themes and credits require CDP. Save your work, then press **Launch WorkBuddy** or choose **Restart WorkBuddy** in the action's connection panel. Wait for **Connected**. No terminal command, hook configuration or separate Bridge service is required.
+Live tasks, model switching, session interaction, voice input, sending, themes and credits require the WorkBuddy communication interface. Save your work, then press **Launch WorkBuddy** or choose **Restart WorkBuddy** in the action's WorkBuddy status panel. Wait for **Connected**. No terminal command, hook configuration or separate Bridge service is required.
 
 When disconnected, Launch starts or restarts the selected client with local debugging at `127.0.0.1:9223`. When connected, it brings WorkBuddy forward. Windows restart ends the selected installation's processes, including tray processes, and may interrupt tasks. If port 9223 is occupied, restart is blocked. After launch, connection detection waits up to 30 seconds.
 
 On Windows, discovery checks running processes, protocol registration, per-user locations, Program Files and uninstall registry entries, including custom drives. If needed, set `WORKBUDDY_EXE` to the client's full executable path and restart Studio.
 
-When CDP is connected, Launch restores the Windows client from the tray or a minimized window through its bare `workbuddy://` or `workbuddy-ai://` link, then brings the renderer forward. It preserves the current chat and does not restart WorkBuddy.
+When WorkBuddy is connected, Launch restores the Windows client from the tray or a minimized window through its bare `workbuddy://` or `workbuddy-ai://` link, then brings the renderer forward. It preserves the current chat and does not restart WorkBuddy.
 
 ## Deep-link actions
 
@@ -40,13 +40,13 @@ Working directories must be absolute paths. Prompts are limited to 8,000 charact
 
 ## Open Conversation
 
-Add **Open Conversation** to a key. Connect CDP, select a loaded conversation from the dropdown and use **Refresh conversations** when needed. The saved conversation stays fixed when recent tasks reorder. No task ID entry is required. **Automatically update title** is enabled by default; disable it to preserve your custom key title. Opening a saved selection uses its deep link. Unloaded or deleted selections stay visible as unavailable; refreshing never silently binds a different chat.
+Add **Open Conversation** to a key. Connect the WorkBuddy communication interface, select a loaded conversation from the dropdown and use **Refresh conversations** when needed. The saved conversation stays fixed when recent tasks reorder. No task ID entry is required. **Automatically update title** is enabled by default; disable it to preserve your custom key title. Opening a saved selection uses its deep link. Unloaded or deleted selections stay visible as unavailable; refreshing never silently binds a different chat.
 
 ## Recent tasks and session status
 
 Each recent-task key draws its title over the supplied round status artwork: a conversation title of up to two lines at the top and a colored status pill below. Idle keys have no status pill. Running keys keep the loading GIF’s original frames and timing; completed, approval, error and disconnected use green, amber, red and gray badges. Long titles end with an ellipsis. Status labels are part of the supplied images and stay the same across Studio languages.
 
-Task identity and live status come from CDP. Title rasterization and GIF compositing run in a worker thread using the bundled WebAssembly renderer and a system font; no Python or runtime npm installation is needed. Generated PNGs/GIFs are cached locally and unchanged images are not sent again.
+Task identity and live status come from the WorkBuddy communication interface. Title rasterization and GIF compositing run in a worker thread using the bundled WebAssembly renderer and a system font; no Python or runtime npm installation is needed. Generated PNGs/GIFs are cached locally and unchanged images are not sent again.
 
 Add **Recent Task 1–5** to keys to show up to five recent conversations loaded by the client. Each key tracks its own conversation's state. Press to open the conversation displayed on that key. Slots follow the recent list rather than permanent assignments or a complete history query.
 
@@ -58,7 +58,7 @@ For standard question panels, turn through the actual options. Three rows are vi
 
 ## Model Switch dial
 
-Open the active conversation's composer with CDP connected. Turn to choose from the client's available models; the selection applies after a short pause. Press to apply the displayed selection immediately. The dial draws the model icon and label together in a rounded card.
+Open the active conversation's composer with the WorkBuddy communication interface connected. Turn to choose from the client's available models; the selection applies after a short pause. Press to apply the displayed selection immediately. The dial draws the model icon and label together in a rounded card.
 
 Switching conversations refreshes the current model. If an approval temporarily hides the composer, the last known model is retained. Disconnection uses a gray card; `N` is shown when no model is known. Model availability and access remain controlled by WorkBuddy.
 
@@ -78,9 +78,9 @@ You can also use **Restore native WorkBuddy theme** in the inspector. Different 
 
 ## Credit Balance
 
-Add **Credit Balance** to a key or dial. The key shows the account balance. Turn the dial to cycle from the account balance through recent tasks **①–⑤**. A circled number before the amount identifies credits used by the corresponding task, read from local WorkBuddy session files. The visible amount refreshes every 30 seconds or on press. A dash indicates unavailable data.
+Add **Credit Balance** to a key or dial. Press the key or turn the dial to cycle through the account balance and recent tasks **①–⑤**. The balance icon shows the selected scope. Recent-task usage is read from local WorkBuddy session files and appears below the icon. The visible amount refreshes every 30 seconds. Press the dial to refresh it immediately. A dash indicates unavailable data.
 
-Initial or transient read failures retry every second. A temporary failure retains the last valid balance; disconnecting clears it. Without a readable balance, the display uses a gray unavailable image with a dash.
+Initial or transient read failures retry every second. A temporary failure retains the last valid balance; disconnecting clears it. When connected without a readable amount, the selected icon appears above a gray dash.
 
 ## Diagnosis and compatibility
 

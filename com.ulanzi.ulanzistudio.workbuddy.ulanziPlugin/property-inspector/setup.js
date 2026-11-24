@@ -32,11 +32,11 @@ window.WorkBuddySetup = (() => {
     intro.append(" ",guide);panel.append(summary,intro);
     if (/Win/i.test(navigator.platform || navigator.userAgent)) panel.append(el("p",t("windowsRestartWarning"),"help"));
     const rows=el("div",null,"wb-panel");
-    for(const [key,label] of [["app",t("client")],["connection","CDP"]]) {
+    for(const [key,label] of [["app",t("client")],["connection",t("workbuddyInterface")]]) {
       const row=el("div",null,"wb-row"), actions=el("span",null,"wb-row-actions");row.append(el("span",label));
       const status=el("span",t("checking"),"wb-value");status.id="wb-"+key;actions.append(status);
       if(key==="app") {
-        download=el("button",t("workbuddyWebsite"),"wb-inline-action");download.type="button";download.id="wb-download";download.hidden=true;
+        download=el("button",t("workbuddyDownload"),"wb-inline-action");download.type="button";download.id="wb-download";download.hidden=true;
         download.addEventListener("click",()=>options.message({type:"openDownload"}));actions.append(download);
       } else {
         enable=el("button",t("restart"),"wb-inline-action");enable.type="button";enable.id="wb-enable-cdp";enable.hidden=true;

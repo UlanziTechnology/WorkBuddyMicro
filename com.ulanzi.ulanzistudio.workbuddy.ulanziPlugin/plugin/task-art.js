@@ -12,24 +12,27 @@ const workerFile=path.join(__dirname,"task-art-worker.js");
 class TaskArtwork {
   constructor({cache=path.join(os.tmpdir(),"ulanzi-workbuddy-task-cards-v2")}={}){
     this.cache=cache;this.recent=new Map();this.requests=new Map();this.pending=new Map();this.sequence=0;
-    const version = createHash("sha256").update(fs.readFileSync(workerFile));
+    const version = createHash("sha256").update(fs.readFileSync(workerFile))
+      .update(fs.readFileSync(require.resolve("./session-card")))
+      .update(fs.readFileSync(require.resolve("../layouts/model-encoder.json")));
     const frames = Array.from({length:DIAL_FRAME_COUNT}, (_, i) => `running-${i}.png`);
-    for (const name of ["done.jpg","approval.jpg","error.jpg","offline.jpg","running.gif",...frames]) {
+    for (const name of ["idle.png","done.jpg","approval.jpg","error.jpg","offline.jpg","running.gif",...frames]) {
       // Missing assets still let the plugin start and fall back to its packaged icons.
       try { version.update(fs.readFileSync(path.join(__dirname, "../assets/task-cards", name))); }
       catch { version.update(name); }
     }
     this.version = version.digest("hex");
   }
-  /** @param {{state:string,title:string,frame?:number}} snapshot
+  /** @param {{state:string,title:string,frame?:number,dial?:boolean}} snapshot
    * @returns {Promise<{path:string,animated:boolean}>} */
   render(snapshot){
     if(this.stopped)return Promise.reject(Error("Task artwork stopped"));
     const state=["idle","running","approval","done","error","offline","empty"].includes(snapshot.state)?snapshot.state:"offline";
     const frame = state === "running" && Number.isInteger(snapshot.frame) &&
       snapshot.frame >= 0 && snapshot.frame < DIAL_FRAME_COUNT ? snapshot.frame : undefined;
-    const animated = state === "running" && frame === undefined;
-    const card = {state, animated, frame, title:Array.from(String(snapshot.title || "")).slice(0,240).join("")};
+    const dial = snapshot.dial === true;
+    const animated = state === "running" && !dial && frame === undefined;
+    const card = {state, animated, frame, dial, title:Array.from(String(snapshot.title || "")).slice(0,240).join("")};
     const name=createHash("sha256").update(JSON.stringify([this.version,card])).digest("hex")+(animated?".gif":".png"),file=path.join(this.cache,name);
     if(!this.requests.has(file))this.requests.set(file,this.produce(card,file,animated).finally(()=>this.requests.delete(file)));
     return this.requests.get(file);

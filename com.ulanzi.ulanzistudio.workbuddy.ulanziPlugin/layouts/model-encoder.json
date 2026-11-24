@@ -6,9 +6,9 @@
       "key": "icon",
       "rect": [
         0,
-        7,
+        0,
         126,
-        126
+        140
       ],
       "value": "assets/icons/action-modelswitch.png",
       "zOrder": 0,

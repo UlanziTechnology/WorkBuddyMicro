@@ -1,66 +1,128 @@
 "use strict";
 
-// The renderer and offline fallback share the same square artwork. Choose line
-// breaks by measured width, preferring word boundaries for model/version names.
+const [, , width, height] = require("../layouts/model-encoder.json").items[0].rect;
+
+// D200X $UA1 uses a 126 × 140 canvas, a 100 × 100 icon slot and a title at y=105.
+const MODEL_CARD = {
+  width, height,
+  iconRegion:{x:13, y:0, width:100, height:100, tileSize:70},
+  titleRegion:{width, centerY:125, fontSize:20, lineHeight:13.5}
+};
+
 function modelSvg(label, measure, connected = true, picture) {
+  const {width, height, iconRegion, titleRegion} = MODEL_CARD;
   const escape = text => text.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"})[c]);
-  const width = measure || ((text, size) => Array.from(text).reduce((n,c) => n + (/[^\x00-\x7f]/.test(c) ? 1 : 0.65), 0) * size);
-  const name = String(label).trim();
-  const textCenter = 106;
-  let lines, size;
-  for (size = 20; size >= 9; size--) {
-    lines = [];
-    let rest = name;
-    while (rest && lines.length < 3) {
-      const chars = Array.from(rest);
-      let end = 0, boundary = 0;
-      while (end < chars.length && width(chars.slice(0,end+1).join(""), size) <= 114) {
-        if (/[-\s]/.test(chars[end])) boundary = end + 1;
-        end++;
+  const measureText = measure || ((text, size) => ({
+    width: Array.from(text).reduce((n, c) => n + (/[^\x00-\x7f]/.test(c) ? 1 : /[MWmw]/.test(c) ? .9 :
+      /[ilI. ]/.test(c) ? .32 : .59), 0) * size,
+    actualBoundingBoxAscent: size * (/[^\x00-\x7f]/.test(text) ? 0.93 : 0.78),
+    actualBoundingBoxDescent: size * (/[^\x00-\x7f]|[gjpqy]/.test(text) ? 0.23 : 0.04)
+  }));
+  const textWidthAt = (text, size) => measureText(text, size).width;
+  const name = String(label).replace(/\s+/g, " ").trim();
+  const textWidth = titleRegion.width - 10;
+  const textX = titleRegion.width / 2;
+  const {centerY, lineHeight} = titleRegion;
+  let size = titleRegion.fontSize;
+  let lines = [name];
+  while (size > 13 && textWidthAt(name, size) > textWidth) size--;
+
+  if (textWidthAt(name, size) > textWidth) {
+    const segmenter = new Intl.Segmenter(undefined, {granularity:"grapheme"});
+    const chars = Array.from(segmenter.segment(name), part => part.segment);
+    const words = new Intl.Segmenter(undefined, {granularity:"word"});
+    const boundaries = new Set(Array.from(words.segment(name), part => part.index));
+    let fallback;
+    // Fit two lines around the title center within the existing feedback image.
+    for (size = 16; size >= 10; size--) {
+      let bestScore = Infinity;
+      let bestLines;
+      let offset = 0;
+      for (let split = 1; split < chars.length; split++) {
+        offset += chars[split - 1].length;
+        const left = chars.slice(0, split).join("").trimEnd();
+        const right = chars.slice(split).join("").trimStart();
+        const a = textWidthAt(left, size);
+        if (a > textWidth) break;
+        const b = textWidthAt(right, size);
+        const score = Math.abs(a - b) + (boundaries.has(offset) ? 0 : textWidth);
+        if (b <= textWidth && score < bestScore) {
+          bestScore = score;
+          bestLines = [left, right];
+        }
       }
-      if (end < chars.length && boundary) end = boundary;
-      end = Math.max(end,1);
-      lines.push(chars.slice(0,end).join("").trim());
-      rest = chars.slice(end).join("").trimStart();
-    }
-    const textBottom = textCenter + (lines.length - 1) / 2 * (size + 1) + size * 0.59;
-    if (!rest && lines.length * (size + 1) <= 50 && textBottom <= 124) break;
-    if (size === 9) { if (rest) lines[2] = lines[2].slice(0,-1) + "…"; break; }
-  }
-  if (lines.length === 2) {
-    let best = Infinity;
-    for (let i = 1; i < name.length; i++) {
-      if (!/[\s-]/.test(name[i])) continue;
-      const left = name.slice(0,i).trim(), right = name.slice(i).replace(/^[-\s]+/, "");
-      const a = width(left,size), b = width(right,size);
-      if (left && right && Math.max(a,b) <= 114 && Math.abs(a-b) < best) {
-        best = Math.abs(a-b);
-        lines = [left,right];
+      if (bestScore < textWidth) {
+        lines = bestLines;
+        break;
       }
+      if (bestLines && !fallback) fallback = {lines:bestLines, size};
+    }
+    if (lines.length === 1 && fallback) ({lines, size} = fallback);
+    if (lines.length === 1) {
+      size = 14;
+      let split = 0;
+      while (split < chars.length && textWidthAt(chars.slice(0, split + 1).join(""), size) <= textWidth) split++;
+      const tail = chars.slice(split);
+      while (tail.length && textWidthAt(tail.join("").trimEnd() + "…", size) > textWidth) tail.pop();
+      lines = [chars.slice(0, split).join("").trimEnd(), tail.join("").trim() + "…"];
     }
   }
-  const text = lines.map((line,i) => {
-    const y = textCenter + (i - (lines.length - 1)/2) * (size+1) + size*0.34;
-    return `<text x="63" y="${y}" font-size="${size}">${escape(line)}</text>`;
+
+  const singleLine = lines.length === 1;
+  if (singleLine) {
+    const {actualBoundingBoxAscent:ascent, actualBoundingBoxDescent:descent} = measureText(lines[0], size);
+    const halfHeight = Math.min(height - centerY, centerY - iconRegion.y - iconRegion.height) - 2;
+    const inkHeight = ascent + descent;
+    // Single-line glyphs can use the full title area without changing their proportions.
+    if (inkHeight > 2 * halfHeight) size = Math.max(1, Math.floor(size * 2 * halfHeight / inkHeight));
+  }
+
+  const text = lines.map((line, i) => {
+    const {actualBoundingBoxAscent:ascent, actualBoundingBoxDescent:descent} = measureText(line, size);
+    const maxInkHeight = lineHeight - 0.8;
+    const inkHeight = ascent + descent;
+    const scaleY = !singleLine && inkHeight > maxInkHeight ? maxInkHeight / inkHeight : 1;
+    const rowCenter = centerY + (i - (lines.length - 1) / 2) * lineHeight;
+    const baseline = (ascent - descent) / 2;
+    return `<g transform="translate(0 ${rowCenter}) scale(1 ${scaleY})"><text x="${textX}" y="${baseline}" font-size="${size}">${escape(line)}</text></g>`;
   }).join("");
+  const cx = iconRegion.x + iconRegion.width / 2;
+  const cy = iconRegion.y + iconRegion.height / 2;
+  const {tileSize} = iconRegion;
+  const tile = `x="${cx - tileSize / 2}" y="${cy - tileSize / 2}" width="${tileSize}" height="${tileSize}" rx="8"`;
+  const left = iconRegion.x / 2;
+  const right = width - left;
   const cachedIcon = !connected && typeof picture === "string" && /^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(picture)
-    ? `<defs><clipPath id="model-icon"><rect x="31" y="13" width="64" height="64" rx="15"/></clipPath></defs><image href="${picture}" width="126" height="126" clip-path="url(#model-icon)"/>` : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="252" height="252" viewBox="0 0 126 126"><rect width="126" height="126" rx="15" fill="${connected ? "#010101" : "#7a7a7a"}"/><path d="m13 36-6 7 6 7m100-14 6 7-6 7" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="31" y="13" width="64" height="64" rx="15" fill="#f6fffc"/><g font-family="sans-serif" font-weight="600" text-anchor="middle" fill="#ffffff"><text x="63" y="58" font-size="37" fill="#083e34">${escape(Array.from(name)[0] || "M")}</text>${text}</g>${cachedIcon}</svg>`;
+    ? `<defs><clipPath id="model-icon"><rect ${tile}/></clipPath></defs><image xlink:href="${picture}" width="${width}" height="${height}" clip-path="url(#model-icon)"/>` : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width * 2}" height="${height * 2}" viewBox="0 0 ${width} ${height}">
+    <rect width="${width}" height="${iconRegion.y + iconRegion.height}" rx="15" fill="${connected ? "#010101" : "#7a7a7a"}"/>
+    <path d="M${left + 2.5} ${cy - 6}l-5 6 5 6M${right - 2.5} ${cy - 6}l5 6-5 6" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect ${tile} fill="#f6fffc"/>
+    <g font-family="sans-serif" font-weight="600" text-anchor="middle" fill="#ffffff">
+      <text x="${cx}" y="${cy + 13}" font-size="38" fill="#083e34">${escape(Array.from(name)[0] || "M")}</text>
+      ${text}
+    </g>
+    ${cachedIcon}
+  </svg>`;
 }
 
 async function drawModelCard(label, icon) {
   const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = 252;
+  const {width, height, iconRegion} = MODEL_CARD;
+  const cx = iconRegion.x + iconRegion.width / 2;
+  const cy = iconRegion.y + iconRegion.height / 2;
+  canvas.width = width * 2;
+  canvas.height = height * 2;
   const ctx = canvas.getContext("2d");
   ctx.scale(2, 2);
   const svg = modelSvg(label, (text, size) => {
     ctx.font = "600 " + size + "px sans-serif";
-    return ctx.measureText(text).width;
+    return ctx.measureText(text);
   });
   const base = new Image();
   base.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
   await base.decode();
-  ctx.drawImage(base, 0, 0, 126, 126);
+  ctx.drawImage(base, 0, 0, width, height);
   if (icon) {
     try {
       let source;
@@ -84,12 +146,13 @@ async function drawModelCard(label, icon) {
       image.src = source;
       try { await image.decode(); } finally { if (source.startsWith("blob:")) URL.revokeObjectURL(source); }
       ctx.fillStyle = "#f6fffc";
-      ctx.fillRect(40, 24, 46, 42);
-      const scale = 56 / Math.max(image.naturalWidth, image.naturalHeight, 1);
+      const logoSize = iconRegion.tileSize - 16;
+      ctx.fillRect(cx - logoSize / 2, cy - logoSize / 2, logoSize, logoSize);
+      const scale = logoSize / Math.max(image.naturalWidth, image.naturalHeight, 1);
       const w = image.naturalWidth * scale, h = image.naturalHeight * scale;
-      ctx.drawImage(image, 63 - w/2, 45 - h/2, w, h);
+      ctx.drawImage(image, cx - w / 2, cy - h / 2, w, h);
     } catch { /* A missing client icon still gets an identifiable model card. */ }
   }
   return canvas.toDataURL("image/png");
 }
-module.exports = { drawModelCard, modelSvg };
+module.exports = { MODEL_CARD, drawModelCard, modelSvg };

@@ -1,4 +1,5 @@
 "use strict";
+const {sessionCard} = require("./session-card");
 /** Show up to three single-line choices with an arrow on the selected row. */
 function questionSvg(question, choiceId) {
   const fontSize = 17;
@@ -27,6 +28,6 @@ function questionSvg(question, choiceId) {
       <path d="M112 ${y+19}h8m-4-4 4 4-4 4" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>` : "";
     return `<g opacity="${choice.disabled ? 0.45 : 1}">${highlight}<text x="8" y="${y+25}" font-size="${fontSize}" stroke="white" stroke-width=".25" paint-order="stroke">${escape(label)}</text></g>`;
   }).join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="252" height="252" viewBox="0 0 126 126"><rect width="126" height="126" rx="15" fill="#010101"/><g fill="white" font-family="sans-serif" font-weight="700">${rows}</g></svg>`;
+  return sessionCard(`<rect width="126" height="126" rx="15" fill="#010101"/><g fill="white" font-family="sans-serif" font-weight="700">${rows}</g>`);
 }
 module.exports = {questionSvg};

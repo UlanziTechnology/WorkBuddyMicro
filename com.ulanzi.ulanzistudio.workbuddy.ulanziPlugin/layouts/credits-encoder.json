@@ -6,11 +6,11 @@
       "key": "icon",
       "rect": [
         0,
-        7,
+        0,
         126,
-        126
+        140
       ],
-      "value": "assets/actions/credits-dial.png",
+      "value": "assets/balance/dial/default.png",
       "zOrder": 0,
       "background": "transparent",
       "enabled": true

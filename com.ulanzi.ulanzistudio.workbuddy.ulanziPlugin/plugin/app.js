@@ -18,6 +18,7 @@ const deeplink = require("./deeplink");
 const {TaskCards} = require("./task-cards");
 const {SessionFiles} = require("./sources/session-files");
 const {TaskArtwork} = require("./task-art");
+const {connectionWarningPicture} = require("./connection-warning");
 const i18n = require("../libs/i18n");
 
 const PLUGIN_UUID = "com.ulanzi.ulanzistudio.workbuddy";
@@ -27,6 +28,7 @@ const DOWNLOAD_URL = "https://www.workbuddy.cn/";
 const RUN_DEDUPE_MS = 250;
 // A key held longer than this is treated as a fresh press even without `keyup`.
 const STALE_PRESS_MS = 5000;
+const CONNECTION_WARNING_MS = 2000;
 
 // ---------------------------------------------------------------------------
 class PluginApp {
@@ -78,6 +80,7 @@ class PluginApp {
   connect() {
     this.ws = new WebSocketClient(`ws://${this.address}:${this.port}`);
     this.ws.on("open", () => {
+      for (const cached of this.displayCache.values()) clearTimeout(cached.warningTimer);
       this.displayCache.clear();
       this.lastInspectorStatus = null;
       this.reconnectDelay = 1000;
@@ -116,8 +119,16 @@ class PluginApp {
     if (obj.cmd === "state" && Array.isArray(obj.param?.statelist)) {
       // Every action uses this boundary, including direct GIF and bitmap updates.
       // Re-sending unchanged GIFs can make the host reload an animation.
-      const changed = obj.param.statelist.filter(icon =>
-        this.displayCache.get(icon.actionid)?.state !== JSON.stringify(icon));
+      const changed = obj.param.statelist.filter(icon => {
+        const cached = this.displayCache.get(icon.actionid);
+        const state = JSON.stringify(icon);
+        if (cached?.state === state) return false;
+        if (cached?.warningTimer) {
+          cached.state = state;
+          return false;
+        }
+        return true;
+      });
       if (!changed.length) return true;
       const sent = this.ws.sendJson({...obj, param:{...obj.param, statelist:changed}});
       if (sent) for (const icon of changed) {
@@ -131,7 +142,7 @@ class PluginApp {
       const signature = JSON.stringify(obj);
       const cached = this.displayCache.get(obj.actionid) || {};
       if (cached.feedback === signature) return true;
-      const sent = this.ws.sendJson(obj);
+      const sent = Boolean(cached.warningTimer) || this.ws.sendJson(obj);
       if (sent) {
         cached.feedback = signature;
         this.displayCache.set(obj.actionid, cached);
@@ -241,7 +252,7 @@ class PluginApp {
     const key = message.key || action.key;
     const changed = action.active !== active || action.key !== key;
     // Studio may resend add/setactive for a live instance. Keep its confirmed display.
-    if (changed) this.displayCache.delete(action.actionid);
+    if (changed) this.clearDisplay(action.actionid);
     action.key = key;
     if (changed && !active) action.setActive(false);
     if (message.param) action.updateSettings(message.param);
@@ -255,7 +266,7 @@ class PluginApp {
       if (action) {
         action.destroy();
         this.actions.delete(item.actionid);
-        this.displayCache.delete(item.actionid);
+        this.clearDisplay(item.actionid);
       }
     });
   }
@@ -409,6 +420,52 @@ class PluginApp {
       actionid: action.actionid,
       key: action.key,
     });
+  }
+
+  async showConnectionWarning(action) {
+    if (!action.active || !this.ws) return;
+    const {uuid, actionid, key} = action;
+    const cached = this.displayCache.get(actionid) || {};
+    if (cached.warningPending) return;
+    if (!cached.warningTimer) {
+      const feedback = cached.feedback && JSON.parse(cached.feedback);
+      const state = cached.state && JSON.parse(cached.state);
+      const defaultIcon = require("../manifest.json").Actions.find(item => item.UUID === uuid)?.States[0]?.Image;
+      cached.warningPending = true;
+      this.displayCache.set(actionid, cached);
+      const dial = action.controller === "Encoder";
+      let picture;
+      try {
+        picture = await connectionWarningPicture(this.t("disconnected"), {
+          dial,
+          fullDialIcon:dial && Boolean(feedback || state?.path || state?.data),
+          icon:feedback?.layout.icon.value || state?.path || state?.data,
+          defaultIcon
+        });
+      } finally {
+        delete cached.warningPending;
+      }
+      if (this.displayCache.get(actionid) !== cached || !action.active || this.status.cdpState) return;
+      const warning = feedback
+        ? {cmd:"setFeedback", uuid, actionid, key, layout:{icon:{value:picture}}}
+        : {cmd:"state", param:{statelist:[{uuid, actionid, key, type:1, data:picture, showtext:false}]}};
+      if (!this.ws?.sendJson(warning)) return;
+    }
+    clearTimeout(cached.warningTimer);
+    cached.warningTimer = setTimeout(() => {
+      if (this.displayCache.get(actionid) !== cached || !action.active) return;
+      delete cached.warningTimer;
+      // Replay the latest normal display, including any update received during the warning.
+      const state = cached.state ? JSON.parse(cached.state) : {uuid, actionid, key, type:0, state:0};
+      const normal = cached.feedback ? JSON.parse(cached.feedback) : {cmd:"state", param:{statelist:[state]}};
+      if (!this.ws?.sendJson(normal)) this.clearDisplay(actionid);
+    }, CONNECTION_WARNING_MS);
+    cached.warningTimer.unref();
+  }
+
+  clearDisplay(actionid) {
+    clearTimeout(this.displayCache.get(actionid)?.warningTimer);
+    this.displayCache.delete(actionid);
   }
 
   setFeedback(action, layout) {
